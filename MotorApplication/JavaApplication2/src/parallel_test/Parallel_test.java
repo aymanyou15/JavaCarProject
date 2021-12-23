@@ -6,6 +6,8 @@
 package parallel_test;
 
 import com.fazecast.jSerialComm.SerialPort;
+import java.awt.RenderingHints.Key;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -14,6 +16,12 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.KeyCode;
+import static javafx.scene.input.KeyCode.DOWN;
+import static javafx.scene.input.KeyCode.LEFT;
+import static javafx.scene.input.KeyCode.RIGHT;
+import static javafx.scene.input.KeyCode.UP;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -22,10 +30,14 @@ import javafx.stage.Stage;
  *
  * @author Ahmed Soliman
  */
-public class Parallel_test extends Application {
+public class Parallel_test extends Application implements EventHandler<KeyEvent> {
     static SerialPort chosenPort;
     Button connectBtn;
     ComboBox portList;
+    String dataSend,dataRecieve;
+    KeyCode keyCod;
+    
+    
     
     @Override
     public void init ()
@@ -52,7 +64,7 @@ public class Parallel_test extends Application {
                 }
 
                 // create a new thread that listens for incoming text and populates the graph
-                Thread thread = new Thread(){
+              /*  Thread thread = new Thread(){
                         @Override public void run() {
                                 Scanner scanner = new Scanner(chosenPort.getInputStream());
                                 while(scanner.hasNextLine()) {
@@ -62,9 +74,38 @@ public class Parallel_test extends Application {
                                         } catch(Exception e) {}
                                 }
                                 scanner.close();
+                                try {Thread.sleep(500); } catch(Exception e) {}
                         }
                     };
-                    thread.start();
+                    thread.start();*/
+                    
+                    // create a new thread for sending data to the arduino
+                    Thread threadSend = new Thread(){
+                        @Override public void run() {
+                                // wait after connecting, so the bootloader can finish
+                            try {Thread.sleep(100); } catch(Exception e) {}
+                                System.out.println("A7eeh3");
+                            // enter an infinite loop that sends text to the arduino
+                            PrintWriter output = new PrintWriter(chosenPort.getOutputStream());
+                            Scanner scanner = new Scanner(chosenPort.getInputStream());
+                                
+                            while(true) {
+                                    System.out.println("A7eeh2");
+                                    output.print("Hellow");
+                                    System.out.println("A7eeh1");
+                                    output.flush();
+                                    if  (scanner.hasNextLine()) {
+                                        try {
+                                                String line = scanner.nextLine();
+                                                System.out.println(line);
+                                        } catch(Exception e) {}
+                                    }
+                                    scanner.close();
+                                    try {Thread.sleep(100); } catch(Exception e) {}
+                            }
+                        }
+                    };
+                    threadSend.start();
             } else {
                     // disconnect from the serial port
                     chosenPort.closePort();
@@ -86,7 +127,7 @@ public class Parallel_test extends Application {
         
         
         Scene scene = new Scene(buttonBox, 300, 250);
-        
+        scene.setOnKeyPressed(this);
         primaryStage.setTitle("connection");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -97,6 +138,31 @@ public class Parallel_test extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void handle(KeyEvent event) {
+        
+        keyCod = event.getCode();
+        
+        switch(keyCod)
+        {
+            case UP:
+                dataSend = "f";
+                System.out.println("a7eeha");
+                break;
+            case DOWN:
+                dataSend = "b";
+                System.out.println("a7eeh2");
+                break;
+            case LEFT:
+                dataSend = "l";
+                System.out.println("a7eeeh3");
+                break;
+            case RIGHT:
+                dataSend = "r";
+                break;
+        }
     }
     
 }
