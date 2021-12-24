@@ -2,7 +2,6 @@ package entry;
 
 import com.fazecast.jSerialComm.SerialPort;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -89,7 +88,7 @@ public class SerialComm extends Application{
                     case UP:
                 {
                     try {
-                        out.write(1);
+                        out.write('f');
                         try {
                         out.close();
                         in = new Scanner (chosenPort.getInputStream());
@@ -108,7 +107,7 @@ public class SerialComm extends Application{
                     case DOWN:
                 {
                     try {
-                        out.write(0);
+                        out.write('b');
                         try {
                         out.close();
                         in = new Scanner (chosenPort.getInputStream());
@@ -126,7 +125,7 @@ public class SerialComm extends Application{
                     case LEFT:
                 {
                     try {
-                        out.write(2);
+                        out.write('l');
                         try {
                         out.close();
                         in = new Scanner (chosenPort.getInputStream());
@@ -144,7 +143,7 @@ public class SerialComm extends Application{
                     case RIGHT:
                 {
                     try {
-                        out.write(3);
+                        out.write('r');
                         try {
                         out.close();
                         in = new Scanner (chosenPort.getInputStream());
