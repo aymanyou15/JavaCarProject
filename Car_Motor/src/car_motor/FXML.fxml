@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import eu.hansolo.medusa.Gauge?>
+<?import java.net.URL?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<AnchorPane id="AnchorPane" prefHeight="404.0" prefWidth="603.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="car_motor.FXMLController">
+    <stylesheets>
+        <URL value="@fxml.css" />
+    </stylesheets>
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="614.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Desktop/english/speed-motion-background-fast-speedometer-car-racing-velocity-background-speed-motion-background-fast-speedometer-car-137699340.jpg" />
+         </image>
+      </ImageView>
+      <Slider fx:id="slider" blockIncrement="20.0" cache="true" layoutX="102.0" layoutY="6.0" majorTickUnit="20.0" max="255.0" minorTickCount="1" onMouseDragged="#updateSpedoMeter" prefHeight="49.0" prefWidth="402.0" showTickLabels="true" showTickMarks="true">
+         <effect>
+            <Lighting bumpInput="$null" diffuseConstant="0.98" specularConstant="0.35" specularExponent="0.0" surfaceScale="0.35">
+               <light>
+                  <Light.Distant azimuth="0.0">
+                     <color>
+                        <Color red="0.6710526347160339" green="0.6710526347160339" blue="0.6710526347160339" />
+                     </color>
+                  </Light.Distant>
+               </light>
+            </Lighting>
+         </effect>
+      </Slider>
+      <Gauge fx:id="spedometer" layoutX="188.0" layoutY="82.0" lcdFont="ELEKTRA" majorTickMarkType="PILL" maxValue="255.0" needleShape="FLAT" onDragDetected="#updateSpedoMeter" onMouseDragged="#updateSpedoMeter" prefHeight="236.0" prefWidth="230.0" title="ITI">
+         <averageColor>
+            <Color red="0.28947368264198303" green="0.03216374292969704" blue="0.28947368264198303" />
+         </averageColor>
+         <barBackgroundColor>
+            <Color red="0.5" green="0.046296294778585434" blue="0.046296294778585434" />
+         </barBackgroundColor>
+         <backgroundPaint>
+            <LinearGradient endY="1.0" startX="0.9052132701421801">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.19736842811107635" green="0.19279970228672028" blue="0.19279970228672028" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </backgroundPaint>
+         <majorTickMarkColor>
+            <Color red="0.42105263471603394" green="0.42105263471603394" blue="0.42105263471603394" />
+         </majorTickMarkColor>
+         <knobColor>
+            <Color red="0.46052631735801697" green="0.3837719261646271" blue="0.3837719261646271" />
+         </knobColor>
+         <barColor>
+            <Color red="0.7105262875556946" green="0.7105262875556946" blue="0.7105262875556946" />
+         </barColor>
+         <mediumTickMarkColor>
+            <Color red="0.6052631735801697" green="0.602461040019989" blue="0.602461040019989" />
+         </mediumTickMarkColor>
+         <minorTickMarkColor>
+            <Color red="0.34210526943206787" green="0.33735379576683044" blue="0.33735379576683044" />
+         </minorTickMarkColor>
+         <subTitleColor>
+            <Color red="0.1184210553765297" green="0.1184210553765297" blue="0.1184210553765297" />
+         </subTitleColor>
+         <tickLabelColor>
+            <Color red="0.6447368264198303" green="0.6417519450187683" blue="0.6417519450187683" />
+         </tickLabelColor>
+         <tickMarkColor>
+            <Color red="0.2631579041481018" green="0.2631579041481018" blue="0.2631579041481018" />
+         </tickMarkColor>
+         <titleColor>
+            <Color red="0.43421053886413574" green="0.4100877046585083" blue="0.4100877046585083" />
+         </titleColor>
+         <unitColor>
+            <Color red="0.06578947603702545" green="0.06578947603702545" blue="0.06578947603702545" />
+         </unitColor>
+         <valueColor>
+            <Color red="0.5921052694320679" green="0.5729166865348816" blue="0.5729166865348816" />
+         </valueColor>
+         <thresholdColor>
+            <Color red="0.34210526943206787" green="0.030092593282461166" blue="0.09249512851238251" />
+         </thresholdColor>
+         <needleColor>
+            <Color red="0.5526315569877625" green="0.09978070110082626" blue="0.09978070110082626" />
+         </needleColor>
+      </Gauge>
+      <Gauge layoutX="465.0" layoutY="272.0" majorTickSpace="1.0" maxValue="10.0" prefHeight="118.0" prefWidth="124.0" skinType="KPI">
+         <barBackgroundColor>
+            <Color red="0.19736842811107635" green="0.19736842811107635" blue="0.19736842811107635" />
+         </barBackgroundColor>
+         <majorTickMarkColor>
+            <Color red="0.3684210479259491" green="0.3462475538253784" blue="0.3462475538253784" />
+         </majorTickMarkColor>
+         <averageColor>
+            <Color red="0.42105263471603394" green="0.26900583505630493" blue="0.42105263471603394" />
+         </averageColor>
+      </Gauge>
+      <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="62.0" layoutY="55.0" />
+      <CheckBox fx:id="checkBox" layoutX="20.0" layoutY="321.0" mnemonicParsing="false" onAction="#ch" />
+      <Label fx:id="label" layoutX="30.0" layoutY="349.0" />
+      <Label fx:id="label1" layoutX="50.0" layoutY="55.0" />
+      <ToggleButton layoutX="23.0" layoutY="334.0" mnemonicParsing="false" selected="true" text="start" />
+      <ToggleButton layoutX="75.0" layoutY="334.0" mnemonicParsing="false" text="stop" />
+   </children>
+</AnchorPane>
