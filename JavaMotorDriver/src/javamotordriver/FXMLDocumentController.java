@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -31,14 +32,16 @@ public class FXMLDocumentController implements Initializable {
 
     AnchorPane anchor;
     static SerialPort chosenPort;
+    @FXML
     Button btn;
     KeyCode key;
     OutputStream out;
     Scanner in;
-
+    @FXML
     public ComboBox portList;
+    @FXML
     public Slider verticalSlider;
-
+    @FXML
     public Gauge spedometer;
 
     int x = 0;
@@ -47,33 +50,39 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         spedometer.setNeedleColor(Color.RED);
+        btn.setText("Start");
+        
+        // populate the drop-down box
+	SerialPort[] portNames = SerialPort.getCommPorts();
+        for (SerialPort portName : portNames) {
+            portList.getItems().addAll(portName.getSystemPortName());
+        }
     }
 
     public void btnMouseClicked(MouseEvent mouseEvent) {
-        x += 5;
-        if (spedometer.getValue() >= 50) {
-            x = 50;
-        }
-        if (spedometer.getValue() < 0) {
-            x = 0;
-        }
-        if (spedometer.getValue() >= 30) {
-            spedometer.setTickMarkColor(Color.RED);
-            spedometer.setTickLabelColor(Color.WHITE);
-            spedometer.setBarColor(Color.RED);
-            spedometer.setValueColor(Color.RED);
-            spedometer.setUnitColor(Color.RED);
-            spedometer.setTitleColor(Color.RED);
-        }
-        if (spedometer.getValue() < 30) {
-            spedometer.setTickMarkColor(Color.BLUE);
-            spedometer.setTickLabelColor(Color.WHITE);
-            spedometer.setBarColor(Color.BLUE);
-            spedometer.setValueColor(Color.WHITE);
-            spedometer.setUnitColor(Color.WHITE);
-            spedometer.setTitleColor(Color.WHITE);
-        }
-        spedometer.setValue(x);
+         if(btn.getText().equals("Start")) {
+                // attempt to connect to the serial port
+                chosenPort = SerialPort.getCommPort(portList.getValue().toString());
+                chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
+                if(chosenPort.openPort()) {
+                        btn.setText("End");
+                        portList.setEditable(false);
+                         out = chosenPort.getOutputStream();
+                }
+                
+                    
+                } else {
+                        // disconnect from the serial port
+                        chosenPort.closePort();
+                        try {
+                            out.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        portList.setEditable(true);
+                        btn.setText("Start");
+
+                }
     }
 
     public void onKeyPressed(KeyEvent event) {
