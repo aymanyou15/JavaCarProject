@@ -11,9 +11,8 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#anchorOnKeyPressed" prefHeight="749.0" prefWidth="1099.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" prefHeight="749.0" prefWidth="1099.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <Rectangle arcHeight="5.0" arcWidth="10.0" height="737.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="1132.0">
@@ -34,15 +33,10 @@
       </VBox>
       <StackPane layoutX="358.0" layoutY="193.0" prefHeight="366.0" prefWidth="416.0">
          <children>
-            <Gauge fx:id="spedometer" angleRange="360.0" animated="true" animationDuration="250" barColor="BLUE" maxMeasuredValueVisible="true" maxValue="50.0" minMeasuredValue="0.0" minMeasuredValueVisible="true" needleColor="RED" skinType="MODERN" subTitle="ITI" subTitleColor="RED" threshold="30.0" thresholdColor="RED" thresholdVisible="true" tickLabelColor="WHITE" tickLabelOrientation="ORTHOGONAL" tickMarkColor="BLUE" title="Speed" titleColor="WHITE" unit="Km / h" unitColor="WHITE" valueColor="WHITE" />
+            <Gauge fx:id="spedometer" animated="true" animationDuration="250" barColor="BLUE" maxMeasuredValueVisible="true" maxValue="50.0" minMeasuredValue="0.0" minMeasuredValueVisible="true" needleColor="RED" skinType="MODERN" subTitle="ITI" subTitleColor="RED" threshold="30.0" thresholdColor="RED" thresholdVisible="true" tickLabelColor="WHITE" tickLabelOrientation="ORTHOGONAL" tickMarkColor="BLUE" title="Speed" titleColor="WHITE" unit="Km / h" unitColor="WHITE" valueColor="WHITE" />
          </children>
       </StackPane>
       <ComboBox layoutX="126.0" layoutY="72.0" prefWidth="150.0" />
-      <Button layoutX="378.0" layoutY="72.0" mnemonicParsing="false" text="Button" />
-      <Button fx:id="speed" contentDisplay="CENTER" defaultButton="true" layoutX="885.0" layoutY="569.0" mnemonicParsing="false" onMouseClicked="#btnOnMouseClick" text="speed++" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
+      <Button fx:id="btn" layoutX="378.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" text="ckeckSpeed" />
     </children>
 </AnchorPane>
