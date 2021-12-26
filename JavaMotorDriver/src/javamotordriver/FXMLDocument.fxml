@@ -37,6 +37,6 @@
          </children>
       </StackPane>
       <ComboBox layoutX="126.0" layoutY="72.0" prefWidth="150.0" />
-      <Button fx:id="btn" layoutX="378.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" text="ckeckSpeed" />
+      <Button fx:id="btn" layoutX="378.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" text="Start" />
     </children>
 </AnchorPane>
