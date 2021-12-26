@@ -6,7 +6,6 @@ package javamotordriver;
 
 import com.fazecast.jSerialComm.SerialPort;
 import eu.hansolo.medusa.Gauge;
-import java.awt.Button;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
@@ -15,6 +14,8 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -35,6 +36,7 @@ public class FXMLDocumentController implements Initializable {
     OutputStream out;
     Scanner in;
 
+    public ComboBox portList;
     public Slider verticalSlider;
 
     public Gauge spedometer;
@@ -76,7 +78,6 @@ public class FXMLDocumentController implements Initializable {
 
     public void onKeyPressed(KeyEvent event) {
         // soliman's code
-        
         key = event.getCode();
                 switch(key)
                 {
