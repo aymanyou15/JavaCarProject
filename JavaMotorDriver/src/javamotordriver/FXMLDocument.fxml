@@ -28,7 +28,7 @@
       </Rectangle>
       <VBox layoutX="35.0" layoutY="79.0" prefHeight="594.0" prefWidth="69.0">
          <children>
-            <Slider fx:id="verticalSlider" blockIncrement="5.0" cache="true" cacheHint="SPEED" majorTickUnit="15.0" max="255.0" minorTickCount="2" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" prefHeight="594.0" prefWidth="75.0" showTickLabels="true" showTickMarks="true" VBox.vgrow="ALWAYS" />
+            <Slider fx:id="verticalSlider" blockIncrement="5.0" cache="true" cacheHint="SPEED" majorTickUnit="15.0" max="255.0" minorTickCount="2" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" prefHeight="594.0" prefWidth="75.0" showTickLabels="true" showTickMarks="true" VBox.vgrow="ALWAYS" focusTraversable="false"/>
          </children>
       </VBox>
       <StackPane layoutX="358.0" layoutY="193.0" prefHeight="366.0" prefWidth="416.0">
@@ -36,7 +36,7 @@
             <Gauge fx:id="spedometer" animated="true" animationDuration="250" barColor="BLUE" maxMeasuredValueVisible="true" maxValue="50.0" minMeasuredValue="0.0" minMeasuredValueVisible="true" needleColor="RED" skinType="MODERN" subTitle="ITI" subTitleColor="RED" threshold="30.0" thresholdColor="RED" thresholdVisible="true" tickLabelColor="WHITE" tickLabelOrientation="ORTHOGONAL" tickMarkColor="BLUE" title="Speed" titleColor="WHITE" unit="Km / h" unitColor="WHITE" valueColor="WHITE" />
          </children>
       </StackPane>
-      <ComboBox fx:id="portList" layoutX="126.0" layoutY="72.0" prefWidth="150.0" />
-      <Button fx:id="btn" layoutX="378.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" text="Start" />
+      <ComboBox fx:id="portList" layoutX="126.0" layoutY="72.0" prefWidth="150.0" focusTraversable="false"/>
+      <Button fx:id="btn" layoutX="378.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" text="Start" focusTraversable="false"/>
     </children>
 </AnchorPane>
