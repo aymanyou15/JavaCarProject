@@ -93,16 +93,8 @@ public class FXMLDocumentController implements Initializable {
                     case UP:
                 {
                     try {
-                        out.write(1);
-                        try {
-                        out.close();
-                        in = new Scanner (chosenPort.getInputStream());
-                        System.out.println(in.nextLine());
-                        in.close();
-                        out = chosenPort.getOutputStream();
-                        } catch (IOException ex) {
-                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        out.write('f');
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -112,16 +104,8 @@ public class FXMLDocumentController implements Initializable {
                     case DOWN:
                 {
                     try {
-                        out.write(0);
-                        try {
-                        out.close();
-                        in = new Scanner (chosenPort.getInputStream());
-                        System.out.println(in.nextLine());
-                        in.close();
-                        out = chosenPort.getOutputStream();
-                        } catch (IOException ex) {
-                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        out.write('b');
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -130,16 +114,8 @@ public class FXMLDocumentController implements Initializable {
                     case LEFT:
                 {
                     try {
-                        out.write(2);
-                        try {
-                        out.close();
-                        in = new Scanner (chosenPort.getInputStream());
-                        System.out.println(in.nextLine());
-                        in.close();
-                        out = chosenPort.getOutputStream();
-                        } catch (IOException ex) {
-                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        out.write('l');
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -148,16 +124,8 @@ public class FXMLDocumentController implements Initializable {
                     case RIGHT:
                 {
                     try {
-                        out.write(3);
-                        try {
-                        out.close();
-                        in = new Scanner (chosenPort.getInputStream());
-                        System.out.println(in.nextLine());
-                        in.close();
-                        out = chosenPort.getOutputStream();
-                        } catch (IOException ex) {
-                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        out.write('r');
+                        
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
