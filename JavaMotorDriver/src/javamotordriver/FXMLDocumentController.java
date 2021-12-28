@@ -32,6 +32,7 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 /**
@@ -56,7 +57,7 @@ public class FXMLDocumentController implements Initializable {
     public Gauge spedometer;
     @FXML
     public Gauge rpmGauge;
-    
+
     @FXML
     public MenuBar menuBar;
     @FXML
@@ -68,8 +69,13 @@ public class FXMLDocumentController implements Initializable {
         // initialize gauges (speed and RPM)
         spedometer.setNeedleColor(Color.RED);
         btn.setText("Start");
+        btn.setShape(new Circle(100));
+        btn.setMinSize(100, 100);
+        btn.setStyle("-fx-font-size: 30px;" + "-fx-background-color: #62B534;" + "-fx-font-weight: bold;"
+                + "-fx-text-align: center;");
+
         rpmGauge.setSectionsVisible(true);
-        rpmGauge.setSections(new Section(8, 10, Color.RED), new Section(6, 8, Color.YELLOW));        
+        rpmGauge.setSections(new Section(8, 10, Color.RED), new Section(6, 8, Color.YELLOW));
 
         // populate the drop-down box
         SerialPort[] portNames = SerialPort.getCommPorts();
@@ -86,6 +92,8 @@ public class FXMLDocumentController implements Initializable {
             chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
             if (chosenPort.openPort()) {
                 btn.setText("End");
+                btn.setStyle("-fx-font-size: 30px;" + "-fx-background-color: #DC2612;" + "-fx-font-weight: bold;"
+                        + "-fx-text-align: center;");
                 portList.setEditable(false);
                 out = chosenPort.getOutputStream();
             }
@@ -112,66 +120,63 @@ public class FXMLDocumentController implements Initializable {
         switch (key) {
             case UP: 
                 try {
-                   out.write('f');
+                out.write('f');
 
-              } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-            
             break;
             case DOWN: 
                 try {
-                    out.write('b');
-  
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);                
-                }
-            
+                out.write('b');
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             break;
             case LEFT: 
                 try {
-                    out.write('l');
+                out.write('l');
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             break;
             case RIGHT: 
                 try {
-                    out.write('r');
+                out.write('r');
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             break;
-            
+
             case S:
-                  sliderValue = sliderValue - 5;
-                    if (sliderValue < 0) {
-                        sliderValue = 0;
-                    }
-                    verticalSlider.setValue(sliderValue);
-                    spedometer.setValue((sliderValue * 50) / 255);
-                    rpmGauge.setValue((spedometer.getValue()/5)*(100/60));
- 
-            break;
+                sliderValue = sliderValue - 5;
+                if (sliderValue < 0) {
+                    sliderValue = 0;
+                }
+                verticalSlider.setValue(sliderValue);
+                spedometer.setValue((sliderValue * 50) / 255);
+                rpmGauge.setValue((spedometer.getValue() / 5) * (100 / 60));
+
+                break;
             case W:
-          
-                    sliderValue = sliderValue + 5;
-                    if (sliderValue > 255) {
-                        sliderValue = 255;
-                    }
-                    verticalSlider.setValue(sliderValue);
-                    spedometer.setValue((sliderValue * 50) / 255);
-                    rpmGauge.setValue((spedometer.getValue()/5)*(100/60));
-                    rpmGauge.setAverageColor(Color.DARKBLUE);
- 
-            break;
-            
-            
+                sliderValue = sliderValue + 5;
+                if (sliderValue > 255) {
+                    sliderValue = 255;
+                }
+                verticalSlider.setValue(sliderValue);
+                spedometer.setValue((sliderValue * 50) / 255);
+                rpmGauge.setValue((spedometer.getValue() / 5) * (100 / 60));
+                rpmGauge.setAverageColor(Color.DARKBLUE);
+
+                break;
+
         }
 
     }
@@ -191,6 +196,7 @@ public class FXMLDocumentController implements Initializable {
         // System.out.println(sliderValue + " ");
         //label1.setText(verticalSlider.getValue()+" ");
     }
+
     @FXML
     void AboutHandler(ActionEvent event) throws IOException {
         Parent nfxml = FXMLLoader.load(getClass().getResource("HelpScene.fxml"));
