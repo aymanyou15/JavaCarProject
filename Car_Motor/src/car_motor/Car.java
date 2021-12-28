@@ -20,7 +20,7 @@ public class Car extends Application{
      @Override
      public void start(Stage primaryStage) throws IOException {
        Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
-       primaryStage.initStyle(StageStyle.UNDECORATED);
+       primaryStage.initStyle(StageStyle.DECORATED);
        Scene scene=new Scene(root);
        
        primaryStage.setScene(scene);

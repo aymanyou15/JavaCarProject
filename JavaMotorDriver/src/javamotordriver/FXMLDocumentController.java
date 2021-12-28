@@ -13,10 +13,17 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -24,6 +31,7 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  *
@@ -45,7 +53,11 @@ public class FXMLDocumentController implements Initializable {
     public Slider verticalSlider;
     @FXML
     public Gauge spedometer;
-
+    
+    @FXML
+    public MenuBar menuBar;
+    @FXML
+    public MenuItem About;
     int x = 0;
 
     @Override
@@ -169,6 +181,13 @@ public class FXMLDocumentController implements Initializable {
         // System.out.println(sliderValue + " ");
         //label1.setText(verticalSlider.getValue()+" ");
     }
-    
+    @FXML
+    void AboutHandler(ActionEvent event) throws IOException {
+        Parent nfxml = FXMLLoader.load(getClass().getResource("HelpScene.fxml"));
+        Scene nc = new Scene(nfxml);
+        Stage ps = (Stage) menuBar.getScene().getWindow();
+        ps.setScene(nc);
+        ps.show();
+    }
 
 }
