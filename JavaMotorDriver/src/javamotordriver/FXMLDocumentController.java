@@ -6,6 +6,7 @@ package javamotordriver;
 
 import com.fazecast.jSerialComm.SerialPort;
 import eu.hansolo.medusa.Gauge;
+import eu.hansolo.medusa.Section;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
@@ -53,6 +54,8 @@ public class FXMLDocumentController implements Initializable {
     public Slider verticalSlider;
     @FXML
     public Gauge spedometer;
+    @FXML
+    public Gauge rpmGauge;
     
     @FXML
     public MenuBar menuBar;
@@ -65,6 +68,8 @@ public class FXMLDocumentController implements Initializable {
         // TODO
         spedometer.setNeedleColor(Color.RED);
         btn.setText("Start");
+        rpmGauge.setSectionsVisible(true);
+        rpmGauge.setSections(new Section(8, 10, Color.RED));
 
         // populate the drop-down box
         SerialPort[] portNames = SerialPort.getCommPorts();
@@ -73,6 +78,7 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    @FXML
     public void btnMouseClicked(MouseEvent mouseEvent) {
         if (btn.getText().equals("Start")) {
             // attempt to connect to the serial port
@@ -98,6 +104,7 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    @FXML
     public void onKeyPressed(KeyEvent event) {
         int sliderValue = (int) verticalSlider.getValue();
         // soliman's code
