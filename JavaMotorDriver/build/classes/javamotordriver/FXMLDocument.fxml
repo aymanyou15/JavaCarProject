@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -38,16 +37,7 @@
       </VBox>
       <StackPane layoutX="631.0" layoutY="383.0" prefHeight="269.0" prefWidth="253.0">
          <children>
-            <Gauge fx:id="rpmGauge" angleRange="270.0" animated="true" borderPaint="#07000000" customFontEnabled="true" focusTraversable="false" keepAspect="false" majorTickMarkLengthFactor="0.5" majorTickMarkWidthFactor="0.5" markersVisible="true" maxMeasuredValue="10.0" maxValue="10.0" mediumTickMarkWidthFactor="0.25" minMeasuredValue="0.0" minorTickMarkLengthFactor="0.35" minorTickMarkWidthFactor="0.125" needleSize="THIN" prefHeight="205.0" prefWidth="253.0" shadowsEnabled="true" threshold="6.0" tickMarkRingVisible="true" unit="RPS">
-               <backgroundPaint>
-                  <RadialGradient centerX="0.5170454545454546" centerY="0.5" focusAngle="47.49" radius="0.7804878048780488">
-                     <stops>
-                        <Stop color="#140d7900" />
-                        <Stop color="#140d7900" offset="0.007246376811594203" />
-                        <Stop color="WHITE" offset="1.0" />
-                     </stops>
-                  </RadialGradient>
-               </backgroundPaint>
+            <Gauge fx:id="rpmGauge" angleRange="270.0" animated="true" animationDuration="100" backgroundPaint="WHITE" borderPaint="#07000000" customFontEnabled="true" focusTraversable="false" keepAspect="false" majorTickMarkLengthFactor="0.5" majorTickMarkWidthFactor="0.5" markersVisible="true" maxMeasuredValue="10.0" maxValue="10.0" mediumTickMarkWidthFactor="0.25" minMeasuredValue="0.0" minorTickMarkLengthFactor="0.35" minorTickMarkWidthFactor="0.125" needleSize="THIN" prefHeight="205.0" prefWidth="253.0" shadowsEnabled="true" threshold="6.0" tickMarkRingVisible="true" unit="RPM *1000">
                <customFont>
                   <Font name="Roboto Bold" size="12.0" />
                </customFont>

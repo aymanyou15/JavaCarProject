@@ -65,11 +65,11 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // initialize gauges (speed and RPM)
         spedometer.setNeedleColor(Color.RED);
         btn.setText("Start");
         rpmGauge.setSectionsVisible(true);
-        rpmGauge.setSections(new Section(8, 10, Color.RED));
+        rpmGauge.setSections(new Section(8, 10, Color.RED), new Section(6, 8, Color.YELLOW));        
 
         // populate the drop-down box
         SerialPort[] portNames = SerialPort.getCommPorts();
@@ -155,6 +155,7 @@ public class FXMLDocumentController implements Initializable {
                     }
                     verticalSlider.setValue(sliderValue);
                     spedometer.setValue((sliderValue * 50) / 255);
+                    rpmGauge.setValue((spedometer.getValue()/5)*(100/60));
  
             break;
             case S:
@@ -165,6 +166,7 @@ public class FXMLDocumentController implements Initializable {
                     }
                     verticalSlider.setValue(sliderValue);
                     spedometer.setValue((sliderValue * 50) / 255);
+                    rpmGauge.setValue((spedometer.getValue()/5)*(100/60));
  
             break;
             
