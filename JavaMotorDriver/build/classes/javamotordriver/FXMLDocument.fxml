@@ -20,16 +20,20 @@
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <Rectangle arcHeight="5.0" arcWidth="10.0" height="705.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="1148.0">
          <fill>
-            <LinearGradient endX="0.8349514563106797" endY="0.3980582524271846" startX="0.6699029126213591">
+            <LinearGradient endX="0.616504854368932" endY="0.771844660194175" startX="0.4611650485436892" startY="0.3252427184466019">
                <stops>
-                  <Stop color="#1b1b1e" />
-                  <Stop color="#51505e" offset="0.514919011082694" />
-                  <Stop color="#292740" offset="1.0" />
+                  <Stop color="#0b0b22" />
+                  <Stop color="#0b0b22" offset="0.010869565217391304" />
+                  <Stop color="#3a3757" offset="0.18883205456095484" />
+                  <Stop color="#07074d" offset="0.4738562091503268" />
+                  <Stop color="#393756" offset="0.817277635691958" />
+                  <Stop color="#111121" offset="0.9963768115942029" />
+                  <Stop color="#0b0b21" offset="1.0" />
                </stops>
             </LinearGradient>
          </fill>
       </Rectangle>
-      <StackPane layoutX="631.0" layoutY="383.0" prefHeight="269.0" prefWidth="253.0">
+      <StackPane layoutX="587.0" layoutY="361.0" prefHeight="269.0" prefWidth="253.0">
          <children>
             <Gauge fx:id="rpmGauge" angleRange="270.0" animated="true" animationDuration="100" backgroundPaint="WHITE" borderPaint="#07000000" customFontEnabled="true" focusTraversable="false" keepAspect="false" majorTickMarkLengthFactor="0.5" majorTickMarkWidthFactor="0.5" markersVisible="true" maxMeasuredValue="10.0" maxValue="10.0" mediumTickMarkWidthFactor="0.25" minMeasuredValue="0.0" minorTickMarkLengthFactor="0.35" minorTickMarkWidthFactor="0.125" needleSize="THIN" prefHeight="205.0" prefWidth="253.0" shadowsEnabled="true" threshold="6.0" tickMarkRingVisible="true" unit="RPM *1000">
                <customFont>
@@ -46,7 +50,7 @@
             </Gauge>
          </children>
       </StackPane>
-      <StackPane layoutX="243.0" layoutY="200.0" prefHeight="366.0" prefWidth="419.0">
+      <StackPane layoutX="212.0" layoutY="200.0" prefHeight="366.0" prefWidth="419.0">
          <children>
             <Gauge fx:id="spedometer" animated="true" animationDuration="100" barColor="BLUE" maxMeasuredValueVisible="true" maxValue="50.0" minMeasuredValue="0.0" minMeasuredValueVisible="true" needleColor="RED" skinType="MODERN" subTitle="ITI" subTitleColor="RED" threshold="30.0" thresholdColor="RED" thresholdVisible="true" tickLabelColor="WHITE" tickLabelOrientation="ORTHOGONAL" tickMarkColor="BLUE" title="Speed" titleColor="WHITE" unit="Km / h" unitColor="WHITE" valueColor="WHITE" />
          </children>

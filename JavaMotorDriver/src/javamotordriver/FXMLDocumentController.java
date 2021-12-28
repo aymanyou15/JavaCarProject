@@ -148,7 +148,7 @@ public class FXMLDocumentController implements Initializable {
             
             break;
             
-            case B:
+            case S:
                   sliderValue = sliderValue - 5;
                     if (sliderValue < 0) {
                         sliderValue = 0;
@@ -158,7 +158,7 @@ public class FXMLDocumentController implements Initializable {
                     rpmGauge.setValue((spedometer.getValue()/5)*(100/60));
  
             break;
-            case S:
+            case W:
           
                     sliderValue = sliderValue + 5;
                     if (sliderValue > 255) {
@@ -167,6 +167,7 @@ public class FXMLDocumentController implements Initializable {
                     verticalSlider.setValue(sliderValue);
                     spedometer.setValue((sliderValue * 50) / 255);
                     rpmGauge.setValue((spedometer.getValue()/5)*(100/60));
+                    rpmGauge.setAverageColor(Color.DARKBLUE);
  
             break;
             
