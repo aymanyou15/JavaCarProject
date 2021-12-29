@@ -31,6 +31,7 @@ import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -58,6 +59,8 @@ public class FXMLDocumentController implements Initializable {
     public MenuBar menuBar;
     @FXML
     public MenuItem About;
+    @FXML
+    public MenuItem UserGuide;
     int x = 0;
 
     @Override
@@ -186,8 +189,21 @@ public class FXMLDocumentController implements Initializable {
         Parent nfxml = FXMLLoader.load(getClass().getResource("HelpScene.fxml"));
         Scene nc = new Scene(nfxml);
         Stage ps = (Stage) menuBar.getScene().getWindow();
-        ps.setScene(nc);
-        ps.show();
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.initOwner(ps);
+        popup.setScene(nc);
+        popup.show();
     }
-
+    @FXML
+    void UserGuideHandler(ActionEvent event) throws IOException {
+        Parent nfxml = FXMLLoader.load(getClass().getResource("UserGuide.fxml"));
+        Scene nc = new Scene(nfxml);
+        Stage ps = (Stage) menuBar.getScene().getWindow();
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.initOwner(ps);
+        popup.setScene(nc);
+        popup.show();
+    }
 }

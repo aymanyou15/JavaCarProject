@@ -4,12 +4,18 @@
  */
 package javamotordriver;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -28,13 +34,19 @@ public class HelpSceneController implements Initializable {
         // TODO
     }    
     @FXML
-    void CloseHandler(MouseEvent event) {
-
+    void CloseHandler(MouseEvent event) throws IOException {
+        Stage ps = (Stage)closeButton.getScene().getWindow();
+        ps.close();
     }
 
     @FXML
-    void UserGuideHandler(MouseEvent event) {
+    void UserGuideHandler(MouseEvent event) throws IOException {
+        Parent nfxml = FXMLLoader.load(getClass().getResource("UserGuide.fxml"));
+        Scene nc = new Scene(nfxml);
+        Stage ps = (Stage) userGuideButton.getScene().getWindow();
 
+        ps.setScene(nc);
+        ps.show();
     }
     
 }
