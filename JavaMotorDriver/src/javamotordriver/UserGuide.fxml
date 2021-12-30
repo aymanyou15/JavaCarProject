@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="700.0" style="-fx-background-color: #3385ff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.UserGuideController">
+   <children>
+      <Text fill="WHITE" layoutX="466.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shortcut Keys" AnchorPane.leftAnchor="466.0" AnchorPane.topAnchor="30.41796875">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="416.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Up key               -                 Forward" AnchorPane.leftAnchor="416.0" AnchorPane.topAnchor="79.892578125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="414.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Down key          -               Backward" AnchorPane.topAnchor="109.892578125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="414.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Right key           -            Move Right" AnchorPane.topAnchor="139.892578125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="413.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Left key             -               Move Left" AnchorPane.topAnchor="169.892578125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="414.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S                       -               Speed Up" AnchorPane.topAnchor="199.892578125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="414.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B                       -           Speed Down" AnchorPane.topAnchor="230.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="132.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quick Start">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="60.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Select the port that the device is connected to from the available ports" wrappingWidth="241.68066704273224">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="60.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Press Start" wrappingWidth="241.68066704273224">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#cccccc" layoutX="60.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Move the Car using arrows and change the speed" wrappingWidth="241.68066704273224">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Line endX="82.0" endY="261.5" layoutX="268.0" layoutY="51.0" startX="82.0" startY="-56.0" stroke="WHITE" />
+   </children>
+</AnchorPane>
