@@ -5,10 +5,12 @@
 package javamotordriver;
 
 import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortInvalidPortException;
 import eu.hansolo.medusa.Gauge;
 import java.awt.Image;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -22,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
@@ -37,7 +40,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 public class FXMLDocumentController implements Initializable {
 
     AnchorPane anchor;
@@ -50,12 +52,12 @@ public class FXMLDocumentController implements Initializable {
     Scanner in;
     @FXML
     public ComboBox portList;
-   
+
     @FXML
     public Gauge spedometer;
-     @FXML
+    @FXML
     private Gauge rpm;
-     @FXML
+    @FXML
     private Slider hSlider;
     @FXML
     private Gauge feul;
@@ -66,7 +68,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ImageView img;
     int x = 0;
-    @FXML private MediaView mv;
+    @FXML
+    private MediaView mv;
     MediaPlayer mp;
     Media me;
     @FXML
@@ -75,6 +78,10 @@ public class FXMLDocumentController implements Initializable {
     public MenuItem About;
     @FXML
     public MenuItem UserGuide;
+    @FXML
+    public Menu helpMenu;
+    @FXML
+    public Menu comMenu;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -94,35 +101,37 @@ public class FXMLDocumentController implements Initializable {
         btn.setText("Start");
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
                 + "-fx-text-align: center;");
-        
-        hSlider.setStyle( "-fx-control-inner-background: #293d3d;" );
-        
 
+        hSlider.setStyle("-fx-control-inner-background: #293d3d;");
+        helpMenu.setStyle("-fx-font-weight: bold;");
+        comMenu.setStyle("-fx-font-weight: bold;");
         // populate the drop-down box
         SerialPort[] portNames = SerialPort.getCommPorts();
         for (SerialPort portName : portNames) {
             portList.getItems().addAll(portName.getSystemPortName());
-            
-        
-        
-       /* hSlider.setValue(mp.getVolume() * 100); // 1.0 = max 0.0 = min
+                   
+            /* hSlider.setValue(mp.getVolume() * 100); // 1.0 = max 0.0 = min
         hSlider.valueProperty().addListener((Observable observable) -> {
             mp.setVolume(hSlider.getValue() / 100);
             });*/
-        
         }
     }
-                
+
 
     public void btnMouseClicked(MouseEvent mouseEvent) {
         if (btn.getText().equals("Start")) {
             // attempt to connect to the serial port
-            chosenPort = SerialPort.getCommPort(portList.getValue().toString());
-            chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
-            if (chosenPort.openPort()) {
-                btn.setText("End");
-                portList.setEditable(false);
-                out = chosenPort.getOutputStream();
+            try {
+                chosenPort = SerialPort.getCommPort(portList.getValue().toString());
+                chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
+
+                if (chosenPort.openPort()) {
+                    btn.setText("End");
+                    portList.setEditable(false);
+                    out = chosenPort.getOutputStream();
+                }
+            } catch (NullPointerException ex) {
+
             }
 
         } else {
@@ -142,67 +151,69 @@ public class FXMLDocumentController implements Initializable {
     public void onKeyPressed(KeyEvent event) {
         int sliderValue = (int) hSlider.getValue();
         // soliman's code
-        key = event.getCode();
+        try {
+            key = event.getCode();
+        } catch (NullPointerException ex) {
+
+        }
         switch (key) {
             case UP: 
                 try {
-                   out.write('f');
+                out.write('f');
 
-              } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-            
             break;
             case DOWN: 
                 try {
-                    out.write('b');
-  
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);                
-                }
-            
+                out.write('b');
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             break;
             case LEFT: 
                 try {
-                    out.write('l');
+                out.write('l');
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             break;
             case RIGHT: 
                 try {
-                    out.write('r');
+                out.write('r');
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             break;
-            
-            case B:
-                  sliderValue = sliderValue - 5;
-                    if (sliderValue < 0) {
-                        sliderValue = 0;
-                    }
-                    hSlider.setValue(sliderValue);
-                    spedometer.setValue((sliderValue * 50) / 255);
- 
-            break;
+
             case S:
-          
-                    sliderValue = sliderValue + 5;
-                    if (sliderValue > 255) {
-                        sliderValue = 255;
-                    }
-                    hSlider.setValue(sliderValue);
-                    spedometer.setValue((sliderValue * 50) / 255);
- 
-            break;
-            
-            
+                sliderValue = sliderValue - 5;
+                if (sliderValue < 0) {
+                    sliderValue = 0;
+                }
+                hSlider.setValue(sliderValue);
+                spedometer.setValue((sliderValue * 50) / 255);
+
+                break;
+            case W:
+
+                sliderValue = sliderValue + 5;
+                if (sliderValue > 255) {
+                    sliderValue = 255;
+                }
+                hSlider.setValue(sliderValue);
+                spedometer.setValue((sliderValue * 50) / 255);
+
+                break;
+
         }
 
     }
@@ -218,27 +229,22 @@ public class FXMLDocumentController implements Initializable {
 
         //value to be sent to the Ardiuno 
         int ArdiunoSpeedValue = sliderValue * (-1);
-        
-         //value to be sent to the RPM guage   (RPM = %duty-cycle * 5.5) 
-         //duty-cycle=slidervalue/1(s)*100
+
+        //value to be sent to the RPM guage   (RPM = %duty-cycle * 5.5) 
+        //duty-cycle=slidervalue/1(s)*100
         float RPMValue = (float) ((sliderValue * 5.5) / 60);
         rpm.setValue(RPMValue);
-        
-        //value to be sent to the Feul consumption 
-        int feulValue = sliderValue/10 ;
-        feul.setValue(feulValue);
-        
-        //value to be sent to the Feul consumption 
-        int heatValue =  sliderValue/10 ;
-       heat.setValue(heatValue);
-       
-        
-       /* mp.play();
-        mp.setRate(1);*/
 
-        // System.out.println(sliderValue + " ");
-        //label1.setText(verticalSlider.getValue()+" ");
+        //value to be sent to the Feul consumption 
+        int feulValue = sliderValue / 10;
+        feul.setValue(feulValue);
+
+        //value to be sent to the Feul consumption 
+        int heatValue = sliderValue / 10;
+        heat.setValue(heatValue);
+
     }
+
     @FXML
     void AboutHandler(ActionEvent event) throws IOException {
         Parent nfxml = FXMLLoader.load(getClass().getResource("HelpScene.fxml"));
@@ -250,6 +256,7 @@ public class FXMLDocumentController implements Initializable {
         popup.setScene(nc);
         popup.show();
     }
+
     @FXML
     void UserGuideHandler(ActionEvent event) throws IOException {
         Parent nfxml = FXMLLoader.load(getClass().getResource("UserGuide.fxml"));
