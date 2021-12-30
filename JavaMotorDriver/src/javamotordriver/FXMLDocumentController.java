@@ -254,6 +254,7 @@ public class FXMLDocumentController implements Initializable {
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initOwner(ps);
         popup.setScene(nc);
+        popup.setResizable(false);
         popup.show();
     }
 
@@ -266,6 +267,7 @@ public class FXMLDocumentController implements Initializable {
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initOwner(ps);
         popup.setScene(nc);
+        popup.setResizable(false);
         popup.show();
     }
 }
