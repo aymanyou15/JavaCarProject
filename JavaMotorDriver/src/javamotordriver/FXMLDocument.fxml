@@ -205,7 +205,7 @@
             <Image url="@../images/illustration-car-dashboard-panel-speedometer-260nw-1697704057.jpg" />
          </image>
       </ImageView>
-      <MenuBar fx:id="menuBar" layoutX="-2.0" opacity="0.91" prefHeight="45.0" prefWidth="1348.0" stylesheets="@styling.css">
+      <MenuBar fx:id="menuBar" layoutX="-2.0" opacity="0.91" prefHeight="56.0" prefWidth="1348.0" stylesheets="@styling.css">
          <menus>
             <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
                <items>

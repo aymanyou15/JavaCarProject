@@ -103,8 +103,8 @@ public class FXMLDocumentController implements Initializable {
                 + "-fx-text-align: center;");
 
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
-        helpMenu.setStyle("-fx-font-weight: bold;");
-        comMenu.setStyle("-fx-font-weight: bold;");
+        helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
+        comMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
         // populate the drop-down box
         SerialPort[] portNames = SerialPort.getCommPorts();
         for (SerialPort portName : portNames) {
