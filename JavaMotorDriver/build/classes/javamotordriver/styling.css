@@ -1,0 +1,37 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 29, 2021, 10:24:44 PM
+    Author     : DELL
+*/
+
+.menu-bar {
+    /*-fx-base: -dark-black;
+    -fx-font-size: 12pt;
+    -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-base,-30%), derive(-fx-base,-60%)),
+        linear-gradient(to bottom, -light-black 2%, -dark-black 98%);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: .9em 0.416667em .9em 0.416667em;
+    -fx-effect: dropshadow(two-pass-box,black,5,.2,0,0);*/
+     -fx-background-color: rgba(41, 61, 61, 0.4);
+}
+.menu {
+    -fx-label-padding: 6px;
+}
+.menu .label, .menu-item .label {
+    -fx-text-fill: #eee;
+}
+.menu:focused, .menu:pressed {
+    -fx-background-color: rgba(41, 61, 61, 0.4);
+}
+.menu-item:hover .menu:focused{
+    -fx-background-color: rgba(41, 61, 61, 0.4);
+}
+.context-menu {
+    -fx-background-color: rgba(41, 61, 61, 0.4);
+}
+
+
