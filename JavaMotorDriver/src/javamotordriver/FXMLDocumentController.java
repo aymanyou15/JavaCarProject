@@ -211,7 +211,10 @@ public class FXMLDocumentController implements Initializable {
                 hSlider.setValue(sliderValue);
                 spedometer.setValue((sliderValue * 50) / 255);
                 try {
-                        out.write(sliderValue + 200);
+                        if(sliderValue != 'f' || sliderValue != 'b' || sliderValue != 'l' || sliderValue != 'r' || sliderValue != 's')
+                        {
+                            out.write(sliderValue);
+                        }
 
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -229,7 +232,10 @@ public class FXMLDocumentController implements Initializable {
                 hSlider.setValue(sliderValue);
                 spedometer.setValue((sliderValue * 50) / 255);
                 try {
-                        out.write(sliderValue + 200);
+                        if(sliderValue != 'f' || sliderValue != 'b' || sliderValue != 'l' || sliderValue != 'r' || sliderValue != 's')
+                        {
+                            out.write(sliderValue);
+                        }
 
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
