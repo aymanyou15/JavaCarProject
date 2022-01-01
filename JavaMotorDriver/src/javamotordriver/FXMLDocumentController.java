@@ -86,17 +86,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        //spedometer.setNeedleColor(Color.RED);
-        /*String path = new File("test.mp4").getAbsolutePath();
-        
-        me = new Media(new File(path).toURI().toString());
-        mp = new MediaPlayer(me);
-        mv.setMediaPlayer(mp);
-        //mp.setAutoPlay(true);
-        DoubleProperty width = mv.fitWidthProperty();
-        DoubleProperty height = mv.fitHeightProperty();
-        width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
-        height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));*/
+
         btn.setShape(new Circle(100));
         btn.setText("Start");
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
@@ -109,14 +99,9 @@ public class FXMLDocumentController implements Initializable {
         SerialPort[] portNames = SerialPort.getCommPorts();
         for (SerialPort portName : portNames) {
             portList.getItems().addAll(portName.getSystemPortName());
-                   
-            /* hSlider.setValue(mp.getVolume() * 100); // 1.0 = max 0.0 = min
-        hSlider.valueProperty().addListener((Observable observable) -> {
-            mp.setVolume(hSlider.getValue() / 100);
-            });*/
+
         }
     }
-
 
     public void btnMouseClicked(MouseEvent mouseEvent) {
         if (btn.getText().equals("Start")) {
@@ -191,6 +176,15 @@ public class FXMLDocumentController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            break;
+
+            case E: 
+                try {
+                out.write('e');
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             break;
 
@@ -201,17 +195,28 @@ public class FXMLDocumentController implements Initializable {
                 }
                 hSlider.setValue(sliderValue);
                 spedometer.setValue((sliderValue * 50) / 255);
+                try {
+                        out.write(sliderValue + 200);
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
                 break;
             case W:
 
-                sliderValue = sliderValue + 5;
+                sliderValue = sliderValue + 5 ;
                 if (sliderValue > 255) {
                     sliderValue = 255;
                 }
                 hSlider.setValue(sliderValue);
                 spedometer.setValue((sliderValue * 50) / 255);
+                try {
+                        out.write(sliderValue + 200);
 
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 break;
 
         }
