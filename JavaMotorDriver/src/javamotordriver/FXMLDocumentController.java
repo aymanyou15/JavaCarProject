@@ -82,6 +82,8 @@ public class FXMLDocumentController implements Initializable {
     public Menu helpMenu;
     @FXML
     public Menu comMenu;
+    
+    int commValue = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -117,6 +119,9 @@ public class FXMLDocumentController implements Initializable {
                     portList.setEditable(false);
                     out = chosenPort.getOutputStream();
                 }
+                else {
+                    System.out.println("hhhhhhhhhhhhhh");
+                }
             } catch (NullPointerException ex) {
 
             }
@@ -139,123 +144,78 @@ public class FXMLDocumentController implements Initializable {
 
     public void onKeyPressed(KeyEvent event) {
         int sliderValue = (int) hSlider.getValue();
+        float RPMValue;
+        hSlider.setFocusTraversable(false);
+        portList.setFocusTraversable(false);
         // soliman's code
         try {
             key = event.getCode();
         } catch (NullPointerException ex) {
 
         }
-        switch (key) {
-            
-            /* up direction */
-            case UP: 
-                try {
-                out.write('f');
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            break;
-            
-            /* down directiton */
-            case DOWN: 
-                try {
-                out.write('b');
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            break;
-            
-            /* left direction */
-            case LEFT: 
-                try {
-                out.write('l');
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            break;
-            
-            /* right direction */
-            case RIGHT: 
-                try {
-                out.write('r');
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            break;
-            
-            /* the buzzre */
-            case E: 
-                try {
-                out.write('e');
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            break;
-            
-                
-            /* increase the speed */
-            case S:
-                sliderValue = sliderValue - 5;
-                if (sliderValue < 0) {
-                    sliderValue = 0;
-                }
-                hSlider.setValue(sliderValue);
-                spedometer.setValue((sliderValue * 50) / 255);
-                try {
-                        if(sliderValue != 'f' || sliderValue != 'b' || sliderValue != 'l' || sliderValue != 'r' || sliderValue != 's')
-                        {
-                            out.write(sliderValue);
-                        }
-
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                break;
-                
-            /* decrease the speed */ 
-            case W:
-
-                sliderValue = sliderValue + 5 ;
-                if (sliderValue > 255) {
-                    sliderValue = 255;
-                }
-                hSlider.setValue(sliderValue);
-                spedometer.setValue((sliderValue * 50) / 255);
-                try {
-                        if(sliderValue != 'f' || sliderValue != 'b' || sliderValue != 'l' || sliderValue != 'r' || sliderValue != 's')
-                        {
-                            out.write(sliderValue);
-                        }
-
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                break;
-
+        
+        if (key == KeyCode.UP){
+            commValue = (int) (0 + (sliderValue/12.75)); 
         }
-
+        
+        if (key == KeyCode.DOWN){
+            commValue = (int) (22 + (sliderValue/12.75)); 
+        }
+        
+        if (key == KeyCode.LEFT){
+            commValue = (int) (44 + (sliderValue/12.75)); 
+        }
+        
+        if (key == KeyCode.RIGHT){
+            commValue = (int) (66 + (sliderValue/12.75)); 
+        }
+        
+        if (key == KeyCode.W){
+            sliderValue = sliderValue + 5;
+            if (sliderValue < 0) {
+                sliderValue = 0;
+            }
+            else if(sliderValue > 255){
+                sliderValue = 255;
+            }
+            hSlider.setValue(sliderValue);
+            spedometer.setValue((sliderValue * 50) / 255);
+            RPMValue = (float) ((sliderValue * 5.5) / 60);
+            rpm.setValue(RPMValue);
+        }
+        
+        if (key == KeyCode.S){
+            sliderValue = sliderValue - 5;
+            if (sliderValue < 0) {
+                sliderValue = 0;
+            }
+            else if(sliderValue > 255){
+                sliderValue = 255;
+            }
+            hSlider.setValue(sliderValue);
+            spedometer.setValue((sliderValue * 50) / 255);
+            RPMValue = (float) ((sliderValue * 5.5) / 60);
+            rpm.setValue(RPMValue);
+        }
+        
+        try {
+            out.write(commValue);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
     }
     
     @FXML
     void onKeyReleased(KeyEvent event) {
-        if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT){
+        
             try {
-                out.write('s');
+                out.write(205);
 
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        
     }
 
     @FXML
@@ -266,9 +226,6 @@ public class FXMLDocumentController implements Initializable {
         //value to be sent to the Spedo Meter  
         float SpedoMeterValue = (float) (sliderValue * 50) / 255;
         spedometer.setValue(SpedoMeterValue);
-
-        //value to be sent to the Ardiuno 
-        int ArdiunoSpeedValue = sliderValue * (-1);
 
         //value to be sent to the RPM guage   (RPM = %duty-cycle * 5.5) 
         //duty-cycle=slidervalue/1(s)*100

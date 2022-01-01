@@ -15,7 +15,7 @@
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" prefHeight="701.0" prefWidth="1279.0" stylesheets="styling.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="701.0" prefWidth="1279.0" stylesheets="styling.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
     <children>
       <ImageView fitHeight="769.0" fitWidth="1353.0" layoutX="-3.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -29,7 +29,7 @@
             <Image url="@../images/10%20-%20Copy.jpg" />
          </image>
       </ImageView>
-      <Gauge fx:id="rpm" borderPaint="#1e1e1e00" layoutX="97.0" layoutY="126.0" maxValue="25.0" prefHeight="437.0" prefWidth="506.0" skinType="MODERN" subTitle="ITI" threshold="17.5" thresholdVisible="true" title="X1000 RPM">
+      <Gauge fx:id="rpm" animated="true" animationDuration="100" borderPaint="#1e1e1e00" layoutX="97.0" layoutY="126.0" maxValue="25.0" prefHeight="437.0" prefWidth="506.0" skinType="MODERN" subTitle="ITI" threshold="17.5" thresholdVisible="true" title="X1000 RPM">
          <needleColor>
             <Color blue="0.06627680361270905" green="0.06627680361270905" red="0.8947368264198303" />
          </needleColor>
