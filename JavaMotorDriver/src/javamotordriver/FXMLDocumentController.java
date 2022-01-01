@@ -131,6 +131,8 @@ public class FXMLDocumentController implements Initializable {
             }
             portList.setEditable(true);
             btn.setText("Start");
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
+                + "-fx-text-align: center;");
 
         }
     }
