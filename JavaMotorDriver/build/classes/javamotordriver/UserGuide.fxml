@@ -63,5 +63,6 @@
          </font>
       </Text>
       <Line endX="82.0" endY="261.5" layoutX="268.0" layoutY="51.0" startX="82.0" startY="-56.0" stroke="WHITE" />
+      <Text fill="#cccccc" layoutX="413.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E                       -                    buzzer" />
    </children>
 </AnchorPane>
