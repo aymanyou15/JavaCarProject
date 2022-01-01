@@ -23,7 +23,7 @@
          </image>
       </ImageView>
       <ComboBox fx:id="portList" focusTraversable="false" layoutX="45.0" layoutY="63.0" prefWidth="150.0" />
-      <Button fx:id="btn" focusTraversable="false" layoutX="636.0" layoutY="574.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" onMouseEntered="#btnOnMouseEntered" text="Start" />
+      <Button fx:id="btn" focusTraversable="false" layoutX="636.0" layoutY="574.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" onMouseEntered="#btnOnMouseEntered" onMouseExited="#btnOnMouseExited" text="Start" />
       <ImageView fitHeight="525.0" fitWidth="323.0" layoutX="86.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/10%20-%20Copy.jpg" />

@@ -5,12 +5,10 @@
 package javamotordriver;
 
 import com.fazecast.jSerialComm.SerialPort;
-import com.fazecast.jSerialComm.SerialPortInvalidPortException;
 import eu.hansolo.medusa.Gauge;
 import java.awt.Image;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -22,6 +20,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
@@ -120,7 +120,11 @@ public class FXMLDocumentController implements Initializable {
                     out = chosenPort.getOutputStream();
                 }
                 else {
-                    System.out.println("hhhhhhhhhhhhhh");
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText(null);
+                    alert.setContentText("please, check your device");
+                    alert.show();
                 }
             } catch (NullPointerException ex) {
 
@@ -200,7 +204,7 @@ public class FXMLDocumentController implements Initializable {
         
         try {
             out.write(commValue);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
      
@@ -212,7 +216,7 @@ public class FXMLDocumentController implements Initializable {
             try {
                 out.write(205);
 
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
         
@@ -266,5 +270,33 @@ public class FXMLDocumentController implements Initializable {
         popup.setScene(nc);
         popup.setResizable(false);
         popup.show();
+    }
+    
+    
+      @FXML
+    void btnOnMouseEntered(MouseEvent event) {
+        if (btn.getText().equals("Start")){
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #00B200;" + "-fx-font-weight: bold;"
+                           + "-fx-text-align: center;");
+        }
+        
+        else if (btn.getText().equals("End")){
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #FF0000;" + "-fx-font-weight: bold;"
+                           + "-fx-text-align: center;");
+        }
+    }
+
+    @FXML
+    void btnOnMouseExited(MouseEvent event) {
+        if (btn.getText().equals("Start")){
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
+                           + "-fx-text-align: center;");
+        }
+        
+        else if (btn.getText().equals("End")){
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
+                           + "-fx-text-align: center;");
+        }
+
     }
 }
