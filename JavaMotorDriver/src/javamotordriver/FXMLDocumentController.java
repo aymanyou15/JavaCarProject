@@ -112,6 +112,8 @@ public class FXMLDocumentController implements Initializable {
 
                 if (chosenPort.openPort()) {
                     btn.setText("End");
+                    btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
+                                  + "-fx-text-align: center;");
                     portList.setEditable(false);
                     out = chosenPort.getOutputStream();
                 }
@@ -142,6 +144,8 @@ public class FXMLDocumentController implements Initializable {
 
         }
         switch (key) {
+            
+            /* up direction */
             case UP: 
                 try {
                 out.write('f');
@@ -151,6 +155,8 @@ public class FXMLDocumentController implements Initializable {
             }
 
             break;
+            
+            /* down directiton */
             case DOWN: 
                 try {
                 out.write('b');
@@ -160,6 +166,8 @@ public class FXMLDocumentController implements Initializable {
             }
 
             break;
+            
+            /* left direction */
             case LEFT: 
                 try {
                 out.write('l');
@@ -169,6 +177,8 @@ public class FXMLDocumentController implements Initializable {
             }
 
             break;
+            
+            /* right direction */
             case RIGHT: 
                 try {
                 out.write('r');
@@ -177,7 +187,8 @@ public class FXMLDocumentController implements Initializable {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
-
+            
+            /* the buzzre */
             case E: 
                 try {
                 out.write('e');
@@ -187,7 +198,9 @@ public class FXMLDocumentController implements Initializable {
             }
 
             break;
-
+            
+                
+            /* increase the speed */
             case S:
                 sliderValue = sliderValue - 5;
                 if (sliderValue < 0) {
@@ -203,6 +216,8 @@ public class FXMLDocumentController implements Initializable {
                     }
 
                 break;
+                
+            /* decrease the speed */ 
             case W:
 
                 sliderValue = sliderValue + 5 ;
@@ -221,6 +236,18 @@ public class FXMLDocumentController implements Initializable {
 
         }
 
+    }
+    
+    @FXML
+    void onKeyReleased(KeyEvent event) {
+        if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT){
+            try {
+                out.write('s');
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @FXML
