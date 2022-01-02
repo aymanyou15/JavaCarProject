@@ -202,6 +202,10 @@ public class FXMLDocumentController implements Initializable {
             rpm.setValue(RPMValue);
         }
         
+        if (key == KeyCode.E){
+            commValue += 100;
+        }
+        
         try {
             out.write(commValue);
         } catch (Exception ex) {
@@ -212,14 +216,23 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     void onKeyReleased(KeyEvent event) {
+        try{
+            key = event.getCode();
+        } catch (NullPointerException ex){
+            
+        }
         
+        if (key == KeyCode.E){
+            commValue -= 100;
+        }
+        else{
             try {
                 out.write(205);
 
             } catch (Exception ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+        }
     }
 
     @FXML
