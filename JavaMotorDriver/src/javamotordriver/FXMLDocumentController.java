@@ -40,8 +40,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -89,9 +91,20 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public Menu comMenu;
     @FXML
-    private Line line;
-
+    private Line line;    
     Timeline timeline;
+    
+    @FXML
+    private Polygon upArrow;
+
+    @FXML
+    private Polygon downArrow;
+
+    @FXML
+    private Polygon rightArrow;
+
+    @FXML
+    private Polygon leftArrow;
 
     int commValue = 0;
 
@@ -114,11 +127,10 @@ public class FXMLDocumentController implements Initializable {
         SerialPort[] portNames = SerialPort.getCommPorts();
         for (SerialPort portName : portNames) {
             portList.getItems().addAll(portName.getSystemPortName());
-
-        }
+        }        
     }
 
-    public void btnMouseClicked(MouseEvent mouseEvent) {
+    public void btnMouseClicked(MouseEvent mouseEvent) {        
         if (btn.getText().equals("Start")) {
             // attempt to connect to the serial port
             try {
@@ -212,18 +224,34 @@ public class FXMLDocumentController implements Initializable {
 
         if (key == KeyCode.UP) {
             commValue = (int) (0 + (sliderValue / 12.75));
+            upArrow.setStyle("-fx-fill: #099c11;");
+            downArrow.setStyle("-fx-fill: #060d39;");
+            rightArrow.setStyle("-fx-fill: #060d39;");
+            leftArrow.setStyle("-fx-fill: #060d39;");
         }
 
         if (key == KeyCode.DOWN) {
             commValue = (int) (22 + (sliderValue / 12.75));
+            downArrow.setStyle("-fx-fill: #099c11;");
+            upArrow.setStyle("-fx-fill: #060d39;");
+            rightArrow.setStyle("-fx-fill: #060d39;");
+            leftArrow.setStyle("-fx-fill: #060d39;");
         }
 
         if (key == KeyCode.LEFT) {
             commValue = (int) (44 + (sliderValue / 12.75));
+            leftArrow.setStyle("-fx-fill: #099c11;");
+            downArrow.setStyle("-fx-fill: ##060d39;");
+            rightArrow.setStyle("-fx-fill: ##060d39;");
+            upArrow.setStyle("-fx-fill: ##060d39;");
         }
 
         if (key == KeyCode.RIGHT) {
             commValue = (int) (66 + (sliderValue / 12.75));
+            rightArrow.setStyle("-fx-fill: #099c11;");
+            downArrow.setStyle("-fx-fill: #060d39;");
+            upArrow.setStyle("-fx-fill: #060d39;");
+            leftArrow.setStyle("-fx-fill: #060d39;");
         }
 
         if (key == KeyCode.W) {
@@ -270,6 +298,11 @@ public class FXMLDocumentController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Please, connect the arduino first");
             alert.show();
+            
+            rightArrow.setStyle("-fx-fill: #060d39;");
+            downArrow.setStyle("-fx-fill: #060d39;");
+            upArrow.setStyle("-fx-fill: #060d39;");
+            leftArrow.setStyle("-fx-fill: #060d39;");
         }
 
     }
@@ -287,6 +320,10 @@ public class FXMLDocumentController implements Initializable {
         } else {
             try {
                 out.write(205);
+                upArrow.setStyle("-fx-background-color: #060d39;");
+                downArrow.setStyle("-fx-background-color: ##060d39;");
+                rightArrow.setStyle("-fx-background-color: ##060d39;");
+                leftArrow.setStyle("-fx-background-color: ##060d39;");
 
             } catch (Exception ex) {
 
