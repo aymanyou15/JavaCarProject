@@ -90,6 +90,7 @@ public class FXMLDocumentController implements Initializable {
     public Menu comMenu;
     @FXML
     private Line line;
+    Timeline timeline;
     
     int commValue = 0;
 
@@ -118,53 +119,52 @@ public class FXMLDocumentController implements Initializable {
     public void btnMouseClicked(MouseEvent mouseEvent) {
         if (btn.getText().equals("Start")) {
             // attempt to connect to the serial port
-            try {
-                final double maxOffset = 
-                line.getStrokeDashArray().stream()
-                        .reduce(
-                                0d, 
-                                (a, b) -> a + b
-                        );
-
-                Timeline timeline = new Timeline(
-                new KeyFrame(
-                        Duration.ZERO, 
-                        new KeyValue(
-                                line.strokeDashOffsetProperty(), 
-                                0, 
-                                Interpolator.LINEAR
-                        )
-                ),
-                new KeyFrame(
-                        Duration.seconds(1), 
-                        new KeyValue(
-                                line.strokeDashOffsetProperty(), 
-                                maxOffset, 
-                                Interpolator.LINEAR
-                        )
-                )
-        );
-       // timeline.setAutoReverse(true);
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        
-        timeline.play();
-        
+            try {                        
                 chosenPort = SerialPort.getCommPort(portList.getValue().toString());
                 chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
 
                 if (chosenPort.openPort()) {
-                    btn.setText("End");
-                    btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
-                                  + "-fx-text-align: center;");
-                    portList.setEditable(false);
-                    out = chosenPort.getOutputStream();
-                    //timeline.stop();
+                    final double maxOffset = 
+                    line.getStrokeDashArray().stream()
+                            .reduce(
+                                    0d, 
+                                    (a, b) -> a + b
+                            );
+
+                    timeline = new Timeline(
+                    new KeyFrame(
+                            Duration.ZERO, 
+                            new KeyValue(
+                                    line.strokeDashOffsetProperty(), 
+                                    0, 
+                                    Interpolator.LINEAR
+                            )
+                    ),
+                    new KeyFrame(
+                            Duration.seconds(1), 
+                            new KeyValue(
+                                    line.strokeDashOffsetProperty(), 
+                                    maxOffset, 
+                                    Interpolator.LINEAR
+                            )
+                    )
+            );
+           // timeline.setAutoReverse(true);
+            timeline.setCycleCount(Timeline.INDEFINITE);
+
+            timeline.play();
+            btn.setText("End");
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
+                          + "-fx-text-align: center;");
+            portList.setEditable(false);
+            out = chosenPort.getOutputStream();
+            //timeline.stop();
                 }
                 else {
                     Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Warning");
                     alert.setHeaderText(null);
-                    alert.setContentText("please, check your device");
+                    alert.setContentText("please, check your bluetooth connection");
                     alert.show();
                 }
 
@@ -184,6 +184,7 @@ public class FXMLDocumentController implements Initializable {
             btn.setText("Start");
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
                 + "-fx-text-align: center;");
+            timeline.stop();
 
         }
     }
@@ -249,9 +250,19 @@ public class FXMLDocumentController implements Initializable {
         }
         
         try {
-            out.write(commValue);
+            if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.RIGHT || key == KeyCode.LEFT 
+                    || key == KeyCode.E || key == KeyCode.W || key == KeyCode.S){
+                
+                out.write(commValue);
+            }
         } catch (Exception ex) {
-            
+            // handle the null pointer exception
+            // the exception is occured if the keys are pressed and there is no stable connection
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please, connect the arduino first");
+            alert.show();
         }
      
     }
@@ -272,7 +283,7 @@ public class FXMLDocumentController implements Initializable {
                 out.write(205);
 
             } catch (Exception ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         }
     }
