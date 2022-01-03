@@ -14,8 +14,9 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="701.0" prefWidth="1279.0" stylesheets="styling.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="701.0" prefWidth="1279.0" stylesheets="styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
     <children>
       <ImageView fitHeight="769.0" fitWidth="1353.0" layoutX="-3.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -31,43 +32,43 @@
       </ImageView>
       <Gauge fx:id="rpm" animated="true" animationDuration="100" borderPaint="#1e1e1e00" layoutX="97.0" layoutY="126.0" maxValue="25.0" prefHeight="437.0" prefWidth="506.0" skinType="MODERN" subTitle="ITI" threshold="17.5" thresholdVisible="true" title="X1000 RPM">
          <needleColor>
-            <Color blue="0.06627680361270905" green="0.06627680361270905" red="0.8947368264198303" />
+            <Color red="0.8947368264198303" green="0.06627680361270905" blue="0.06627680361270905" />
          </needleColor>
          <backgroundPaint>
             <LinearGradient endX="1.0" endY="1.0" startX="0.9099526066350712" startY="0.8104265402843602">
                <stops>
                   <Stop>
                      <color>
-                        <Color blue="0.07419590651988983" green="0.07419590651988983" red="0.07894736528396606" />
+                        <Color red="0.07894736528396606" green="0.07419590651988983" blue="0.07419590651988983" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color blue="0.07565789669752121" green="0.07565789669752121" opacity="0.0" red="0.07894736528396606" />
+                        <Color red="0.07894736528396606" green="0.07565789669752121" blue="0.07565789669752121" opacity="0.0" />
                      </color>
                   </Stop>
                </stops>
             </LinearGradient>
          </backgroundPaint>
          <barBackgroundColor>
-            <Color blue="0.8100000023841858" green="0.7037152051925659" red="0.25110000371932983" />
+            <Color red="0.25110000371932983" green="0.7037152051925659" blue="0.8100000023841858" />
          </barBackgroundColor>
          <barColor>
-            <Color blue="1.0" green="1.0" red="1.0" />
+            <Color red="1.0" green="1.0" blue="1.0" />
          </barColor>
          <subTitleColor>
-            <Color blue="0.04325048625469208" green="0.04325048625469208" red="0.9342105388641357" />
+            <Color red="0.9342105388641357" green="0.04325048625469208" blue="0.04325048625469208" />
          </subTitleColor>
          <thresholdColor>
-            <Color blue="0.020406920462846756" green="0.020406920462846756" red="0.8815789222717285" />
+            <Color red="0.8815789222717285" green="0.020406920462846756" blue="0.020406920462846756" />
          </thresholdColor>
       </Gauge>
-      <ImageView fitHeight="468.0" fitWidth="323.0" layoutX="929.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="468.0" fitWidth="323.0" layoutX="951.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/10.jpg" />
          </image>
       </ImageView>
-      <Gauge fx:id="spedometer" animated="true" animationDuration="100" averageVisible="true" layoutX="687.0" layoutY="128.0" maxMeasuredValueVisible="true" maxValue="50.0" minMeasuredValue="0.0" minMeasuredValueVisible="true" needleColor="RED" prefHeight="432.0" prefWidth="586.0" skinType="MODERN" subTitle="ITI" threshold="30.0" thresholdColor="RED" thresholdVisible="true" tickLabelOrientation="ORTHOGONAL" title="Km / h" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE">
+      <Gauge fx:id="spedometer" animated="true" animationDuration="100" averageVisible="true" layoutX="704.0" layoutY="128.0" maxMeasuredValueVisible="true" maxValue="50.0" minMeasuredValue="0.0" minMeasuredValueVisible="true" needleColor="RED" prefHeight="432.0" prefWidth="586.0" skinType="MODERN" subTitle="ITI" threshold="30.0" thresholdColor="RED" thresholdVisible="true" tickLabelOrientation="ORTHOGONAL" title="Km / h" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE">
          <barColor>
             <Color red="1.0" />
          </barColor>
@@ -75,7 +76,7 @@
             <Color red="1.0" />
          </tickMarkColor>
          <barBackgroundColor>
-            <Color blue="0.17580409348011017" green="0.17580409348011017" red="0.9736841917037964" />
+            <Color red="0.9736841917037964" green="0.17580409348011017" blue="0.17580409348011017" />
          </barBackgroundColor>
          <majorTickMarkColor>
             <Color />
@@ -106,23 +107,23 @@
                   </Stop>
                   <Stop offset="1.0">
                      <color>
-                        <Color blue="1.0" green="1.0" red="1.0" />
+                        <Color red="1.0" green="1.0" blue="1.0" />
                      </color>
                   </Stop>
                </stops>
             </RadialGradient>
          </backgroundPaint>
          <averageColor>
-            <Color blue="0.9078947305679321" green="0.21016082167625427" red="0.9078947305679321" />
+            <Color red="0.9078947305679321" green="0.21016082167625427" blue="0.9078947305679321" />
          </averageColor>
          <knobColor>
-            <Color blue="0.5313718318939209" green="0.5313718318939209" red="0.8026315569877625" />
+            <Color red="0.8026315569877625" green="0.5313718318939209" blue="0.5313718318939209" />
          </knobColor>
          <tickLabelColor>
-            <Color blue="0.4181286692619324" green="0.4181286692619324" red="0.43421053886413574" />
+            <Color red="0.43421053886413574" green="0.4181286692619324" blue="0.4181286692619324" />
          </tickLabelColor>
          <subTitleColor>
-            <Color blue="0.9039961099624634" green="0.9039961099624634" red="0.9210526347160339" />
+            <Color red="0.9210526347160339" green="0.9039961099624634" blue="0.9039961099624634" />
          </subTitleColor>
       </Gauge>
       <Gauge fx:id="heat" layoutX="1173.0" layoutY="531.0" maxValue="25.0" needleShape="ROUND" onMouseDragged="#dragMouseSlider" orientation="VERTICAL" prefHeight="154.0" prefWidth="151.0" skinType="HORIZONTAL" startAngle="180.0" styleClass="heat-style" threshold="12.5">
@@ -131,7 +132,7 @@
                <stops>
                   <Stop>
                      <color>
-                        <Color blue="0.07419590651988983" green="0.07419590651988983" red="0.07894736528396606" />
+                        <Color red="0.07894736528396606" green="0.07419590651988983" blue="0.07419590651988983" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
@@ -159,34 +160,34 @@
             </LinearGradient>
          </backgroundPaint>
          <barBackgroundColor>
-            <Color blue="0.14473684132099152" green="0.14473684132099152" red="0.14473684132099152" />
+            <Color red="0.14473684132099152" green="0.14473684132099152" blue="0.14473684132099152" />
          </barBackgroundColor>
          <majorTickMarkColor>
-            <Color blue="0.9473684430122375" green="0.9473684430122375" red="0.9473684430122375" />
+            <Color red="0.9473684430122375" green="0.9473684430122375" blue="0.9473684430122375" />
          </majorTickMarkColor>
          <minorTickMarkColor>
-            <Color blue="0.43494153022766113" green="0.43494153022766113" red="0.44736841320991516" />
+            <Color red="0.44736841320991516" green="0.43494153022766113" blue="0.43494153022766113" />
          </minorTickMarkColor>
          <tickMarkColor>
-            <Color blue="0.8684210777282715" green="0.8684210777282715" red="0.8684210777282715" />
+            <Color red="0.8684210777282715" green="0.8684210777282715" blue="0.8684210777282715" />
          </tickMarkColor>
          <titleColor>
-            <Color blue="0.3684210479259491" green="0.3684210479259491" red="0.3684210479259491" />
+            <Color red="0.3684210479259491" green="0.3684210479259491" blue="0.3684210479259491" />
          </titleColor>
          <valueColor>
-            <Color blue="0.7982456088066101" green="0.7982456088066101" red="0.8289473652839661" />
+            <Color red="0.8289473652839661" green="0.7982456088066101" blue="0.7982456088066101" />
          </valueColor>
          <needleColor>
-            <Color blue="1.0" green="1.0" red="1.0" />
+            <Color red="1.0" green="1.0" blue="1.0" />
          </needleColor>
          <thresholdColor>
-            <Color blue="0.027412280440330505" green="0.027412280440330505" red="0.6578947305679321" />
+            <Color red="0.6578947305679321" green="0.027412280440330505" blue="0.027412280440330505" />
          </thresholdColor>
          <barColor>
-            <Color blue="0.9473684430122375" green="0.9473684430122375" red="0.9473684430122375" />
+            <Color red="0.9473684430122375" green="0.9473684430122375" blue="0.9473684430122375" />
          </barColor>
          <barBorderColor>
-            <Color blue="0.8533138632774353" green="0.8533138632774353" opacity="0.0" red="0.8947368264198303" />
+            <Color red="0.8947368264198303" green="0.8533138632774353" blue="0.8533138632774353" opacity="0.0" />
          </barBorderColor>
       </Gauge>
       <Slider fx:id="hSlider" layoutX="287.0" layoutY="27.0" max="255.0" onMouseDragged="#dragMouseSlider" prefHeight="133.0" prefWidth="756.0" showTickLabels="true" showTickMarks="true" />
@@ -200,7 +201,8 @@
             <Image url="@../images/pngtree-vector-fuel-station-icon-png-image_745467.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="97.0" fitWidth="107.0" layoutX="626.0" layoutY="433.0" pickOnBounds="true" preserveRatio="true">
+      <Line fx:id="line" endX="5.0" endY="-47.0" layoutX="669.0" layoutY="472.0" startX="5.0" startY="74.0" stroke="#7eb3bc" />
+      <ImageView fitHeight="56.0" fitWidth="79.0" layoutX="640.0" layoutY="455.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/illustration-car-dashboard-panel-speedometer-260nw-1697704057.jpg" />
          </image>
@@ -228,7 +230,7 @@
                <stops>
                   <Stop>
                      <color>
-                        <Color blue="0.07419590651988983" green="0.07419590651988983" red="0.07894736528396606" />
+                        <Color red="0.07894736528396606" green="0.07419590651988983" blue="0.07419590651988983" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
@@ -256,34 +258,34 @@
             </LinearGradient>
          </backgroundPaint>
          <barBackgroundColor>
-            <Color blue="0.14473684132099152" green="0.14473684132099152" red="0.14473684132099152" />
+            <Color red="0.14473684132099152" green="0.14473684132099152" blue="0.14473684132099152" />
          </barBackgroundColor>
          <majorTickMarkColor>
-            <Color blue="0.9473684430122375" green="0.9473684430122375" red="0.9473684430122375" />
+            <Color red="0.9473684430122375" green="0.9473684430122375" blue="0.9473684430122375" />
          </majorTickMarkColor>
          <minorTickMarkColor>
-            <Color blue="0.43494153022766113" green="0.43494153022766113" red="0.44736841320991516" />
+            <Color red="0.44736841320991516" green="0.43494153022766113" blue="0.43494153022766113" />
          </minorTickMarkColor>
          <tickMarkColor>
-            <Color blue="0.8684210777282715" green="0.8684210777282715" red="0.8684210777282715" />
+            <Color red="0.8684210777282715" green="0.8684210777282715" blue="0.8684210777282715" />
          </tickMarkColor>
          <titleColor>
-            <Color blue="0.3684210479259491" green="0.3684210479259491" red="0.3684210479259491" />
+            <Color red="0.3684210479259491" green="0.3684210479259491" blue="0.3684210479259491" />
          </titleColor>
          <valueColor>
-            <Color blue="0.7982456088066101" green="0.7982456088066101" red="0.8289473652839661" />
+            <Color red="0.8289473652839661" green="0.7982456088066101" blue="0.7982456088066101" />
          </valueColor>
          <needleColor>
-            <Color blue="1.0" green="1.0" red="1.0" />
+            <Color red="1.0" green="1.0" blue="1.0" />
          </needleColor>
          <thresholdColor>
-            <Color blue="0.027412280440330505" green="0.027412280440330505" red="0.6578947305679321" />
+            <Color red="0.6578947305679321" green="0.027412280440330505" blue="0.027412280440330505" />
          </thresholdColor>
          <barColor>
-            <Color blue="0.9473684430122375" green="0.9473684430122375" red="0.9473684430122375" />
+            <Color red="0.9473684430122375" green="0.9473684430122375" blue="0.9473684430122375" />
          </barColor>
          <barBorderColor>
-            <Color blue="0.8533138632774353" green="0.8533138632774353" opacity="0.0" red="0.8947368264198303" />
+            <Color red="0.8947368264198303" green="0.8533138632774353" blue="0.8533138632774353" opacity="0.0" />
          </barBorderColor>
       </Gauge>
     </children>

@@ -14,6 +14,10 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,8 +41,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class FXMLDocumentController implements Initializable {
 
@@ -82,6 +88,8 @@ public class FXMLDocumentController implements Initializable {
     public Menu helpMenu;
     @FXML
     public Menu comMenu;
+    @FXML
+    private Line line;
     
     int commValue = 0;
 
@@ -97,6 +105,8 @@ public class FXMLDocumentController implements Initializable {
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
         comMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
+         line.getStrokeDashArray().setAll(25d, 20d, 5d, 20d);
+        line.setStrokeWidth(2);
         // populate the drop-down box
         SerialPort[] portNames = SerialPort.getCommPorts();
         for (SerialPort portName : portNames) {
@@ -109,6 +119,36 @@ public class FXMLDocumentController implements Initializable {
         if (btn.getText().equals("Start")) {
             // attempt to connect to the serial port
             try {
+                final double maxOffset = 
+                line.getStrokeDashArray().stream()
+                        .reduce(
+                                0d, 
+                                (a, b) -> a + b
+                        );
+
+                Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.ZERO, 
+                        new KeyValue(
+                                line.strokeDashOffsetProperty(), 
+                                0, 
+                                Interpolator.LINEAR
+                        )
+                ),
+                new KeyFrame(
+                        Duration.seconds(1), 
+                        new KeyValue(
+                                line.strokeDashOffsetProperty(), 
+                                maxOffset, 
+                                Interpolator.LINEAR
+                        )
+                )
+        );
+       // timeline.setAutoReverse(true);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        
+        timeline.play();
+        
                 chosenPort = SerialPort.getCommPort(portList.getValue().toString());
                 chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
 
@@ -118,6 +158,7 @@ public class FXMLDocumentController implements Initializable {
                                   + "-fx-text-align: center;");
                     portList.setEditable(false);
                     out = chosenPort.getOutputStream();
+                    //timeline.stop();
                 }
                 else {
                     Alert alert = new Alert(AlertType.WARNING);
@@ -126,6 +167,7 @@ public class FXMLDocumentController implements Initializable {
                     alert.setContentText("please, check your device");
                     alert.show();
                 }
+
             } catch (NullPointerException ex) {
 
             }
@@ -209,7 +251,7 @@ public class FXMLDocumentController implements Initializable {
         try {
             out.write(commValue);
         } catch (Exception ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
      
     }
