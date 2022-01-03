@@ -90,8 +90,9 @@ public class FXMLDocumentController implements Initializable {
     public Menu comMenu;
     @FXML
     private Line line;
+
     Timeline timeline;
-    
+
     int commValue = 0;
 
     @Override
@@ -106,9 +107,10 @@ public class FXMLDocumentController implements Initializable {
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
         comMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
-         line.getStrokeDashArray().setAll(25d, 20d, 5d, 20d);
+        line.getStrokeDashArray().setAll(25d, 20d, 5d, 20d);
         line.setStrokeWidth(2);
         // populate the drop-down box
+        portList.setValue("");
         SerialPort[] portNames = SerialPort.getCommPorts();
         for (SerialPort portName : portNames) {
             portList.getItems().addAll(portName.getSystemPortName());
@@ -119,48 +121,55 @@ public class FXMLDocumentController implements Initializable {
     public void btnMouseClicked(MouseEvent mouseEvent) {
         if (btn.getText().equals("Start")) {
             // attempt to connect to the serial port
-            try {                        
+            try {
                 chosenPort = SerialPort.getCommPort(portList.getValue().toString());
                 chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
+                
+                if (portList.getValue().equals("")){
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText(null);                    
+                    alert.setContentText("please, choose a port from the comboBox");
+                    alert.show();
+                }
 
-                if (chosenPort.openPort()) {
-                    final double maxOffset = 
-                    line.getStrokeDashArray().stream()
-                            .reduce(
-                                    0d, 
-                                    (a, b) -> a + b
-                            );
+                else if (chosenPort.openPort()) {
+                    final double maxOffset
+                            = line.getStrokeDashArray().stream()
+                                    .reduce(
+                                            0d,
+                                            (a, b) -> a + b
+                                    );
 
                     timeline = new Timeline(
-                    new KeyFrame(
-                            Duration.ZERO, 
-                            new KeyValue(
-                                    line.strokeDashOffsetProperty(), 
-                                    0, 
-                                    Interpolator.LINEAR
+                            new KeyFrame(
+                                    Duration.ZERO,
+                                    new KeyValue(
+                                            line.strokeDashOffsetProperty(),
+                                            0,
+                                            Interpolator.LINEAR
+                                    )
+                            ),
+                            new KeyFrame(
+                                    Duration.seconds(1),
+                                    new KeyValue(
+                                            line.strokeDashOffsetProperty(),
+                                            maxOffset,
+                                            Interpolator.LINEAR
+                                    )
                             )
-                    ),
-                    new KeyFrame(
-                            Duration.seconds(1), 
-                            new KeyValue(
-                                    line.strokeDashOffsetProperty(), 
-                                    maxOffset, 
-                                    Interpolator.LINEAR
-                            )
-                    )
-            );
-           // timeline.setAutoReverse(true);
-            timeline.setCycleCount(Timeline.INDEFINITE);
+                    );
+                    // timeline.setAutoReverse(true);
+                    timeline.setCycleCount(Timeline.INDEFINITE);
 
-            timeline.play();
-            btn.setText("End");
-            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
-                          + "-fx-text-align: center;");
-            portList.setEditable(false);
-            out = chosenPort.getOutputStream();
-            //timeline.stop();
-                }
-                else {
+                    timeline.play();
+                    btn.setText("End");
+                    btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
+                            + "-fx-text-align: center;");
+                    portList.setEditable(false);
+                    out = chosenPort.getOutputStream();
+                    //timeline.stop();
+                } else {
                     Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Warning");
                     alert.setHeaderText(null);
@@ -183,7 +192,7 @@ public class FXMLDocumentController implements Initializable {
             portList.setEditable(true);
             btn.setText("Start");
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
-                + "-fx-text-align: center;");
+                    + "-fx-text-align: center;");
             timeline.stop();
 
         }
@@ -200,29 +209,28 @@ public class FXMLDocumentController implements Initializable {
         } catch (NullPointerException ex) {
 
         }
-        
-        if (key == KeyCode.UP){
-            commValue = (int) (0 + (sliderValue/12.75)); 
+
+        if (key == KeyCode.UP) {
+            commValue = (int) (0 + (sliderValue / 12.75));
         }
-        
-        if (key == KeyCode.DOWN){
-            commValue = (int) (22 + (sliderValue/12.75)); 
+
+        if (key == KeyCode.DOWN) {
+            commValue = (int) (22 + (sliderValue / 12.75));
         }
-        
-        if (key == KeyCode.LEFT){
-            commValue = (int) (44 + (sliderValue/12.75)); 
+
+        if (key == KeyCode.LEFT) {
+            commValue = (int) (44 + (sliderValue / 12.75));
         }
-        
-        if (key == KeyCode.RIGHT){
-            commValue = (int) (66 + (sliderValue/12.75)); 
+
+        if (key == KeyCode.RIGHT) {
+            commValue = (int) (66 + (sliderValue / 12.75));
         }
-        
-        if (key == KeyCode.W){
+
+        if (key == KeyCode.W) {
             sliderValue = sliderValue + 5;
             if (sliderValue < 0) {
                 sliderValue = 0;
-            }
-            else if(sliderValue > 255){
+            } else if (sliderValue > 255) {
                 sliderValue = 255;
             }
             hSlider.setValue(sliderValue);
@@ -230,13 +238,12 @@ public class FXMLDocumentController implements Initializable {
             RPMValue = (float) ((sliderValue * 5.5) / 60);
             rpm.setValue(RPMValue);
         }
-        
-        if (key == KeyCode.S){
+
+        if (key == KeyCode.S) {
             sliderValue = sliderValue - 5;
             if (sliderValue < 0) {
                 sliderValue = 0;
-            }
-            else if(sliderValue > 255){
+            } else if (sliderValue > 255) {
                 sliderValue = 255;
             }
             hSlider.setValue(sliderValue);
@@ -244,15 +251,15 @@ public class FXMLDocumentController implements Initializable {
             RPMValue = (float) ((sliderValue * 5.5) / 60);
             rpm.setValue(RPMValue);
         }
-        
-        if (key == KeyCode.E){
+
+        if (key == KeyCode.E) {
             commValue += 100;
         }
-        
+
         try {
-            if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.RIGHT || key == KeyCode.LEFT 
-                    || key == KeyCode.E || key == KeyCode.W || key == KeyCode.S){
-                
+            if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.RIGHT || key == KeyCode.LEFT
+                    || key == KeyCode.E || key == KeyCode.W || key == KeyCode.S) {
+
                 out.write(commValue);
             }
         } catch (Exception ex) {
@@ -264,26 +271,25 @@ public class FXMLDocumentController implements Initializable {
             alert.setContentText("Please, connect the arduino first");
             alert.show();
         }
-     
+
     }
-    
+
     @FXML
     void onKeyReleased(KeyEvent event) {
-        try{
+        try {
             key = event.getCode();
-        } catch (NullPointerException ex){
-            
+        } catch (NullPointerException ex) {
+
         }
-        
-        if (key == KeyCode.E){
+
+        if (key == KeyCode.E) {
             commValue -= 100;
-        }
-        else{
+        } else {
             try {
                 out.write(205);
 
             } catch (Exception ex) {
-                
+
             }
         }
     }
@@ -337,31 +343,26 @@ public class FXMLDocumentController implements Initializable {
         popup.setResizable(false);
         popup.show();
     }
-    
-    
-      @FXML
+
+    @FXML
     void btnOnMouseEntered(MouseEvent event) {
-        if (btn.getText().equals("Start")){
+        if (btn.getText().equals("Start")) {
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #00B200;" + "-fx-font-weight: bold;"
-                           + "-fx-text-align: center;");
-        }
-        
-        else if (btn.getText().equals("End")){
+                    + "-fx-text-align: center;");
+        } else if (btn.getText().equals("End")) {
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #FF0000;" + "-fx-font-weight: bold;"
-                           + "-fx-text-align: center;");
+                    + "-fx-text-align: center;");
         }
     }
 
     @FXML
     void btnOnMouseExited(MouseEvent event) {
-        if (btn.getText().equals("Start")){
+        if (btn.getText().equals("Start")) {
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
-                           + "-fx-text-align: center;");
-        }
-        
-        else if (btn.getText().equals("End")){
+                    + "-fx-text-align: center;");
+        } else if (btn.getText().equals("End")) {
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
-                           + "-fx-text-align: center;");
+                    + "-fx-text-align: center;");
         }
 
     }
