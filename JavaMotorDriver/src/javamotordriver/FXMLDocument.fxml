@@ -14,8 +14,10 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" prefHeight="701.0" prefWidth="1279.0" stylesheets="styling.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="701.0" prefWidth="1279.0" stylesheets="styling.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
     <children>
       <ImageView fitHeight="769.0" fitWidth="1353.0" layoutX="-3.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -23,13 +25,13 @@
          </image>
       </ImageView>
       <ComboBox fx:id="portList" focusTraversable="false" layoutX="45.0" layoutY="63.0" prefWidth="150.0" />
-      <Button fx:id="btn" focusTraversable="false" layoutX="636.0" layoutY="574.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" text="Start" />
+      <Button fx:id="btn" focusTraversable="false" layoutX="636.0" layoutY="574.0" mnemonicParsing="false" onMouseClicked="#btnMouseClicked" onMouseEntered="#btnOnMouseEntered" onMouseExited="#btnOnMouseExited" text="Start" />
       <ImageView fitHeight="525.0" fitWidth="323.0" layoutX="86.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/10%20-%20Copy.jpg" />
          </image>
       </ImageView>
-      <Gauge fx:id="rpm" borderPaint="#1e1e1e00" layoutX="97.0" layoutY="126.0" maxValue="25.0" prefHeight="437.0" prefWidth="506.0" skinType="MODERN" subTitle="ITI" threshold="17.5" thresholdVisible="true" title="X1000 RPM">
+      <Gauge fx:id="rpm" animated="true" animationDuration="100" borderPaint="#1e1e1e00" layoutX="97.0" layoutY="126.0" maxValue="25.0" prefHeight="437.0" prefWidth="506.0" skinType="MODERN" subTitle="ITI" threshold="17.5" thresholdVisible="true" title="X1000 RPM">
          <needleColor>
             <Color blue="0.06627680361270905" green="0.06627680361270905" red="0.8947368264198303" />
          </needleColor>
@@ -62,12 +64,12 @@
             <Color blue="0.020406920462846756" green="0.020406920462846756" red="0.8815789222717285" />
          </thresholdColor>
       </Gauge>
-      <ImageView fitHeight="468.0" fitWidth="323.0" layoutX="929.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="468.0" fitWidth="323.0" layoutX="951.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/10.jpg" />
          </image>
       </ImageView>
-      <Gauge fx:id="spedometer" animated="true" animationDuration="100" averageVisible="true" layoutX="687.0" layoutY="128.0" maxMeasuredValueVisible="true" maxValue="50.0" minMeasuredValue="0.0" minMeasuredValueVisible="true" needleColor="RED" prefHeight="432.0" prefWidth="586.0" skinType="MODERN" subTitle="ITI" threshold="30.0" thresholdColor="RED" thresholdVisible="true" tickLabelOrientation="ORTHOGONAL" title="Km / h" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE">
+      <Gauge fx:id="spedometer" animated="true" animationDuration="100" averageVisible="true" layoutX="704.0" layoutY="128.0" maxMeasuredValueVisible="true" maxValue="50.0" minMeasuredValue="0.0" minMeasuredValueVisible="true" needleColor="RED" prefHeight="432.0" prefWidth="586.0" skinType="MODERN" subTitle="ITI" threshold="30.0" thresholdColor="RED" thresholdVisible="true" tickLabelOrientation="ORTHOGONAL" title="Km / h" titleColor="WHITE" unitColor="WHITE" valueColor="WHITE">
          <barColor>
             <Color red="1.0" />
          </barColor>
@@ -200,7 +202,8 @@
             <Image url="@../images/pngtree-vector-fuel-station-icon-png-image_745467.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="97.0" fitWidth="107.0" layoutX="626.0" layoutY="433.0" pickOnBounds="true" preserveRatio="true">
+      <Line fx:id="line" endX="5.0" endY="-47.0" layoutX="669.0" layoutY="472.0" startX="5.0" startY="74.0" stroke="#7eb3bc" />
+      <ImageView fitHeight="56.0" fitWidth="79.0" layoutX="640.0" layoutY="455.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/illustration-car-dashboard-panel-speedometer-260nw-1697704057.jpg" />
          </image>
@@ -211,13 +214,6 @@
                <items>
                   <MenuItem fx:id="About" mnemonicParsing="false" onAction="#AboutHandler" text="About" />
                   <MenuItem fx:id="UserGuide" mnemonicParsing="false" onAction="#UserGuideHandler" text="User Guide" />
-               </items>
-            </Menu>
-            <Menu fx:id="comMenu" mnemonicParsing="false" text="COM">
-               <items>
-                  <MenuItem fx:id="About1" mnemonicParsing="false" onAction="#AboutHandler" text="COM7" />
-                  <MenuItem fx:id="UserGuide1" mnemonicParsing="false" onAction="#UserGuideHandler" text="COM8" />
-                  <MenuItem fx:id="UserGuide11" mnemonicParsing="false" onAction="#UserGuideHandler" text="COM9" />
                </items>
             </Menu>
          </menus>
@@ -286,5 +282,10 @@
             <Color blue="0.8533138632774353" green="0.8533138632774353" opacity="0.0" red="0.8947368264198303" />
          </barBorderColor>
       </Gauge>
+      <Polygon fx:id="upArrow" fill="#010425" layoutX="672.0" layoutY="294.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" stroke="#1e717c" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polygon fx:id="downArrow" fill="#010425" layoutX="674.0" layoutY="411.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="180" stroke="#1e717c" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polygon fx:id="rightArrow" fill="#010425" layoutX="730.0" layoutY="352.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="90" stroke="#1e717c" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polygon fx:id="leftArrow" fill="#010425" layoutX="616.0" layoutY="353.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="270" stroke="#1e717c" strokeType="INSIDE" strokeWidth="0.0" />
+      <Button fx:id="refreshBtn" layoutX="45.0" layoutY="126.0" mnemonicParsing="false" onMousePressed="#refreshOnMousePressed" text="Refresh" />
     </children>
 </AnchorPane>
