@@ -216,13 +216,6 @@
                   <MenuItem fx:id="UserGuide" mnemonicParsing="false" onAction="#UserGuideHandler" text="User Guide" />
                </items>
             </Menu>
-            <Menu fx:id="comMenu" mnemonicParsing="false" text="COM">
-               <items>
-                  <MenuItem fx:id="About1" mnemonicParsing="false" onAction="#AboutHandler" text="COM7" />
-                  <MenuItem fx:id="UserGuide1" mnemonicParsing="false" onAction="#UserGuideHandler" text="COM8" />
-                  <MenuItem fx:id="UserGuide11" mnemonicParsing="false" onAction="#UserGuideHandler" text="COM9" />
-               </items>
-            </Menu>
          </menus>
       </MenuBar>
       <Gauge fx:id="feul" layoutX="21.0" layoutY="543.0" maxValue="25.0" needleShape="ROUND" onMouseDragged="#dragMouseSlider" orientation="VERTICAL" prefHeight="154.0" prefWidth="151.0" skinType="HORIZONTAL" startAngle="180.0" styleClass="heat-style" threshold="12.5">
@@ -289,9 +282,10 @@
             <Color blue="0.8533138632774353" green="0.8533138632774353" opacity="0.0" red="0.8947368264198303" />
          </barBorderColor>
       </Gauge>
-      <Polygon fx:id="upArrow" fill="#060d39" layoutX="672.0" layoutY="294.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" stroke="#94aad7" strokeType="INSIDE" strokeWidth="3.0" />
-      <Polygon fx:id="downArrow" fill="#060d39" layoutX="674.0" layoutY="411.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="180" stroke="#94aad7" strokeType="INSIDE" strokeWidth="3.0" />
-      <Polygon fx:id="rightArrow" fill="#060d39" layoutX="730.0" layoutY="352.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="90" stroke="#94aad7" strokeType="INSIDE" strokeWidth="3.0" />
-      <Polygon fx:id="leftArrow" fill="#060d39" layoutX="616.0" layoutY="353.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="270" stroke="#94aad7" strokeType="INSIDE" strokeWidth="3.0" />
+      <Polygon fx:id="upArrow" fill="#010425" layoutX="672.0" layoutY="294.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" stroke="#1e717c" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polygon fx:id="downArrow" fill="#010425" layoutX="674.0" layoutY="411.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="180" stroke="#1e717c" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polygon fx:id="rightArrow" fill="#010425" layoutX="730.0" layoutY="352.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="90" stroke="#1e717c" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polygon fx:id="leftArrow" fill="#010425" layoutX="616.0" layoutY="353.0" points="-23.0, -23.0, 25.0, -23.0, 25.0, -56.0, 0.0, -88.0, -23.0, -56.0" rotate="270" stroke="#1e717c" strokeType="INSIDE" strokeWidth="0.0" />
+      <Button fx:id="refreshBtn" layoutX="45.0" layoutY="126.0" mnemonicParsing="false" onMousePressed="#refreshOnMousePressed" text="Refresh" />
     </children>
 </AnchorPane>

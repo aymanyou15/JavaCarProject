@@ -40,7 +40,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -89,8 +88,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public Menu helpMenu;
     @FXML
-    public Menu comMenu;
-    @FXML
     private Line line;    
     Timeline timeline;
     
@@ -105,6 +102,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Polygon leftArrow;
+    
+    @FXML
+    private Button refreshBtn;
 
     int commValue = 0;
 
@@ -116,10 +116,17 @@ public class FXMLDocumentController implements Initializable {
         btn.setText("Start");
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
                 + "-fx-text-align: center;");
+        
+        
+        refreshBtn.setShape(new Circle(100));
+        refreshBtn.setText("Refresh");
+        refreshBtn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
+                + "-fx-text-align: center;");
+        
+        portList.setStyle("-fx-background-color: #093691;" + "-fx-text-align: center;");
 
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
-        comMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
         line.getStrokeDashArray().setAll(25d, 20d, 5d, 20d);
         line.setStrokeWidth(2);
         // populate the drop-down box
@@ -225,33 +232,33 @@ public class FXMLDocumentController implements Initializable {
         if (key == KeyCode.UP) {
             commValue = (int) (0 + (sliderValue / 12.75));
             upArrow.setStyle("-fx-fill: #099c11;");
-            downArrow.setStyle("-fx-fill: #060d39;");
-            rightArrow.setStyle("-fx-fill: #060d39;");
-            leftArrow.setStyle("-fx-fill: #060d39;");
+            downArrow.setStyle("-fx-fill: ##010425;");
+            rightArrow.setStyle("-fx-fill: ##010425;");
+            leftArrow.setStyle("-fx-fill: ##010425;");
         }
 
         if (key == KeyCode.DOWN) {
             commValue = (int) (22 + (sliderValue / 12.75));
             downArrow.setStyle("-fx-fill: #099c11;");
-            upArrow.setStyle("-fx-fill: #060d39;");
-            rightArrow.setStyle("-fx-fill: #060d39;");
-            leftArrow.setStyle("-fx-fill: #060d39;");
+            upArrow.setStyle("-fx-fill: ##010425;");
+            rightArrow.setStyle("-fx-fill: ##010425;");
+            leftArrow.setStyle("-fx-fill: ##010425;");
         }
 
         if (key == KeyCode.LEFT) {
             commValue = (int) (44 + (sliderValue / 12.75));
             leftArrow.setStyle("-fx-fill: #099c11;");
-            downArrow.setStyle("-fx-fill: ##060d39;");
-            rightArrow.setStyle("-fx-fill: ##060d39;");
-            upArrow.setStyle("-fx-fill: ##060d39;");
+            downArrow.setStyle("-fx-fill: #010425;");
+            rightArrow.setStyle("-fx-fill: #010425;");
+            upArrow.setStyle("-fx-fill: #010425;");
         }
 
         if (key == KeyCode.RIGHT) {
             commValue = (int) (66 + (sliderValue / 12.75));
             rightArrow.setStyle("-fx-fill: #099c11;");
-            downArrow.setStyle("-fx-fill: #060d39;");
-            upArrow.setStyle("-fx-fill: #060d39;");
-            leftArrow.setStyle("-fx-fill: #060d39;");
+            downArrow.setStyle("-fx-fill: #010425;");
+            upArrow.setStyle("-fx-fill: #010425;");
+            leftArrow.setStyle("-fx-fill: #010425;");
         }
 
         if (key == KeyCode.W) {
@@ -299,10 +306,10 @@ public class FXMLDocumentController implements Initializable {
             alert.setContentText("Please, connect the arduino first");
             alert.show();
             
-            rightArrow.setStyle("-fx-fill: #060d39;");
-            downArrow.setStyle("-fx-fill: #060d39;");
-            upArrow.setStyle("-fx-fill: #060d39;");
-            leftArrow.setStyle("-fx-fill: #060d39;");
+            rightArrow.setStyle("-fx-fill: #010425;");
+            downArrow.setStyle("-fx-fill: #010425;");
+            upArrow.setStyle("-fx-fill: #010425;");
+            leftArrow.setStyle("-fx-fill: #010425;");
         }
 
     }
@@ -320,10 +327,10 @@ public class FXMLDocumentController implements Initializable {
         } else {
             try {
                 out.write(205);
-                upArrow.setStyle("-fx-background-color: #060d39;");
-                downArrow.setStyle("-fx-background-color: ##060d39;");
-                rightArrow.setStyle("-fx-background-color: ##060d39;");
-                leftArrow.setStyle("-fx-background-color: ##060d39;");
+                upArrow.setStyle("-fx-background-color: #010425;");
+                downArrow.setStyle("-fx-background-color: #010425;");
+                rightArrow.setStyle("-fx-background-color: #010425;");
+                leftArrow.setStyle("-fx-background-color: #010425;");
 
             } catch (Exception ex) {
 
@@ -402,5 +409,10 @@ public class FXMLDocumentController implements Initializable {
                     + "-fx-text-align: center;");
         }
 
+    }
+    
+    @FXML
+    void refreshOnMousePressed(MouseEvent event) {
+        
     }
 }
