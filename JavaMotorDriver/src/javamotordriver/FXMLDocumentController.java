@@ -232,17 +232,17 @@ public class FXMLDocumentController implements Initializable {
         if (key == KeyCode.UP) {
             commValue = (int) (0 + (sliderValue / 12.75));
             upArrow.setStyle("-fx-fill: #099c11;");
-            downArrow.setStyle("-fx-fill: ##010425;");
-            rightArrow.setStyle("-fx-fill: ##010425;");
-            leftArrow.setStyle("-fx-fill: ##010425;");
+            downArrow.setStyle("-fx-fill: #010425;");
+            rightArrow.setStyle("-fx-fill: #010425;");
+            leftArrow.setStyle("-fx-fill: #010425;");
         }
 
         if (key == KeyCode.DOWN) {
             commValue = (int) (22 + (sliderValue / 12.75));
             downArrow.setStyle("-fx-fill: #099c11;");
-            upArrow.setStyle("-fx-fill: ##010425;");
-            rightArrow.setStyle("-fx-fill: ##010425;");
-            leftArrow.setStyle("-fx-fill: ##010425;");
+            upArrow.setStyle("-fx-fill: #010425;");
+            rightArrow.setStyle("-fx-fill: #010425;");
+            leftArrow.setStyle("-fx-fill: #010425;");
         }
 
         if (key == KeyCode.LEFT) {
