@@ -56,8 +56,8 @@ public class FXMLDocumentController implements Initializable {
 
     AnchorPane anchor;
     static SerialPort chosenPort;
-    public Socket socket;
-    public PrintStream dos;
+//    public Socket socket;
+//    public PrintStream dos;
     
     @FXML
     Button btn;
@@ -121,12 +121,12 @@ public class FXMLDocumentController implements Initializable {
         // TODO
         
         // socket connection with server
-        try {
-            socket = new Socket("127.0.0.1",5005);
-            dos = new PrintStream(socket.getOutputStream());
-        } catch (IOException ex) {
-            System.out.println("No Server to Connect to");
-        }
+//        try {
+//            socket = new Socket("127.0.0.1",5005);
+//            dos = new PrintStream(socket.getOutputStream());
+//        } catch (IOException ex) {
+//            System.out.println("No Server to Connect to");
+//        }
         
         btn.setShape(new Circle(100));
         btn.setText("Start");
@@ -274,7 +274,7 @@ public class FXMLDocumentController implements Initializable {
         try {
             key = event.getCode();
             // send the key pressed to the server
-            dos.println(key);
+            //dos.println(key);
         } catch (NullPointerException ex) {
 
         }
