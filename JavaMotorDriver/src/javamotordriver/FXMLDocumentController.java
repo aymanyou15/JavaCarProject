@@ -148,7 +148,7 @@ public class FXMLDocumentController implements Initializable {
                     try {
                         detect_ports();
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                        
                     }
                 }
             }
@@ -182,7 +182,7 @@ public class FXMLDocumentController implements Initializable {
 
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, e);
+            
         }
     }
 
@@ -230,8 +230,8 @@ public class FXMLDocumentController implements Initializable {
                     );
                     // timeline.setAutoReverse(true);
                     timeline.setCycleCount(Timeline.INDEFINITE);
-
                     timeline.play();
+                    
                     btn.setText("End");
                     btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
                             + "-fx-text-align: center;");
@@ -242,7 +242,7 @@ public class FXMLDocumentController implements Initializable {
                     Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Warning");
                     alert.setHeaderText(null);
-                    alert.setContentText("please, check your bluetooth connection");
+                    alert.setContentText("please, check your connection");
                     alert.show();
                 }
 
@@ -256,7 +256,7 @@ public class FXMLDocumentController implements Initializable {
             try {
                 out.close();
             } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
             portList.setEditable(true);
             btn.setText("Start");
@@ -270,8 +270,6 @@ public class FXMLDocumentController implements Initializable {
     public void onKeyPressed(KeyEvent event) {
         int sliderValue = (int) hSlider.getValue();
         float RPMValue;
-        hSlider.setFocusTraversable(false);
-        portList.setFocusTraversable(false);
         // soliman's code
         try {
             key = event.getCode();
