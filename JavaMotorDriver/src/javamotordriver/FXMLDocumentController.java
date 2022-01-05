@@ -20,6 +20,9 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,7 +66,7 @@ public class FXMLDocumentController implements Initializable {
     OutputStream out;
     Scanner in;
     @FXML
-    public ComboBox portList;
+    public ComboBox<String> portList;
 
     @FXML
     public Gauge spedometer;
@@ -107,11 +110,11 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Polygon leftArrow;
-    
-    @FXML
-    private Button refreshBtn;
-
+  
     int commValue = 0;
+    
+    ObservableList<String> portListVector = FXCollections.observableArrayList("1");
+    ObservableList<String> portListVector_temp = FXCollections.observableArrayList("2");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -131,30 +134,64 @@ public class FXMLDocumentController implements Initializable {
                 + "-fx-text-align: center;");
         
         
-        refreshBtn.setShape(new Circle(100));
-        refreshBtn.setText("Refresh");
-        refreshBtn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
-                + "-fx-text-align: center;");
-        
         portList.setStyle("-fx-background-color: #093691;" + "-fx-text-align: center;");
 
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
         line.getStrokeDashArray().setAll(25d, 20d, 5d, 20d);
         line.setStrokeWidth(2);
+        
+        Thread portCheck = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        detect_ports();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+
+        });
+        portCheck.setDaemon(true);
+        portCheck.start();
+    }
+    
+    public void detect_ports() throws InterruptedException {
         // populate the drop-down box
-        portList.setValue("");
-        SerialPort[] portNames = SerialPort.getCommPorts();
-        for (SerialPort portName : portNames) {
-            portList.getItems().addAll(portName.getSystemPortName());
-        }        
+        try {
+
+            SerialPort[] portNames = SerialPort.getCommPorts();
+            portListVector.clear();
+            for (SerialPort portName : portNames) {
+                portListVector.addAll(portName.getSystemPortName());
+            }
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    if (portListVector != portListVector_temp) {
+                        portListVector_temp = portListVector;
+                        portList.setItems(portListVector_temp);
+                    }
+
+                }
+            });
+
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public void btnMouseClicked(MouseEvent mouseEvent) {        
         if (btn.getText().equals("Start")) {
             // attempt to connect to the serial port
             try {
-                chosenPort = SerialPort.getCommPort(portList.getValue().toString());
+                chosenPort = SerialPort.getCommPort(portList.getValue());
+                System.out.println(portList.getValue());
                 chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
                 
                 if (portList.getValue().equals("")){
