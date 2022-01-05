@@ -37,7 +37,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="414.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S                        -           Speed Down" AnchorPane.topAnchor="230.0">
+      <Text fill="#cccccc" layoutX="414.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S                         -           Speed Down" AnchorPane.topAnchor="230.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -63,6 +63,9 @@
          </font>
       </Text>
       <Line endX="82.0" endY="261.5" layoutX="268.0" layoutY="51.0" startX="82.0" startY="-56.0" stroke="WHITE" />
-      <Text fill="#cccccc" layoutX="413.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E                       -                    buzzer" />
+      <Text fill="#cccccc" layoutX="413.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E                         -                    buzzer">
+         <font>
+            <Font size="14.0" />
+         </font></Text>
    </children>
 </AnchorPane>
