@@ -116,7 +116,7 @@ public class ConnectedCar extends Thread{
                 if(incoming == null)
                     break;
                 Platform.runLater(() -> {
-                    if(incoming.equals("UP") || incoming.equals("DOWN")){
+                    if(incoming.equals("W") || incoming.equals("S")){
                         double posx = startx+r*Math.cos(Math.PI*angle/180)
                                 +cardiag*(Math.cos(Math.atan2(cary,carx))-Math.cos(Math.atan2(carx,cary)));
                         double posy = starty-r*Math.sin(Math.PI*angle/180)
@@ -130,7 +130,7 @@ public class ConnectedCar extends Thread{
                         
                         last.setEndX(startx+r*Math.cos(Math.PI*angle/180));
                         last.setEndY(starty-r*Math.sin(Math.PI*angle/180));
-                        if(incoming.equals("UP"))
+                        if(incoming.equals("W"))
                             r++;
                         else
                             r--;
@@ -145,10 +145,10 @@ public class ConnectedCar extends Thread{
                             last.setStroke(color);
                             g.getChildren().add(last);
                         }
-                        if(incoming.equals("LEFT")){
+                        if(incoming.equals("A")){
                             angle++;
                         }
-                        else if(incoming.equals("RIGHT")){
+                        else if(incoming.equals("D")){
                             angle--;
                         }
                     }

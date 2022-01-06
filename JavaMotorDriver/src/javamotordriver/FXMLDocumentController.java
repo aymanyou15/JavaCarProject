@@ -9,6 +9,8 @@ import eu.hansolo.medusa.Gauge;
 import java.awt.Image;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -50,8 +52,8 @@ public class FXMLDocumentController implements Initializable {
 
     AnchorPane anchor;
     static SerialPort chosenPort;
-//    public Socket socket;
-//    public PrintStream dos;
+    public Socket socket;
+    public PrintStream dos;
 
     @FXML
     Button btn;
@@ -114,12 +116,12 @@ public class FXMLDocumentController implements Initializable {
         // TODO
 
         // socket connection with server
-//        try {
-//            socket = new Socket("127.0.0.1",5005);
-//            dos = new PrintStream(socket.getOutputStream());
-//        } catch (IOException ex) {
-//            System.out.println("No Server to Connect to");
-//        }
+        try {
+            socket = new Socket("127.0.0.1",5005);
+            dos = new PrintStream(socket.getOutputStream());
+        } catch (IOException ex) {
+            System.out.println("No Server to Connect to");
+        }
         btn.setShape(new Circle(100));
         btn.setText("Start");
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
@@ -258,7 +260,7 @@ public class FXMLDocumentController implements Initializable {
         try {
             key = event.getCode();
             // send the key pressed to the server
-            //dos.println(key);
+            dos.println(key);
         } catch (NullPointerException ex) {
 
         }
@@ -379,7 +381,6 @@ public class FXMLDocumentController implements Initializable {
 
             try {
                 out.write(commValue);
-                System.out.println(commValue + "----------------");
 
             } catch (IOException | NullPointerException ex) {
                 // handle the input output exception
