@@ -379,6 +379,7 @@ public class FXMLDocumentController implements Initializable {
 
             try {
                 out.write(commValue);
+                System.out.println(commValue + "----------------");
 
             } catch (IOException | NullPointerException ex) {
                 // handle the input output exception
@@ -401,18 +402,19 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    void onKeyReleased(KeyEvent event
-    ) {
+    void onKeyReleased(KeyEvent event) {
+        if (key == KeyCode.W || key == KeyCode.S || key == KeyCode.D || key == KeyCode.A
+                || key == KeyCode.O || key == KeyCode.L || key == KeyCode.K) {
+            try {
+                out.write(205);
+                upArrow.setStyle("-fx-background-color: #010425;");
+                downArrow.setStyle("-fx-background-color: #010425;");
+                rightArrow.setStyle("-fx-background-color: #010425;");
+                leftArrow.setStyle("-fx-background-color: #010425;");
 
-        try {
-            out.write(205);
-            upArrow.setStyle("-fx-background-color: #010425;");
-            downArrow.setStyle("-fx-background-color: #010425;");
-            rightArrow.setStyle("-fx-background-color: #010425;");
-            leftArrow.setStyle("-fx-background-color: #010425;");
+            } catch (Exception ex) {
 
-        } catch (Exception ex) {
-
+            }
         }
     }
 
