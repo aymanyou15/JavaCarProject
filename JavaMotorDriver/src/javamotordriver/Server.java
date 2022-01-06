@@ -74,6 +74,7 @@ public class Server extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Server");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
         server = new ServerSocket(5005);
         ConnectedCar.counter.setText("Connected Cars: "+Integer.toString(ConnectedCar.count));
