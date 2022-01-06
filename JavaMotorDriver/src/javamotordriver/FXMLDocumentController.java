@@ -117,7 +117,7 @@ public class FXMLDocumentController implements Initializable {
 
         // socket connection with server
         try {
-            socket = new Socket("127.0.0.1",5005);
+            socket = new Socket("127.0.0.1", 5005);
             dos = new PrintStream(socket.getOutputStream());
         } catch (IOException ex) {
             System.out.println("No Server to Connect to");
@@ -380,7 +380,9 @@ public class FXMLDocumentController implements Initializable {
             }
 
             try {
-                out.write(commValue);
+                if (key == KeyCode.W || key == KeyCode.S || key == KeyCode.D || key == KeyCode.A) {
+                    out.write(commValue);
+                }
 
             } catch (IOException | NullPointerException ex) {
                 // handle the input output exception
