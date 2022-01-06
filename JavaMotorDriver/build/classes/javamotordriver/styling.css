@@ -28,7 +28,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 
 .combo-box-popup .list-view{
-    -fx-background-color: -fx-my-menu-color; 
+    -fx-background-color: rgba(41, 61, 61, 0.4); 
      -fx-label-padding: 6px;
       -fx-text-fill: #eee;
 }

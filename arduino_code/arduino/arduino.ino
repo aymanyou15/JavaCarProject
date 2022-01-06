@@ -63,16 +63,16 @@ void loop()
     analogWrite(ENR, f);
     Right_Motion();
   }
-  else if (f == 230)
+  else if (f == 100)
   {
     digitalWrite(buzz, HIGH);
   }
-  else if (f == 240)
+  else if (f == 120)
   {
     digitalWrite(buzz, LOW);
   }
 
-  else if (f == 205)
+  else
   {
     Stop_Motion();
     analogWrite(ENL, 0);

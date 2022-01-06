@@ -105,7 +105,7 @@ public class FXMLDocumentController implements Initializable {
 
     int commValue = 0;
 
-    boolean checkPortConeection;
+    int buzz = 0;
 
     ObservableList<String> portListVector = FXCollections.observableArrayList();
 
@@ -268,7 +268,7 @@ public class FXMLDocumentController implements Initializable {
             if (key == KeyCode.W) {
                 commValue = (int) (0 + (sliderValue / 12.75));
                 upArrow.setStyle("-fx-fill: #31D9C5;");
-               /* downArrow.setStyle("-fx-fill: #040404;");
+                /* downArrow.setStyle("-fx-fill: #040404;");
                 rightArrow.setStyle("-fx-fill: #040404;");
                 leftArrow.setStyle("-fx-fill: #040404;");*/
             }
@@ -286,7 +286,7 @@ public class FXMLDocumentController implements Initializable {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (44 + (sliderValue / 12.75));
                 leftArrow.setStyle("-fx-fill:  #31D9C5;");
-               /* downArrow.setStyle("-fx-fill: #010425;");
+                /* downArrow.setStyle("-fx-fill: #010425;");
                 rightArrow.setStyle("-fx-fill: #010425;");
                 upArrow.setStyle("-fx-fill: #010425;");*/
             }
@@ -295,7 +295,7 @@ public class FXMLDocumentController implements Initializable {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (66 + (sliderValue / 12.75));
                 rightArrow.setStyle("-fx-fill:  #31D9C5;");
-               /* downArrow.setStyle("-fx-fill: #010425;");
+                /* downArrow.setStyle("-fx-fill: #010425;");
                 upArrow.setStyle("-fx-fill: #010425;");
                 leftArrow.setStyle("-fx-fill: #010425;");*/
             }
@@ -327,25 +327,53 @@ public class FXMLDocumentController implements Initializable {
             }
 
             if (key == KeyCode.K) {
-                try {
-                    out.write(230);
+                switch (buzz) {
+                    case 0:
+                        buzz = 1;
+                        try {
+                            out.write(100);
 
-                } catch (IOException | NullPointerException ex) {
-                    // handle the input output exception
-                    // the exception is occured if the keys are pressed and there is no stable connection
-                    Alert alert = new Alert(AlertType.WARNING);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Please, connect the arduino first");
-                    alert.show();
+                        } catch (IOException | NullPointerException ex) {
+                            // handle the input output exception
+                            // the exception is occured if the keys are pressed and there is no stable connection
+                            Alert alert = new Alert(AlertType.WARNING);
+                            alert.setTitle("Warning");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Please, connect the arduino first");
+                            alert.show();
 
-                    rightArrow.setStyle("-fx-fill: #010425;");
-                    downArrow.setStyle("-fx-fill: #010425;");
-                    upArrow.setStyle("-fx-fill: #010425;");
-                    leftArrow.setStyle("-fx-fill: #010425;");
-                    spedometer.setValue(0);
-                    rpm.setValue(0);
-                    hSlider.setValue(0);
+                            rightArrow.setStyle("-fx-fill: #010425;");
+                            downArrow.setStyle("-fx-fill: #010425;");
+                            upArrow.setStyle("-fx-fill: #010425;");
+                            leftArrow.setStyle("-fx-fill: #010425;");
+                            spedometer.setValue(0);
+                            rpm.setValue(0);
+                            hSlider.setValue(0);
+                        }
+                        break;
+                    case 1:
+                        buzz = 0;
+                        try {
+                            out.write(120);
+
+                        } catch (IOException | NullPointerException ex) {
+                            // handle the input output exception
+                            // the exception is occured if the keys are pressed and there is no stable connection
+                            Alert alert = new Alert(AlertType.WARNING);
+                            alert.setTitle("Warning");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Please, connect the arduino first");
+                            alert.show();
+
+                            rightArrow.setStyle("-fx-fill: #010425;");
+                            downArrow.setStyle("-fx-fill: #010425;");
+                            upArrow.setStyle("-fx-fill: #010425;");
+                            leftArrow.setStyle("-fx-fill: #010425;");
+                            spedometer.setValue(0);
+                            rpm.setValue(0);
+                            hSlider.setValue(0);
+                        }
+                        break;
                 }
             }
 
@@ -373,42 +401,24 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    void onKeyReleased(KeyEvent event) {
+    void onKeyReleased(KeyEvent event
+    ) {
+
         try {
-            key = event.getCode();
-        } catch (NullPointerException ex) {
+            out.write(205);
+            upArrow.setStyle("-fx-background-color: #010425;");
+            downArrow.setStyle("-fx-background-color: #010425;");
+            rightArrow.setStyle("-fx-background-color: #010425;");
+            leftArrow.setStyle("-fx-background-color: #010425;");
 
-        }
+        } catch (Exception ex) {
 
-        if (key == KeyCode.K) {
-            try {
-                out.write(240);
-
-            } catch (IOException | NullPointerException ex) {
-   
-            }
-            try {
-
-            } catch (Exception ex) {
-
-            }
-
-        } else {
-            try {
-                out.write(205);
-                upArrow.setStyle("-fx-background-color: #010425;");
-                downArrow.setStyle("-fx-background-color: #010425;");
-                rightArrow.setStyle("-fx-background-color: #010425;");
-                leftArrow.setStyle("-fx-background-color: #010425;");
-
-            } catch (Exception ex) {
-
-            }
         }
     }
 
     @FXML
-    void dragMouseSlider(MouseEvent event) {
+    void dragMouseSlider(MouseEvent event
+    ) {
 
         int sliderValue = (int) hSlider.getValue();
 
@@ -458,7 +468,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    void btnOnMouseEntered(MouseEvent event) {
+    void btnOnMouseEntered(MouseEvent event
+    ) {
         if (btn.getText().equals("Start")) {
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #00B200;" + "-fx-font-weight: bold;"
                     + "-fx-text-align: center;");
@@ -469,7 +480,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    void btnOnMouseExited(MouseEvent event) {
+    void btnOnMouseExited(MouseEvent event
+    ) {
         if (btn.getText().equals("Start")) {
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
                     + "-fx-text-align: center;");
@@ -481,7 +493,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    void refreshOnMousePressed(MouseEvent event) {
+    void refreshOnMousePressed(MouseEvent event
+    ) {
 
     }
 }
