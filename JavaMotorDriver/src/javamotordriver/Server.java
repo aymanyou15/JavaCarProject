@@ -39,12 +39,6 @@ public class Server extends Application {
     @Override
     public void init(){
         colors = new Vector<Color>();
-//        colors.add(Color.valueOf("#3a0ca3"));
-//        colors.add(Color.valueOf("#2A9D8F"));
-//        colors.add(Color.valueOf("#E9C46A"));
-//        colors.add(Color.valueOf("#E76F51"));
-//        colors.add(Color.valueOf("#e63946"));
-//        colors.add(Color.valueOf("#f72585"));
         colors.add(Color.valueOf("#f72585"));
         colors.add(Color.valueOf("#b5179e"));
         colors.add(Color.valueOf("#7209b7"));

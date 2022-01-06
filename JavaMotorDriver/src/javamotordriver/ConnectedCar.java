@@ -46,7 +46,6 @@ public class ConnectedCar extends Thread{
             counter.setX(4);
             counter.setY(20);
             counter.setStroke(Color.WHITE);
-            g.getChildren().add(counter);
         });
         startx = 200;
         starty = 280;
@@ -108,7 +107,6 @@ public class ConnectedCar extends Thread{
         while(true){
             try {
                 String incoming = instream.readLine();
-                System.out.println(incoming);
                 if(incoming == null)
                     break;
                 Platform.runLater(() -> {
@@ -150,7 +148,7 @@ public class ConnectedCar extends Thread{
                     }
                 });
             } catch (IOException ex) {
-                System.out.println("Car Connection is closed");
+                // Car Connection is closed
                 Platform.runLater(()->{
                     count--;
                     counter.setText("Connected Cars: "+Integer.toString(count));
@@ -163,6 +161,15 @@ public class ConnectedCar extends Thread{
                 break;
             }
         }
+        Platform.runLater(()->{
+            count--;
+            counter.setText("Connected Cars: "+Integer.toString(count));
+            t.stop();
+            Circle ending = new Circle(car.getX()+5,car.getY()+10,2);
+            ending.setFill(color);
+            g.getChildren().add(ending);
+            g.getChildren().removeAll(car,live);
+        });
     }
 }
 

@@ -14,6 +14,8 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -104,14 +106,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        // socket connection with server
-        try {
-            socket = new Socket("127.0.0.1", 5005);
-            dos = new PrintStream(socket.getOutputStream());
-        } catch (IOException ex) {
-            System.out.println("No Server to Connect to");
-        }
+        
         btn.setShape(new Circle(100));
         btn.setText("Start");
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
@@ -212,7 +207,14 @@ public class FXMLDocumentController implements Initializable {
                     new Thread(() -> {
                         out = chosenPort.getOutputStream();
                     }).start();
-
+                    
+                    // socket connection with server
+                    try {
+                        socket = new Socket("127.0.0.1", 5005);
+                        dos = new PrintStream(socket.getOutputStream());
+                    } catch (IOException ex) {
+                        // No Server to Connect to
+                    }
                    
                 }
 
@@ -231,6 +233,12 @@ public class FXMLDocumentController implements Initializable {
                 out.close();
             } catch (IOException ex) {
 
+            }
+            try {
+                socket.close();
+                dos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
             portList.setEditable(false);
             portList.setValue("");
