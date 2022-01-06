@@ -4,6 +4,7 @@
  #define IN2   (3)
  #define IN3   (4)
  #define IN4   (5)
+ #define IN5   (6)
  #define ENL   (9)
  #define ENR   (10)
 
@@ -18,6 +19,7 @@ void setup()
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
+  pinMode(IN5,  OUTPUT);
 
   pinMode(ENL, OUTPUT);
   pinMode(ENR, OUTPUT);
@@ -31,41 +33,78 @@ void loop()
 {
 
    f = Serial.read();
-   
-  if(f <= 20 && f >= 0)
-  {
-    f = f * 12.75;
-    analogWrite(ENL, f);
-    analogWrite(ENR, f);
-    Serial.println(f);
-    Forward_Motion();
+
+   if(f > 100 && f < 200)
+   {
+      /* the Buzzer is on */
+      digitalWrite(IN5, HIGH);
+    
+      if(f <= 20 && f >= 0)
+      {
+        f = f * 12.75;
+        analogWrite(ENL, f);
+        analogWrite(ENR, f);
+        Serial.println(f);
+        Forward_Motion();
+      }
+      else if(f <= 42 && f >= 22)
+      {
+        f = (f -22) * 12.75;
+        analogWrite(ENL, f);
+        analogWrite(ENR, f);
+        Backward_Motion();
+      }
+      else if(f <= 64 && f >= 44)
+      {
+        f = (f - 44) * 12.75;
+        analogWrite(ENL, f);
+        analogWrite(ENR, f);
+        Left_Motion();
+      }
+      else if(f <= 86 && f >= 66)
+      {
+        f = (f - 66) * 12.75;
+        analogWrite(ENL, f);
+        analogWrite(ENR, f);
+        Right_Motion();
+      }
   }
-  else if(f <= 42 && f >= 22)
+  else if (f < 100)
   {
-    f = (f -22) * 12.75;
-    analogWrite(ENL, f);
-    analogWrite(ENR, f);
-    Backward_Motion();
+    /* the buzzer is off */
+    digitalWrite(IN5, LOW);
+
+    if(f <= 20 && f >= 0)
+      {
+        f = f * 12.75;
+        analogWrite(ENL, f);
+        analogWrite(ENR, f);
+        Serial.println(f);
+        Forward_Motion();
+      }
+      else if(f <= 42 && f >= 22)
+      {
+        f = (f -22) * 12.75;
+        analogWrite(ENL, f);
+        analogWrite(ENR, f);
+        Backward_Motion();
+      }
+      else if(f <= 64 && f >= 44)
+      {
+        f = (f - 44) * 12.75;
+        analogWrite(ENL, f);
+        analogWrite(ENR, f);
+        Left_Motion();
+      }
+      else if(f <= 86 && f >= 66)
+      {
+        f = (f - 66) * 12.75;
+        analogWrite(ENL, f);
+        analogWrite(ENR, f);
+        Right_Motion();
+      }
   }
-  else if(f <= 64 && f >= 44)
-  {
-    f = (f - 44) * 12.75;
-    analogWrite(ENL, f);
-    analogWrite(ENR, f);
-    Left_Motion();
-  }
-  else if(f <= 86 && f >= 66)
-  {
-    f = (f - 66) * 12.75;
-    analogWrite(ENL, f);
-    analogWrite(ENR, f);
-    Right_Motion();
-  }
-  else if(f >= 100 && f < 200)
-  {
-    digitalWrite(IN5, HIGH);
-  }
-  else if(f >= 200)
+  else
   {
     Stop_Motion();
     analogWrite(ENL,0);
