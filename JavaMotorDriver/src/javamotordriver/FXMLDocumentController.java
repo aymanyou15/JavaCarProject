@@ -9,7 +9,6 @@ import eu.hansolo.medusa.Gauge;
 import java.awt.Image;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -34,14 +33,12 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -134,7 +131,7 @@ public class FXMLDocumentController implements Initializable {
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
         line.getStrokeDashArray().setAll(25d, 20d, 5d, 20d);
-        line.setStrokeWidth(2);
+        line.setStrokeWidth(2);        
 
         Thread portCheck = new Thread(() -> {
             while (true) {
@@ -174,12 +171,12 @@ public class FXMLDocumentController implements Initializable {
             // attempt to connect to the serial port
             try {
 
-                chosenPort = SerialPort.getCommPort(portList.getValue());
+                chosenPort = SerialPort.getCommPort(portList.getValue().toString());
                 chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
 
-                new Thread(() -> {
-                    checkPortConeection = chosenPort.openPort();
-                }).start();
+//                new Thread(() -> {
+//                    checkPortConeection = chosenPort.openPort();
+//                }).start();
 
                 if (portList.getValue().equals("")) {
                     Alert alert = new Alert(AlertType.WARNING);
@@ -187,7 +184,7 @@ public class FXMLDocumentController implements Initializable {
                     alert.setHeaderText(null);
                     alert.setContentText("please, choose a port from the comboBox");
                     alert.show();
-                } else if (checkPortConeection) {
+                } else if (chosenPort.openPort()) {
                     final double maxOffset
                             = line.getStrokeDashArray().stream()
                                     .reduce(
@@ -222,20 +219,14 @@ public class FXMLDocumentController implements Initializable {
                             + "-fx-text-align: center;");
 
                     portList.setEditable(false);
-                    new Thread(() -> {
+//                    new Thread(() -> {
 
-                        chosenPort = SerialPort.getCommPort(portList.getValue());
                         out = chosenPort.getOutputStream();
+                        System.out.println("conecteeeed");
 
-                    }).start();
+//                    }).start();
 
                     //timeline.stop();
-                } else {
-                    Alert alert = new Alert(AlertType.WARNING);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText(null);
-                    alert.setContentText("please, check your connection");
-                    alert.show();
                 }
 
             } catch (Exception ex) {
@@ -281,79 +272,78 @@ public class FXMLDocumentController implements Initializable {
         }
         if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.LEFT || key == KeyCode.RIGHT
                 || key == KeyCode.W || key == KeyCode.E || key == KeyCode.S) {
-            try {
-                if (chosenPort.isOpen()) {
+            System.out.println("senddddddddddd");
 
-                    if (key == KeyCode.UP) {
-                        commValue = (int) (0 + (sliderValue / 12.75));
-                        upArrow.setStyle("-fx-fill: #099c11;");
-                        downArrow.setStyle("-fx-fill: #010425;");
-                        rightArrow.setStyle("-fx-fill: #010425;");
-                        leftArrow.setStyle("-fx-fill: #010425;");
-                    }
+            if (key == KeyCode.UP) {
+                commValue = (int) (0 + (sliderValue / 12.75));
+                upArrow.setStyle("-fx-fill: #099c11;");
+                downArrow.setStyle("-fx-fill: #010425;");
+                rightArrow.setStyle("-fx-fill: #010425;");
+                leftArrow.setStyle("-fx-fill: #010425;");
+            }
 
-                    if (key == KeyCode.DOWN) {
-                        hSlider.setValue(hSlider.getValue());
-                        commValue = (int) (22 + (sliderValue / 12.75));
-                        downArrow.setStyle("-fx-fill: #099c11;");
-                        upArrow.setStyle("-fx-fill: #010425;");
-                        rightArrow.setStyle("-fx-fill: #010425;");
-                        leftArrow.setStyle("-fx-fill: #010425;");
-                    }
+            if (key == KeyCode.DOWN) {
+                hSlider.setValue(hSlider.getValue());
+                commValue = (int) (22 + (sliderValue / 12.75));
+                downArrow.setStyle("-fx-fill: #099c11;");
+                upArrow.setStyle("-fx-fill: #010425;");
+                rightArrow.setStyle("-fx-fill: #010425;");
+                leftArrow.setStyle("-fx-fill: #010425;");
+            }
 
-                    if (key == KeyCode.LEFT) {
-                        hSlider.setValue(hSlider.getValue());
-                        commValue = (int) (44 + (sliderValue / 12.75));
-                        leftArrow.setStyle("-fx-fill: #099c11;");
-                        downArrow.setStyle("-fx-fill: #010425;");
-                        rightArrow.setStyle("-fx-fill: #010425;");
-                        upArrow.setStyle("-fx-fill: #010425;");
-                    }
+            if (key == KeyCode.LEFT) {
+                hSlider.setValue(hSlider.getValue());
+                commValue = (int) (44 + (sliderValue / 12.75));
+                leftArrow.setStyle("-fx-fill: #099c11;");
+                downArrow.setStyle("-fx-fill: #010425;");
+                rightArrow.setStyle("-fx-fill: #010425;");
+                upArrow.setStyle("-fx-fill: #010425;");
+            }
 
-                    if (key == KeyCode.RIGHT) {
-                        hSlider.setValue(hSlider.getValue());
-                        commValue = (int) (66 + (sliderValue / 12.75));
-                        rightArrow.setStyle("-fx-fill: #099c11;");
-                        downArrow.setStyle("-fx-fill: #010425;");
-                        upArrow.setStyle("-fx-fill: #010425;");
-                        leftArrow.setStyle("-fx-fill: #010425;");
-                    }
+            if (key == KeyCode.RIGHT) {
+                hSlider.setValue(hSlider.getValue());
+                commValue = (int) (66 + (sliderValue / 12.75));
+                rightArrow.setStyle("-fx-fill: #099c11;");
+                downArrow.setStyle("-fx-fill: #010425;");
+                upArrow.setStyle("-fx-fill: #010425;");
+                leftArrow.setStyle("-fx-fill: #010425;");
+            }
 
-                    if (key == KeyCode.W) {
-                        sliderValue = sliderValue + 5;
-                        if (sliderValue < 0) {
-                            sliderValue = 0;
-                        } else if (sliderValue > 255) {
-                            sliderValue = 255;
-                        }
-                        hSlider.setValue(sliderValue);
-                        spedometer.setValue((sliderValue * 50) / 255);
-                        RPMValue = (float) ((sliderValue * 5.5) / 60);
-                        rpm.setValue(RPMValue);
-                    }
-
-                    if (key == KeyCode.S) {
-                        sliderValue = sliderValue - 5;
-                        if (sliderValue < 0) {
-                            sliderValue = 0;
-                        } else if (sliderValue > 255) {
-                            sliderValue = 255;
-                        }
-                        hSlider.setValue(sliderValue);
-                        spedometer.setValue((sliderValue * 50) / 255);
-                        RPMValue = (float) ((sliderValue * 5.5) / 60);
-                        rpm.setValue(RPMValue);
-                    }
-
-                    if (key == KeyCode.E) {
-                        commValue += 100;
-                    }
-
-                    out.write(commValue);
-
+            if (key == KeyCode.W) {
+                sliderValue = sliderValue + 5;
+                if (sliderValue < 0) {
+                    sliderValue = 0;
+                } else if (sliderValue > 255) {
+                    sliderValue = 255;
                 }
+                hSlider.setValue(sliderValue);
+                spedometer.setValue((sliderValue * 50) / 255);
+                RPMValue = (float) ((sliderValue * 5.5) / 60);
+                rpm.setValue(RPMValue);
+            }
 
-            } catch (IOException | NullPointerException ex) {
+            if (key == KeyCode.S) {
+                sliderValue = sliderValue - 5;
+                if (sliderValue < 0) {
+                    sliderValue = 0;
+                } else if (sliderValue > 255) {
+                    sliderValue = 255;
+                }
+                hSlider.setValue(sliderValue);
+                spedometer.setValue((sliderValue * 50) / 255);
+                RPMValue = (float) ((sliderValue * 5.5) / 60);
+                rpm.setValue(RPMValue);
+            }
+
+            if (key == KeyCode.E) {
+                commValue += 100;
+            }
+
+            try {
+                out.write(commValue);
+                System.out.println("after write");
+
+            } catch (IOException ex) {
                 // handle the input output exception
                 // the exception is occured if the keys are pressed and there is no stable connection
                 Alert alert = new Alert(AlertType.WARNING);
@@ -366,6 +356,9 @@ public class FXMLDocumentController implements Initializable {
                 downArrow.setStyle("-fx-fill: #010425;");
                 upArrow.setStyle("-fx-fill: #010425;");
                 leftArrow.setStyle("-fx-fill: #010425;");
+                spedometer.setValue(0);
+                rpm.setValue(0);
+                hSlider.setValue(0);
             }
         }
     }
@@ -380,6 +373,13 @@ public class FXMLDocumentController implements Initializable {
 
         if (key == KeyCode.E) {
             commValue -= 100;
+            try {
+                out.write(commValue);
+
+            } catch (Exception ex) {
+
+            }
+
         } else {
             try {
                 out.write(205);

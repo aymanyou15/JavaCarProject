@@ -1,10 +1,10 @@
 
  /* set up l298 input pin on IN1 - 2 , IN2 - 3 , IN3 - 4 , IN4 - 5 */
- #define IN1   (2)
+ #define IN1   2
  #define IN2   (3)
  #define IN3   (4)
  #define IN4   (5)
- #define IN5   (6)
+ #define buzz  (6)
  #define ENL   (9)
  #define ENR   (10)
 
@@ -19,7 +19,7 @@ void setup()
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
-  pinMode(IN5,  OUTPUT);
+  pinMode(buzz,  OUTPUT);
 
   pinMode(ENL, OUTPUT);
   pinMode(ENR, OUTPUT);
@@ -37,7 +37,7 @@ void loop()
    if(f > 100 && f < 200)
    {
       /* the Buzzer is on */
-      digitalWrite(IN5, HIGH);
+      digitalWrite(buzz, HIGH);
     
       if(f <= 20 && f >= 0)
       {
@@ -72,7 +72,7 @@ void loop()
   else if (f < 100)
   {
     /* the buzzer is off */
-    digitalWrite(IN5, LOW);
+    digitalWrite(buzz, LOW);
 
     if(f <= 20 && f >= 0)
       {
