@@ -9,13 +9,10 @@ import eu.hansolo.medusa.Gauge;
 import java.awt.Image;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.net.Socket;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -58,7 +55,7 @@ public class FXMLDocumentController implements Initializable {
     static SerialPort chosenPort;
 //    public Socket socket;
 //    public PrintStream dos;
-    
+
     @FXML
     Button btn;
     KeyCode key;
@@ -80,11 +77,9 @@ public class FXMLDocumentController implements Initializable {
     private Gauge heat;
     @FXML
     Image picture;
-    @FXML
-    private ImageView img;
+
     int x = 0;
-    @FXML
-    private MediaView mv;
+
     MediaPlayer mp;
     Media me;
     @FXML
@@ -96,9 +91,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public Menu helpMenu;
     @FXML
-    private Line line;    
+    private Line line;
     Timeline timeline;
-    
+
     @FXML
     private Polygon upArrow;
 
@@ -110,16 +105,17 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Polygon leftArrow;
-  
+
     int commValue = 0;
-    
-    ObservableList<String> portListVector = FXCollections.observableArrayList("1");
-    ObservableList<String> portListVector_temp = FXCollections.observableArrayList("2");
+
+    boolean checkPortConeection;
+
+    ObservableList<String> portListVector = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         // socket connection with server
 //        try {
 //            socket = new Socket("127.0.0.1",5005);
@@ -127,82 +123,71 @@ public class FXMLDocumentController implements Initializable {
 //        } catch (IOException ex) {
 //            System.out.println("No Server to Connect to");
 //        }
-        
         btn.setShape(new Circle(100));
         btn.setText("Start");
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
                 + "-fx-text-align: center;");
-        
-        
+
         portList.setStyle("-fx-background-color: #093691;" + "-fx-text-align: center;");
+        portList.setValue("");
 
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
         line.getStrokeDashArray().setAll(25d, 20d, 5d, 20d);
         line.setStrokeWidth(2);
-        
-        Thread portCheck = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        detect_ports();
-                    } catch (InterruptedException ex) {
-                        
-                    }
+
+        Thread portCheck = new Thread(() -> {
+            while (true) {
+                try {
+                    detectPorts();
+
+                } catch (Exception ex) {
+
                 }
             }
-
         });
         portCheck.setDaemon(true);
         portCheck.start();
     }
-    
-    public void detect_ports() throws InterruptedException {
-        // populate the drop-down box
-        try {
 
-            SerialPort[] portNames = SerialPort.getCommPorts();
-            portListVector.clear();
-            for (SerialPort portName : portNames) {
-                portListVector.addAll(portName.getSystemPortName());
-            }
-            Platform.runLater(new Runnable() {
+    public void detectPorts() throws InterruptedException {
+        // populate the drop-down box       
 
-                @Override
-                public void run() {
-
-                    if (portListVector != portListVector_temp) {
-                        portListVector_temp = portListVector;
-                        portList.setItems(portListVector_temp);
-                    }
-
-                }
-            });
-
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            
+        SerialPort[] portNames = SerialPort.getCommPorts();
+        portListVector.clear();
+        for (SerialPort portName : portNames) {
+            portListVector.addAll(portName.getSystemPortName());
         }
+        if (portListVector.size() != portList.getItems().size()) {
+            Platform.runLater(() -> {
+                portList.getItems().clear();
+                portList.getItems().addAll(portListVector);
+            });
+        }
+
+        Thread.sleep(1000);
+
     }
 
-    public void btnMouseClicked(MouseEvent mouseEvent) {        
+    public void btnMouseClicked(MouseEvent mouseEvent) {
         if (btn.getText().equals("Start")) {
             // attempt to connect to the serial port
             try {
+
                 chosenPort = SerialPort.getCommPort(portList.getValue());
-                System.out.println(portList.getValue());
                 chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
-                
-                if (portList.getValue().equals("")){
+
+                new Thread(() -> {
+                    checkPortConeection = chosenPort.openPort();
+                }).start();
+
+                if (portList.getValue().equals("")) {
                     Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Warning");
-                    alert.setHeaderText(null);                    
+                    alert.setHeaderText(null);
                     alert.setContentText("please, choose a port from the comboBox");
                     alert.show();
-                }
-
-                else if (chosenPort.openPort()) {
+                } else if (checkPortConeection) {
                     final double maxOffset
                             = line.getStrokeDashArray().stream()
                                     .reduce(
@@ -231,12 +216,19 @@ public class FXMLDocumentController implements Initializable {
                     // timeline.setAutoReverse(true);
                     timeline.setCycleCount(Timeline.INDEFINITE);
                     timeline.play();
-                    
+
                     btn.setText("End");
                     btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
                             + "-fx-text-align: center;");
+
                     portList.setEditable(false);
-                    out = chosenPort.getOutputStream();
+                    new Thread(() -> {
+
+                        chosenPort = SerialPort.getCommPort(portList.getValue());
+                        out = chosenPort.getOutputStream();
+
+                    }).start();
+
                     //timeline.stop();
                 } else {
                     Alert alert = new Alert(AlertType.WARNING);
@@ -246,8 +238,12 @@ public class FXMLDocumentController implements Initializable {
                     alert.show();
                 }
 
-            } catch (NullPointerException ex) {
-
+            } catch (Exception ex) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("please, check your connection");
+                alert.show();
             }
 
         } else {
@@ -256,21 +252,26 @@ public class FXMLDocumentController implements Initializable {
             try {
                 out.close();
             } catch (IOException ex) {
-                
+
             }
-            portList.setEditable(true);
+            portList.setEditable(false);
+            portList.setValue("");
             btn.setText("Start");
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
                     + "-fx-text-align: center;");
+            portList.setStyle("-fx-background-color: #093691;" + "-fx-text-align: center;");
             timeline.stop();
-
+            hSlider.setValue(0);
+            spedometer.setValue(0);
+            rpm.setValue(0);
         }
     }
 
     public void onKeyPressed(KeyEvent event) {
         int sliderValue = (int) hSlider.getValue();
         float RPMValue;
-        // soliman's code
+
+//        // soliman's code
         try {
             key = event.getCode();
             // send the key pressed to the server
@@ -278,90 +279,95 @@ public class FXMLDocumentController implements Initializable {
         } catch (NullPointerException ex) {
 
         }
+        if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.LEFT || key == KeyCode.RIGHT
+                || key == KeyCode.W || key == KeyCode.E || key == KeyCode.S) {
+            try {
+                if (chosenPort.isOpen()) {
 
-        if (key == KeyCode.UP) {
-            commValue = (int) (0 + (sliderValue / 12.75));
-            upArrow.setStyle("-fx-fill: #099c11;");
-            downArrow.setStyle("-fx-fill: #010425;");
-            rightArrow.setStyle("-fx-fill: #010425;");
-            leftArrow.setStyle("-fx-fill: #010425;");
-        }
+                    if (key == KeyCode.UP) {
+                        commValue = (int) (0 + (sliderValue / 12.75));
+                        upArrow.setStyle("-fx-fill: #099c11;");
+                        downArrow.setStyle("-fx-fill: #010425;");
+                        rightArrow.setStyle("-fx-fill: #010425;");
+                        leftArrow.setStyle("-fx-fill: #010425;");
+                    }
 
-        if (key == KeyCode.DOWN) {
-            commValue = (int) (22 + (sliderValue / 12.75));
-            downArrow.setStyle("-fx-fill: #099c11;");
-            upArrow.setStyle("-fx-fill: #010425;");
-            rightArrow.setStyle("-fx-fill: #010425;");
-            leftArrow.setStyle("-fx-fill: #010425;");
-        }
+                    if (key == KeyCode.DOWN) {
+                        hSlider.setValue(hSlider.getValue());
+                        commValue = (int) (22 + (sliderValue / 12.75));
+                        downArrow.setStyle("-fx-fill: #099c11;");
+                        upArrow.setStyle("-fx-fill: #010425;");
+                        rightArrow.setStyle("-fx-fill: #010425;");
+                        leftArrow.setStyle("-fx-fill: #010425;");
+                    }
 
-        if (key == KeyCode.LEFT) {
-            commValue = (int) (44 + (sliderValue / 12.75));
-            leftArrow.setStyle("-fx-fill: #099c11;");
-            downArrow.setStyle("-fx-fill: #010425;");
-            rightArrow.setStyle("-fx-fill: #010425;");
-            upArrow.setStyle("-fx-fill: #010425;");
-        }
+                    if (key == KeyCode.LEFT) {
+                        hSlider.setValue(hSlider.getValue());
+                        commValue = (int) (44 + (sliderValue / 12.75));
+                        leftArrow.setStyle("-fx-fill: #099c11;");
+                        downArrow.setStyle("-fx-fill: #010425;");
+                        rightArrow.setStyle("-fx-fill: #010425;");
+                        upArrow.setStyle("-fx-fill: #010425;");
+                    }
 
-        if (key == KeyCode.RIGHT) {
-            commValue = (int) (66 + (sliderValue / 12.75));
-            rightArrow.setStyle("-fx-fill: #099c11;");
-            downArrow.setStyle("-fx-fill: #010425;");
-            upArrow.setStyle("-fx-fill: #010425;");
-            leftArrow.setStyle("-fx-fill: #010425;");
-        }
+                    if (key == KeyCode.RIGHT) {
+                        hSlider.setValue(hSlider.getValue());
+                        commValue = (int) (66 + (sliderValue / 12.75));
+                        rightArrow.setStyle("-fx-fill: #099c11;");
+                        downArrow.setStyle("-fx-fill: #010425;");
+                        upArrow.setStyle("-fx-fill: #010425;");
+                        leftArrow.setStyle("-fx-fill: #010425;");
+                    }
 
-        if (key == KeyCode.W) {
-            sliderValue = sliderValue + 5;
-            if (sliderValue < 0) {
-                sliderValue = 0;
-            } else if (sliderValue > 255) {
-                sliderValue = 255;
+                    if (key == KeyCode.W) {
+                        sliderValue = sliderValue + 5;
+                        if (sliderValue < 0) {
+                            sliderValue = 0;
+                        } else if (sliderValue > 255) {
+                            sliderValue = 255;
+                        }
+                        hSlider.setValue(sliderValue);
+                        spedometer.setValue((sliderValue * 50) / 255);
+                        RPMValue = (float) ((sliderValue * 5.5) / 60);
+                        rpm.setValue(RPMValue);
+                    }
+
+                    if (key == KeyCode.S) {
+                        sliderValue = sliderValue - 5;
+                        if (sliderValue < 0) {
+                            sliderValue = 0;
+                        } else if (sliderValue > 255) {
+                            sliderValue = 255;
+                        }
+                        hSlider.setValue(sliderValue);
+                        spedometer.setValue((sliderValue * 50) / 255);
+                        RPMValue = (float) ((sliderValue * 5.5) / 60);
+                        rpm.setValue(RPMValue);
+                    }
+
+                    if (key == KeyCode.E) {
+                        commValue += 100;
+                    }
+
+                    out.write(commValue);
+
+                }
+
+            } catch (IOException | NullPointerException ex) {
+                // handle the input output exception
+                // the exception is occured if the keys are pressed and there is no stable connection
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText(null);
+                alert.setContentText("Please, connect the arduino first");
+                alert.show();
+
+                rightArrow.setStyle("-fx-fill: #010425;");
+                downArrow.setStyle("-fx-fill: #010425;");
+                upArrow.setStyle("-fx-fill: #010425;");
+                leftArrow.setStyle("-fx-fill: #010425;");
             }
-            hSlider.setValue(sliderValue);
-            spedometer.setValue((sliderValue * 50) / 255);
-            RPMValue = (float) ((sliderValue * 5.5) / 60);
-            rpm.setValue(RPMValue);
         }
-
-        if (key == KeyCode.S) {
-            sliderValue = sliderValue - 5;
-            if (sliderValue < 0) {
-                sliderValue = 0;
-            } else if (sliderValue > 255) {
-                sliderValue = 255;
-            }
-            hSlider.setValue(sliderValue);
-            spedometer.setValue((sliderValue * 50) / 255);
-            RPMValue = (float) ((sliderValue * 5.5) / 60);
-            rpm.setValue(RPMValue);
-        }
-
-        if (key == KeyCode.E) {
-            commValue += 100;
-        }
-
-        try {
-            if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.RIGHT || key == KeyCode.LEFT
-                    || key == KeyCode.E || key == KeyCode.W || key == KeyCode.S) {
-
-                out.write(commValue);
-            }
-        } catch (Exception ex) {
-            // handle the null pointer exception
-            // the exception is occured if the keys are pressed and there is no stable connection
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please, connect the arduino first");
-            alert.show();
-            
-            rightArrow.setStyle("-fx-fill: #010425;");
-            downArrow.setStyle("-fx-fill: #010425;");
-            upArrow.setStyle("-fx-fill: #010425;");
-            leftArrow.setStyle("-fx-fill: #010425;");
-        }
-
     }
 
     @FXML
@@ -460,9 +466,9 @@ public class FXMLDocumentController implements Initializable {
         }
 
     }
-    
+
     @FXML
     void refreshOnMousePressed(MouseEvent event) {
-        
+
     }
 }
