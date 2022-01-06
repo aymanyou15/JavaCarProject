@@ -1,6 +1,6 @@
 
  /* set up l298 input pin on IN1 - 2 , IN2 - 3 , IN3 - 4 , IN4 - 5 */
- #define IN1   2
+ #define IN1   (2)
  #define IN2   (3)
  #define IN3   (4)
  #define IN4   (5)

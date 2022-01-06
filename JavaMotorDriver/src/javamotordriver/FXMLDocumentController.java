@@ -367,7 +367,6 @@ public class FXMLDocumentController implements Initializable {
         if (key == KeyCode.K) {
             commValue -= 100;
             try {
-                out.write(commValue);
 
             } catch (Exception ex) {
 
