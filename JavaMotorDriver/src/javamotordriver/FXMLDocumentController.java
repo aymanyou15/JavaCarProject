@@ -265,7 +265,6 @@ public class FXMLDocumentController implements Initializable {
         }
         if (key == KeyCode.W || key == KeyCode.S || key == KeyCode.D || key == KeyCode.A
                 || key == KeyCode.O || key == KeyCode.K || key == KeyCode.L) {
-            System.out.println("senddddddddddd");
 
             if (key == KeyCode.W) {
                 commValue = (int) (0 + (sliderValue / 12.75));
@@ -329,12 +328,30 @@ public class FXMLDocumentController implements Initializable {
             }
 
             if (key == KeyCode.K) {
-                commValue += 100;
+                try {
+                    out.write(230);
+
+                } catch (IOException | NullPointerException ex) {
+                    // handle the input output exception
+                    // the exception is occured if the keys are pressed and there is no stable connection
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Please, connect the arduino first");
+                    alert.show();
+
+                    rightArrow.setStyle("-fx-fill: #010425;");
+                    downArrow.setStyle("-fx-fill: #010425;");
+                    upArrow.setStyle("-fx-fill: #010425;");
+                    leftArrow.setStyle("-fx-fill: #010425;");
+                    spedometer.setValue(0);
+                    rpm.setValue(0);
+                    hSlider.setValue(0);
+                }
             }
 
             try {
                 out.write(commValue);
-                System.out.println("after write");
 
             } catch (IOException | NullPointerException ex) {
                 // handle the input output exception
@@ -365,7 +382,12 @@ public class FXMLDocumentController implements Initializable {
         }
 
         if (key == KeyCode.K) {
-            commValue -= 100;
+            try {
+                out.write(240);
+
+            } catch (IOException | NullPointerException ex) {
+   
+            }
             try {
 
             } catch (Exception ex) {

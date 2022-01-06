@@ -1,19 +1,19 @@
 
- /* set up l298 input pin on IN1 - 2 , IN2 - 3 , IN3 - 4 , IN4 - 5 */
- #define IN1   (2)
- #define IN2   (3)
- #define IN3   (4)
- #define IN4   (5)
- #define buzz  (6)
- #define ENL   (9)
- #define ENR   (10)
+/* set up l298 input pin on IN1 - 2 , IN2 - 3 , IN3 - 4 , IN4 - 5 */
+#define IN1   (2)
+#define IN2   (3)
+#define IN3   (4)
+#define IN4   (5)
+#define buzz  (6)
+#define ENL   (9)
+#define ENR   (10)
 
-  int f = 0;
-  int speedValue;
-void setup() 
+int f = 0;
+int speedValue;
+void setup()
 {
   Serial.begin(9600);
-  pinMode(13,OUTPUT);
+  pinMode(13, OUTPUT);
   /* set up l298 input pin as Output pin*/
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -24,93 +24,61 @@ void setup()
   pinMode(ENL, OUTPUT);
   pinMode(ENR, OUTPUT);
 
-  analogWrite(ENL,0);
-  analogWrite(ENR,0);
-  
+  analogWrite(ENL, 0);
+  analogWrite(ENR, 0);
+
 }
 
-void loop() 
+void loop()
 {
 
-   f = Serial.read();
+  f = Serial.read();
 
-   if(f > 100 && f < 200)
-   {
-      /* the Buzzer is on */
-      digitalWrite(buzz, HIGH);
-    
-      if(f <= 20 && f >= 0)
-      {
-        f = f * 12.75;
-        analogWrite(ENL, f);
-        analogWrite(ENR, f);
-        Serial.println(f);
-        Forward_Motion();
-      }
-      else if(f <= 42 && f >= 22)
-      {
-        f = (f -22) * 12.75;
-        analogWrite(ENL, f);
-        analogWrite(ENR, f);
-        Backward_Motion();
-      }
-      else if(f <= 64 && f >= 44)
-      {
-        f = (f - 44) * 12.75;
-        analogWrite(ENL, f);
-        analogWrite(ENR, f);
-        Left_Motion();
-      }
-      else if(f <= 86 && f >= 66)
-      {
-        f = (f - 66) * 12.75;
-        analogWrite(ENL, f);
-        analogWrite(ENR, f);
-        Right_Motion();
-      }
-  }
-  else if (f < 100)
+  if (f <= 20 && f >= 0)
   {
-    /* the buzzer is off */
-    digitalWrite(buzz, LOW);
-
-    if(f <= 20 && f >= 0)
-      {
-        f = f * 12.75;
-        analogWrite(ENL, f);
-        analogWrite(ENR, f);
-        Serial.println(f);
-        Forward_Motion();
-      }
-      else if(f <= 42 && f >= 22)
-      {
-        f = (f -22) * 12.75;
-        analogWrite(ENL, f);
-        analogWrite(ENR, f);
-        Backward_Motion();
-      }
-      else if(f <= 64 && f >= 44)
-      {
-        f = (f - 44) * 12.75;
-        analogWrite(ENL, f);
-        analogWrite(ENR, f);
-        Left_Motion();
-      }
-      else if(f <= 86 && f >= 66)
-      {
-        f = (f - 66) * 12.75;
-        analogWrite(ENL, f);
-        analogWrite(ENR, f);
-        Right_Motion();
-      }
+    f = f * 12.75;
+    analogWrite(ENL, f);
+    analogWrite(ENR, f);
+    Serial.println(f);
+    Forward_Motion();
   }
-  else
+  else if (f <= 42 && f >= 22)
+  {
+    f = (f - 22) * 12.75;
+    analogWrite(ENL, f);
+    analogWrite(ENR, f);
+    Backward_Motion();
+  }
+  else if (f <= 64 && f >= 44)
+  {
+    f = (f - 44) * 12.75;
+    analogWrite(ENL, f);
+    analogWrite(ENR, f);
+    Left_Motion();
+  }
+  else if (f <= 86 && f >= 66)
+  {
+    f = (f - 66) * 12.75;
+    analogWrite(ENL, f);
+    analogWrite(ENR, f);
+    Right_Motion();
+  }
+  else if (f == 230)
+  {
+    digitalWrite(buzz, HIGH);
+  }
+  else if (f == 240)
+  {
+    digitalWrite(buzz, LOW);
+  }
+
+  else if (f == 205)
   {
     Stop_Motion();
-    analogWrite(ENL,0);
-    analogWrite(ENR,0);
+    analogWrite(ENL, 0);
+    analogWrite(ENR, 0);
   }
-  
+
 }
 
 
@@ -125,10 +93,10 @@ void Forward_Motion(void)
 }
 void Backward_Motion(void)
 {
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, HIGH);
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
 }
 void Left_Motion(void)
 {
