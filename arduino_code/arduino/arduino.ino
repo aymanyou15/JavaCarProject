@@ -39,7 +39,6 @@ void loop()
     f = f * 12.75;
     analogWrite(ENL, f);
     analogWrite(ENR, f);
-    Serial.println(f);
     Forward_Motion();
   }
   else if (f <= 42 && f >= 22)
