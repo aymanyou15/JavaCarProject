@@ -8,14 +8,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 */
 
 .menu-bar {
-    /*-fx-base: -dark-black;
-    -fx-font-size: 12pt;
-    -fx-background-color:
-        linear-gradient(to bottom, derive(-fx-base,-30%), derive(-fx-base,-60%)),
-        linear-gradient(to bottom, -light-black 2%, -dark-black 98%);
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: .9em 0.416667em .9em 0.416667em;
-    -fx-effect: dropshadow(two-pass-box,black,5,.2,0,0);*/
      -fx-background-color: rgba(41, 61, 61, 0.4);
 }
 .menu {
@@ -34,4 +26,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: rgba(41, 61, 61, 0.4);
 }
 
+
+.combo-box-popup .list-view{
+    -fx-background-color: -fx-my-menu-color; 
+     -fx-label-padding: 6px;
+      -fx-text-fill: #eee;
+}
+
+.combo-box-popup .list-view .list-cell{
+    -fx-text-fill: #eee;
+     -fx-label-padding: 6px;
+    -fx-background-color: rgba(41, 61, 61, 0.4);
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover{
+    -fx-background-color:#2478E9;
+    -fx-text-fill: -fx-my-menu-font-color-highlighted;/* show what option is selcted and highlight it */
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover{
+    -fx-background-color: #2478E9;
+    -fx-text-fill: #eee;
+}
 

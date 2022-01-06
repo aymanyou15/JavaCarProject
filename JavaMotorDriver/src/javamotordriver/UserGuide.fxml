@@ -5,14 +5,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="700.0" style="-fx-background-color: #3385ff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.UserGuideController">
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="700.0" style="-fx-background-color: #3385ff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.UserGuideController">
    <children>
       <Text fill="WHITE" layoutX="466.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shortcut Keys" AnchorPane.leftAnchor="466.0" AnchorPane.topAnchor="30.41796875">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="416.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="W                       -                 Forward" AnchorPane.leftAnchor="416.0" AnchorPane.topAnchor="79.892578125">
+      <Text fill="#cccccc" layoutX="412.0" layoutY="95.107421875" strokeType="OUTSIDE" strokeWidth="0.0" text="W                       -                 Forward" wrappingWidth="225.8662109375" AnchorPane.leftAnchor="412.0" AnchorPane.topAnchor="80.0">
          <font>
             <Font size="14.0" />
          </font>

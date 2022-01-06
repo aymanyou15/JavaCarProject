@@ -125,7 +125,7 @@ public class FXMLDocumentController implements Initializable {
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
                 + "-fx-text-align: center;");
 
-        portList.setStyle("-fx-background-color: #093691;" + "-fx-text-align: center;");
+        portList.setStyle("-fx-background-color: rgba(41, 61, 61, 0.1);" + "-fx-text-align: center;");
         portList.setValue("");
 
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
@@ -243,7 +243,6 @@ public class FXMLDocumentController implements Initializable {
             btn.setText("Start");
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
                     + "-fx-text-align: center;");
-            portList.setStyle("-fx-background-color: #093691;" + "-fx-text-align: center;");
             timeline.stop();
             hSlider.setValue(0);
             spedometer.setValue(0);
@@ -268,37 +267,37 @@ public class FXMLDocumentController implements Initializable {
 
             if (key == KeyCode.W) {
                 commValue = (int) (0 + (sliderValue / 12.75));
-                upArrow.setStyle("-fx-fill: #099c11;");
-                downArrow.setStyle("-fx-fill: #010425;");
-                rightArrow.setStyle("-fx-fill: #010425;");
-                leftArrow.setStyle("-fx-fill: #010425;");
+                upArrow.setStyle("-fx-fill: #31D9C5;");
+               /* downArrow.setStyle("-fx-fill: #040404;");
+                rightArrow.setStyle("-fx-fill: #040404;");
+                leftArrow.setStyle("-fx-fill: #040404;");*/
             }
 
             if (key == KeyCode.S) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (22 + (sliderValue / 12.75));
-                downArrow.setStyle("-fx-fill: #099c11;");
-                upArrow.setStyle("-fx-fill: #010425;");
+                downArrow.setStyle("-fx-fill:  #31D9C5;");
+                /*upArrow.setStyle("-fx-fill: #010425;");
                 rightArrow.setStyle("-fx-fill: #010425;");
-                leftArrow.setStyle("-fx-fill: #010425;");
+                leftArrow.setStyle("-fx-fill: #010425;");*/
             }
 
             if (key == KeyCode.A) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (44 + (sliderValue / 12.75));
-                leftArrow.setStyle("-fx-fill: #099c11;");
-                downArrow.setStyle("-fx-fill: #010425;");
+                leftArrow.setStyle("-fx-fill:  #31D9C5;");
+               /* downArrow.setStyle("-fx-fill: #010425;");
                 rightArrow.setStyle("-fx-fill: #010425;");
-                upArrow.setStyle("-fx-fill: #010425;");
+                upArrow.setStyle("-fx-fill: #010425;");*/
             }
 
             if (key == KeyCode.D) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (66 + (sliderValue / 12.75));
-                rightArrow.setStyle("-fx-fill: #099c11;");
-                downArrow.setStyle("-fx-fill: #010425;");
+                rightArrow.setStyle("-fx-fill:  #31D9C5;");
+               /* downArrow.setStyle("-fx-fill: #010425;");
                 upArrow.setStyle("-fx-fill: #010425;");
-                leftArrow.setStyle("-fx-fill: #010425;");
+                leftArrow.setStyle("-fx-fill: #010425;");*/
             }
 
             if (key == KeyCode.O) {
