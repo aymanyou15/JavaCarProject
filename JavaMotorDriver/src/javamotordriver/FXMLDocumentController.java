@@ -39,8 +39,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -53,34 +51,27 @@ public class FXMLDocumentController implements Initializable {
     AnchorPane anchor;
     static SerialPort chosenPort;
     public Socket socket;
-    public PrintStream dos;
-
-    @FXML
-    Button btn;
+    public PrintStream dos; 
     KeyCode key;
-
     OutputStream out;
     Scanner in;
+    
     @FXML
-    public ComboBox<String> portList;
-
+    private Slider hSlider;
     @FXML
     public Gauge spedometer;
     @FXML
     private Gauge rpm;
     @FXML
-    private Slider hSlider;
-    @FXML
-    private Gauge feul;
+    private Gauge fuel;
     @FXML
     private Gauge heat;
     @FXML
     Image picture;
-
-    int x = 0;
-
-    MediaPlayer mp;
-    Media me;
+    @FXML
+    public ComboBox<String> portList;
+    @FXML
+    Button btn;
     @FXML
     public MenuBar menuBar;
     @FXML
@@ -95,25 +86,24 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Polygon upArrow;
-
     @FXML
     private Polygon downArrow;
-
     @FXML
     private Polygon rightArrow;
-
     @FXML
     private Polygon leftArrow;
 
+    int x = 0;
+    float i=0;
     int commValue = 0;
-
     int buzz = 0;
-
     ObservableList<String> portListVector = FXCollections.observableArrayList();
 
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
 
         // socket connection with server
         try {
@@ -129,6 +119,7 @@ public class FXMLDocumentController implements Initializable {
 
         portList.setStyle("-fx-background-color: rgba(41, 61, 61, 0.1);" + "-fx-text-align: center;");
         portList.setValue("");
+ 
 
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
@@ -147,6 +138,7 @@ public class FXMLDocumentController implements Initializable {
         });
         portCheck.setDaemon(true);
         portCheck.start();
+        i=0;
     }
 
     public void detectPorts() throws InterruptedException {
@@ -208,20 +200,20 @@ public class FXMLDocumentController implements Initializable {
                                     )
                             )
                     );
-                    // timeline.setAutoReverse(true);
                     timeline.setCycleCount(Timeline.INDEFINITE);
                     timeline.play();
-
+                    fuel.setValue(0);
                     btn.setText("End");
                     btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
                             + "-fx-text-align: center;");
 
+                    
                     portList.setEditable(false);
                     new Thread(() -> {
                         out = chosenPort.getOutputStream();
                     }).start();
 
-                    //timeline.stop();
+                   
                 }
 
             } catch (Exception ex) {
@@ -249,14 +241,77 @@ public class FXMLDocumentController implements Initializable {
             hSlider.setValue(0);
             spedometer.setValue(0);
             rpm.setValue(0);
+            fuel.setValue(0);
+            i=0;
+            heat.setValue(0);
         }
+    }
+
+        @FXML
+    void btnOnMouseEntered(MouseEvent event
+    ) {
+        if (btn.getText().equals("Start")) {
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #00B200;" + "-fx-font-weight: bold;"
+                    + "-fx-text-align: center;");
+        } else if (btn.getText().equals("End")) {
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #FF0000;" + "-fx-font-weight: bold;"
+                    + "-fx-text-align: center;");
+        
+        }
+    }
+
+    @FXML
+    void btnOnMouseExited(MouseEvent event
+    ) {
+        if (btn.getText().equals("Start")) {
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
+                    + "-fx-text-align: center;");
+        } else if (btn.getText().equals("End")) {
+            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
+                    + "-fx-text-align: center;");
+                
+        }
+    }
+    
+     @FXML
+    void dragMouseSlider(MouseEvent event
+    ) {
+
+        int sliderValue = (int) hSlider.getValue();
+
+        //value to be sent to the Spedo Meter  
+        float SpedoMeterValue = (float) (sliderValue * 50) / 255;
+        spedometer.setValue(SpedoMeterValue);
+
+        //value to be sent to the RPM guage   (RPM = %duty-cycle * 5.5) 
+        //duty-cycle=slidervalue/1(s)*100
+        float RPMValue = (float) ((sliderValue * 5.5) / 60);
+        rpm.setValue(RPMValue);
+
+        //value to be sent to the Feul consumption 
+        //Assume the car fuel tank has 12 gallon of fuel 
+        i=i+RPMValue;
+        float fuelValue=(float)((i/1.6)/12);
+        fuel.setValue(fuelValue);
+        if (RPMValue>=50)
+                {
+                   fuel.setValue(50); 
+                }
+                else {
+                     fuel.setValue(fuelValue);
+                }
+
+        //value to be sent to the Heat guage 
+        int heatValue = sliderValue / 20;
+        heat.setValue(heatValue);
+
     }
 
     public void onKeyPressed(KeyEvent event) {
         int sliderValue = (int) hSlider.getValue();
         float RPMValue;
+        float fuelValue;
 
-//        // soliman's code
         try {
             key = event.getCode();
             // send the key pressed to the server
@@ -270,36 +325,28 @@ public class FXMLDocumentController implements Initializable {
             if (key == KeyCode.W) {
                 commValue = (int) (0 + (sliderValue / 12.75));
                 upArrow.setStyle("-fx-fill: #31D9C5;");
-                /* downArrow.setStyle("-fx-fill: #040404;");
-                rightArrow.setStyle("-fx-fill: #040404;");
-                leftArrow.setStyle("-fx-fill: #040404;");*/
+        
             }
 
             if (key == KeyCode.S) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (22 + (sliderValue / 12.75));
                 downArrow.setStyle("-fx-fill:  #31D9C5;");
-                /*upArrow.setStyle("-fx-fill: #010425;");
-                rightArrow.setStyle("-fx-fill: #010425;");
-                leftArrow.setStyle("-fx-fill: #010425;");*/
+            
             }
 
             if (key == KeyCode.A) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (44 + (sliderValue / 12.75));
                 leftArrow.setStyle("-fx-fill:  #31D9C5;");
-                /* downArrow.setStyle("-fx-fill: #010425;");
-                rightArrow.setStyle("-fx-fill: #010425;");
-                upArrow.setStyle("-fx-fill: #010425;");*/
+         
             }
 
             if (key == KeyCode.D) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (66 + (sliderValue / 12.75));
                 rightArrow.setStyle("-fx-fill:  #31D9C5;");
-                /* downArrow.setStyle("-fx-fill: #010425;");
-                upArrow.setStyle("-fx-fill: #010425;");
-                leftArrow.setStyle("-fx-fill: #010425;");*/
+
             }
 
             if (key == KeyCode.O) {
@@ -313,6 +360,20 @@ public class FXMLDocumentController implements Initializable {
                 spedometer.setValue((sliderValue * 50) / 255);
                 RPMValue = (float) ((sliderValue * 5.5) / 60);
                 rpm.setValue(RPMValue);
+                i=i+RPMValue;
+                fuelValue=(float)((i/1.6)/12);
+                if (RPMValue>=50)
+                {
+                   fuel.setValue(50); 
+                }
+                else {
+                     fuel.setValue(fuelValue);
+                }
+                fuel.setValue(fuelValue);
+                int heatValue = sliderValue / 20;
+                heat.setValue(heatValue);
+                
+                
             }
 
             if (key == KeyCode.L) {
@@ -326,6 +387,9 @@ public class FXMLDocumentController implements Initializable {
                 spedometer.setValue((sliderValue * 50) / 255);
                 RPMValue = (float) ((sliderValue * 5.5) / 60);
                 rpm.setValue(RPMValue);
+                int heatValue = sliderValue / 20;
+                heat.setValue(heatValue);
+                
             }
 
             if (key == KeyCode.K) {
@@ -343,14 +407,12 @@ public class FXMLDocumentController implements Initializable {
                             alert.setHeaderText(null);
                             alert.setContentText("Please, connect the arduino first");
                             alert.show();
-
-                            rightArrow.setStyle("-fx-fill: #010425;");
-                            downArrow.setStyle("-fx-fill: #010425;");
-                            upArrow.setStyle("-fx-fill: #010425;");
-                            leftArrow.setStyle("-fx-fill: #010425;");
                             spedometer.setValue(0);
                             rpm.setValue(0);
                             hSlider.setValue(0);
+                            fuel.setValue(0);
+                            i=0;
+                            heat.setValue(0);
                         }
                         break;
                     case 1:
@@ -366,14 +428,12 @@ public class FXMLDocumentController implements Initializable {
                             alert.setHeaderText(null);
                             alert.setContentText("Please, connect the arduino first");
                             alert.show();
-
-                            rightArrow.setStyle("-fx-fill: #010425;");
-                            downArrow.setStyle("-fx-fill: #010425;");
-                            upArrow.setStyle("-fx-fill: #010425;");
-                            leftArrow.setStyle("-fx-fill: #010425;");
                             spedometer.setValue(0);
                             rpm.setValue(0);
                             hSlider.setValue(0);
+                            fuel.setValue(0);
+                            i=0;
+                            heat.setValue(0);
                         }
                         break;
                 }
@@ -392,14 +452,12 @@ public class FXMLDocumentController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Please, connect the arduino first");
                 alert.show();
-
-                rightArrow.setStyle("-fx-fill: #010425;");
-                downArrow.setStyle("-fx-fill: #010425;");
-                upArrow.setStyle("-fx-fill: #010425;");
-                leftArrow.setStyle("-fx-fill: #010425;");
                 spedometer.setValue(0);
                 rpm.setValue(0);
                 hSlider.setValue(0);
+                fuel.setValue(0);
+                i=0;
+                heat.setValue(0);
             }
         }
     }
@@ -410,10 +468,10 @@ public class FXMLDocumentController implements Initializable {
                 || key == KeyCode.O || key == KeyCode.L || key == KeyCode.K) {
             try {
                 out.write(205);
-                upArrow.setStyle("-fx-background-color: #010425;");
-                downArrow.setStyle("-fx-background-color: #010425;");
-                rightArrow.setStyle("-fx-background-color: #010425;");
-                leftArrow.setStyle("-fx-background-color: #010425;");
+                upArrow.setStyle("-fx-background-color: #000000;");
+                downArrow.setStyle("-fx-background-color: #000000;");
+                rightArrow.setStyle("-fx-background-color:#000000;");
+                leftArrow.setStyle("-fx-background-color: #000000;");
 
             } catch (Exception ex) {
 
@@ -421,31 +479,7 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
-    @FXML
-    void dragMouseSlider(MouseEvent event
-    ) {
-
-        int sliderValue = (int) hSlider.getValue();
-
-        //value to be sent to the Spedo Meter  
-        float SpedoMeterValue = (float) (sliderValue * 50) / 255;
-        spedometer.setValue(SpedoMeterValue);
-
-        //value to be sent to the RPM guage   (RPM = %duty-cycle * 5.5) 
-        //duty-cycle=slidervalue/1(s)*100
-        float RPMValue = (float) ((sliderValue * 5.5) / 60);
-        rpm.setValue(RPMValue);
-
-        //value to be sent to the Feul consumption 
-        int feulValue = sliderValue / 10;
-        feul.setValue(feulValue);
-
-        //value to be sent to the Feul consumption 
-        int heatValue = sliderValue / 10;
-        heat.setValue(heatValue);
-
-    }
-
+   
     @FXML
     void AboutHandler(ActionEvent event) throws IOException {
         Parent nfxml = FXMLLoader.load(getClass().getResource("HelpScene.fxml"));
@@ -472,34 +506,4 @@ public class FXMLDocumentController implements Initializable {
         popup.show();
     }
 
-    @FXML
-    void btnOnMouseEntered(MouseEvent event
-    ) {
-        if (btn.getText().equals("Start")) {
-            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #00B200;" + "-fx-font-weight: bold;"
-                    + "-fx-text-align: center;");
-        } else if (btn.getText().equals("End")) {
-            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #FF0000;" + "-fx-font-weight: bold;"
-                    + "-fx-text-align: center;");
-        }
-    }
-
-    @FXML
-    void btnOnMouseExited(MouseEvent event
-    ) {
-        if (btn.getText().equals("Start")) {
-            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
-                    + "-fx-text-align: center;");
-        } else if (btn.getText().equals("End")) {
-            btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
-                    + "-fx-text-align: center;");
-        }
-
-    }
-
-    @FXML
-    void refreshOnMousePressed(MouseEvent event
-    ) {
-
-    }
 }

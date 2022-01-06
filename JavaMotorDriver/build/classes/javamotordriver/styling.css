@@ -2,10 +2,6 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
 */
-/* 
-    Created on : Dec 29, 2021, 10:24:44 PM
-    Author     : DELL
-*/
 
 .menu-bar {
      -fx-background-color: rgba(41, 61, 61, 0.4);
@@ -24,28 +20,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 .context-menu {
     -fx-background-color: rgba(41, 61, 61, 0.4);
+    -fx-text-fill: white;
 }
 
 
 .combo-box-popup .list-view{
     -fx-background-color: rgba(41, 61, 61, 0.4); 
      -fx-label-padding: 6px;
-      -fx-text-fill: #eee;
+      -fx-text-fill: white;
 }
 
 .combo-box-popup .list-view .list-cell{
-    -fx-text-fill: #eee;
+    -fx-text-fill: white;
      -fx-label-padding: 6px;
     -fx-background-color: rgba(41, 61, 61, 0.4);
 }
 
 .combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover{
-    -fx-background-color:#2478E9;
-    -fx-text-fill: -fx-my-menu-font-color-highlighted;/* show what option is selcted and highlight it */
+    -fx-background-color:#2478E9;/* show what option is selcted and highlight it */
 }
 
 .combo-box-popup .list-view .list-cell:filled:hover{
     -fx-background-color: #2478E9;
-    -fx-text-fill: #eee;
+    -fx-text-fill: white;
 }
 

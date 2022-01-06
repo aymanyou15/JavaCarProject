@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="701.0" prefWidth="1279.0" stylesheets="styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="anchor" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="700.0" prefWidth="1350.0" stylesheets="styling.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javamotordriver.FXMLDocumentController">
     <children>
       <ImageView fitHeight="769.0" fitWidth="1353.0" layoutX="-3.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -126,7 +126,7 @@
             <Color red="0.9210526347160339" green="0.9039961099624634" blue="0.9039961099624634" />
          </subTitleColor>
       </Gauge>
-      <Gauge fx:id="heat" layoutX="1173.0" layoutY="531.0" maxValue="25.0" needleShape="ROUND" onMouseDragged="#dragMouseSlider" orientation="VERTICAL" prefHeight="154.0" prefWidth="151.0" skinType="HORIZONTAL" startAngle="180.0" styleClass="heat-style" threshold="12.5">
+      <Gauge fx:id="fuel" layoutX="1173.0" layoutY="531.0" maxValue="50.0" needleShape="ROUND" onMouseDragged="#dragMouseSlider" orientation="VERTICAL" prefHeight="154.0" prefWidth="151.0" skinType="HORIZONTAL" startAngle="180.0" styleClass="heat-style" threshold="12.5">
          <foregroundPaint>
             <LinearGradient endX="1.0" endY="1.0" startX="0.9099526066350712" startY="0.8104265402843602">
                <stops>
@@ -172,10 +172,10 @@
             <Color red="0.8684210777282715" green="0.8684210777282715" blue="0.8684210777282715" />
          </tickMarkColor>
          <titleColor>
-            <Color red="0.3684210479259491" green="0.3684210479259491" blue="0.3684210479259491" />
+            <Color />
          </titleColor>
          <valueColor>
-            <Color red="0.8289473652839661" green="0.7982456088066101" blue="0.7982456088066101" />
+            <Color />
          </valueColor>
          <needleColor>
             <Color red="1.0" green="1.0" blue="1.0" />
@@ -191,7 +191,7 @@
          </barBorderColor>
       </Gauge>
       <Slider fx:id="hSlider" layoutX="287.0" layoutY="27.0" max="255.0" onMouseDragged="#dragMouseSlider" prefHeight="133.0" prefWidth="756.0" showTickLabels="true" showTickMarks="true" />
-      <ImageView fitHeight="38.0" fitWidth="35.0" layoutX="141.0" layoutY="663.0" pickOnBounds="true">
+      <ImageView fitHeight="27.0" fitWidth="29.0" layoutX="147.0" layoutY="663.0" pickOnBounds="true">
          <image>
             <Image url="@../images/images.jpg" />
          </image>
@@ -217,8 +217,8 @@
             </Menu>
          </menus>
       </MenuBar>
-      <ComboBox fx:id="portList" focusTraversable="false" layoutX="81.0" prefHeight="56.0" prefWidth="82.0" stylesheets="@styling.css" />
-      <Gauge fx:id="feul" layoutX="21.0" layoutY="543.0" maxValue="25.0" needleShape="ROUND" onMouseDragged="#dragMouseSlider" orientation="VERTICAL" prefHeight="154.0" prefWidth="151.0" skinType="HORIZONTAL" startAngle="180.0" styleClass="heat-style" threshold="12.5">
+      <ComboBox fx:id="portList" focusTraversable="false" layoutX="81.0" prefHeight="56.0" prefWidth="82.0" promptText="COM" stylesheets="@styling.css" />
+      <Gauge fx:id="heat" layoutX="21.0" layoutY="543.0" maxValue="25.0" needleShape="ROUND" onMouseDragged="#dragMouseSlider" orientation="VERTICAL" prefHeight="154.0" prefWidth="151.0" skinType="HORIZONTAL" startAngle="180.0" styleClass="heat-style" threshold="12.5">
          <foregroundPaint>
             <LinearGradient endX="1.0" endY="1.0" startX="0.9099526066350712" startY="0.8104265402843602">
                <stops>
@@ -267,7 +267,7 @@
             <Color red="0.3684210479259491" green="0.3684210479259491" blue="0.3684210479259491" />
          </titleColor>
          <valueColor>
-            <Color red="0.8289473652839661" green="0.7982456088066101" blue="0.7982456088066101" />
+            <Color />
          </valueColor>
          <needleColor>
             <Color red="1.0" green="1.0" blue="1.0" />

@@ -27,10 +27,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 
-/**
- *
- * @author Ahmed Yehia
- */
 public class Server extends Application {
     ServerSocket server;
     Socket handler;
