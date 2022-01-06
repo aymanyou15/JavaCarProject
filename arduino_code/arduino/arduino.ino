@@ -71,7 +71,7 @@ void loop()
     digitalWrite(buzz, LOW);
   }
 
-  else
+  else if (f >= 130)
   {
     Stop_Motion();
     analogWrite(ENL, 0);
