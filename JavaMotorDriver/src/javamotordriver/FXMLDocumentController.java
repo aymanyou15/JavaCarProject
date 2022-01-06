@@ -131,7 +131,7 @@ public class FXMLDocumentController implements Initializable {
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
         line.getStrokeDashArray().setAll(25d, 20d, 5d, 20d);
-        line.setStrokeWidth(2);        
+        line.setStrokeWidth(2);
 
         Thread portCheck = new Thread(() -> {
             while (true) {
@@ -174,10 +174,6 @@ public class FXMLDocumentController implements Initializable {
                 chosenPort = SerialPort.getCommPort(portList.getValue().toString());
                 chosenPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
 
-//                new Thread(() -> {
-//                    checkPortConeection = chosenPort.openPort();
-//                }).start();
-
                 if (portList.getValue().equals("")) {
                     Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Warning");
@@ -219,12 +215,9 @@ public class FXMLDocumentController implements Initializable {
                             + "-fx-text-align: center;");
 
                     portList.setEditable(false);
-//                    new Thread(() -> {
-
+                    new Thread(() -> {
                         out = chosenPort.getOutputStream();
-                        System.out.println("conecteeeed");
-
-//                    }).start();
+                    }).start();
 
                     //timeline.stop();
                 }
@@ -270,11 +263,11 @@ public class FXMLDocumentController implements Initializable {
         } catch (NullPointerException ex) {
 
         }
-        if (key == KeyCode.UP || key == KeyCode.DOWN || key == KeyCode.LEFT || key == KeyCode.RIGHT
-                || key == KeyCode.W || key == KeyCode.E || key == KeyCode.S) {
+        if (key == KeyCode.W || key == KeyCode.S || key == KeyCode.D || key == KeyCode.A
+                || key == KeyCode.O || key == KeyCode.K || key == KeyCode.L) {
             System.out.println("senddddddddddd");
 
-            if (key == KeyCode.UP) {
+            if (key == KeyCode.W) {
                 commValue = (int) (0 + (sliderValue / 12.75));
                 upArrow.setStyle("-fx-fill: #099c11;");
                 downArrow.setStyle("-fx-fill: #010425;");
@@ -282,7 +275,7 @@ public class FXMLDocumentController implements Initializable {
                 leftArrow.setStyle("-fx-fill: #010425;");
             }
 
-            if (key == KeyCode.DOWN) {
+            if (key == KeyCode.S) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (22 + (sliderValue / 12.75));
                 downArrow.setStyle("-fx-fill: #099c11;");
@@ -291,7 +284,7 @@ public class FXMLDocumentController implements Initializable {
                 leftArrow.setStyle("-fx-fill: #010425;");
             }
 
-            if (key == KeyCode.LEFT) {
+            if (key == KeyCode.A) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (44 + (sliderValue / 12.75));
                 leftArrow.setStyle("-fx-fill: #099c11;");
@@ -300,7 +293,7 @@ public class FXMLDocumentController implements Initializable {
                 upArrow.setStyle("-fx-fill: #010425;");
             }
 
-            if (key == KeyCode.RIGHT) {
+            if (key == KeyCode.D) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (66 + (sliderValue / 12.75));
                 rightArrow.setStyle("-fx-fill: #099c11;");
@@ -309,7 +302,7 @@ public class FXMLDocumentController implements Initializable {
                 leftArrow.setStyle("-fx-fill: #010425;");
             }
 
-            if (key == KeyCode.W) {
+            if (key == KeyCode.O) {
                 sliderValue = sliderValue + 5;
                 if (sliderValue < 0) {
                     sliderValue = 0;
@@ -322,7 +315,7 @@ public class FXMLDocumentController implements Initializable {
                 rpm.setValue(RPMValue);
             }
 
-            if (key == KeyCode.S) {
+            if (key == KeyCode.L) {
                 sliderValue = sliderValue - 5;
                 if (sliderValue < 0) {
                     sliderValue = 0;
@@ -335,7 +328,7 @@ public class FXMLDocumentController implements Initializable {
                 rpm.setValue(RPMValue);
             }
 
-            if (key == KeyCode.E) {
+            if (key == KeyCode.K) {
                 commValue += 100;
             }
 
@@ -343,7 +336,7 @@ public class FXMLDocumentController implements Initializable {
                 out.write(commValue);
                 System.out.println("after write");
 
-            } catch (IOException ex) {
+            } catch (IOException | NullPointerException ex) {
                 // handle the input output exception
                 // the exception is occured if the keys are pressed and there is no stable connection
                 Alert alert = new Alert(AlertType.WARNING);
@@ -371,7 +364,7 @@ public class FXMLDocumentController implements Initializable {
 
         }
 
-        if (key == KeyCode.E) {
+        if (key == KeyCode.K) {
             commValue -= 100;
             try {
                 out.write(commValue);
