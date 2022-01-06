@@ -47,17 +47,17 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="60.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Select the port that the device is connected to from the available ports" wrappingWidth="241.68066704273224">
+      <Text fill="#cccccc" layoutX="60.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Select the port that the device is connected to from the available ports from the Combo box" wrappingWidth="241.68066704273224">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="60.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Press Start" wrappingWidth="241.68066704273224">
+      <Text fill="#cccccc" layoutX="60.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Press Start" wrappingWidth="241.68066704273224">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Text fill="#cccccc" layoutX="60.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Move the Car using arrows and change the speed" wrappingWidth="241.68066704273224">
+      <Text fill="#cccccc" layoutX="60.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Move the Car using arrows and change the speed" wrappingWidth="241.68066704273224">
          <font>
             <Font size="14.0" />
          </font>
