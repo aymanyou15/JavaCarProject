@@ -53,11 +53,11 @@ public class FXMLDocumentController implements Initializable {
     AnchorPane anchor;
     static SerialPort chosenPort;
     public Socket socket;
-    public PrintStream dos; 
+    public PrintStream dos;
     KeyCode key;
     OutputStream out;
     Scanner in;
-    
+
     @FXML
     private Slider hSlider;
     @FXML
@@ -96,17 +96,14 @@ public class FXMLDocumentController implements Initializable {
     private Polygon leftArrow;
 
     int x = 0;
-    float i=0;
+    float i = 0;
     int commValue = 0;
     int buzz = 0;
     ObservableList<String> portListVector = FXCollections.observableArrayList();
 
-    
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         btn.setShape(new Circle(100));
         btn.setText("Start");
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
@@ -114,7 +111,6 @@ public class FXMLDocumentController implements Initializable {
 
         portList.setStyle("-fx-background-color: rgba(41, 61, 61, 0.1);" + "-fx-text-align: center;");
         portList.setValue("");
- 
 
         hSlider.setStyle("-fx-control-inner-background: #293d3d;");
         helpMenu.setStyle("-fx-font-weight: bold;" + "-fx-font-size: 18px;");
@@ -133,7 +129,7 @@ public class FXMLDocumentController implements Initializable {
         });
         portCheck.setDaemon(true);
         portCheck.start();
-        i=0;
+        i = 0;
     }
 
     public void detectPorts() throws InterruptedException {
@@ -202,12 +198,11 @@ public class FXMLDocumentController implements Initializable {
                     btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
                             + "-fx-text-align: center;");
 
-                    
                     portList.setEditable(false);
                     new Thread(() -> {
                         out = chosenPort.getOutputStream();
                     }).start();
-                    
+
                     // socket connection with server
                     try {
                         socket = new Socket("127.0.0.1", 5005);
@@ -215,7 +210,7 @@ public class FXMLDocumentController implements Initializable {
                     } catch (IOException ex) {
                         // No Server to Connect to
                     }
-                   
+
                 }
 
             } catch (Exception ex) {
@@ -237,8 +232,8 @@ public class FXMLDocumentController implements Initializable {
             try {
                 socket.close();
                 dos.close();
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException | NullPointerException ex) {
+
             }
             portList.setEditable(false);
             portList.setValue("");
@@ -250,12 +245,12 @@ public class FXMLDocumentController implements Initializable {
             spedometer.setValue(0);
             rpm.setValue(0);
             fuel.setValue(0);
-            i=0;
+            i = 0;
             heat.setValue(0);
         }
     }
 
-        @FXML
+    @FXML
     void btnOnMouseEntered(MouseEvent event
     ) {
         if (btn.getText().equals("Start")) {
@@ -264,7 +259,7 @@ public class FXMLDocumentController implements Initializable {
         } else if (btn.getText().equals("End")) {
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #FF0000;" + "-fx-font-weight: bold;"
                     + "-fx-text-align: center;");
-        
+
         }
     }
 
@@ -277,11 +272,11 @@ public class FXMLDocumentController implements Initializable {
         } else if (btn.getText().equals("End")) {
             btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #DB341D;" + "-fx-font-weight: bold;"
                     + "-fx-text-align: center;");
-                
+
         }
     }
-    
-     @FXML
+
+    @FXML
     void dragMouseSlider(MouseEvent event
     ) {
 
@@ -298,16 +293,14 @@ public class FXMLDocumentController implements Initializable {
 
         //value to be sent to the Feul consumption 
         //Assume the car fuel tank has 12 gallon of fuel 
-        i=i+RPMValue;
-        float fuelValue=(float)((i/1.6)/12);
+        i = i + RPMValue;
+        float fuelValue = (float) ((i / 1.6) / 12);
         fuel.setValue(fuelValue);
-        if (RPMValue>=50)
-                {
-                   fuel.setValue(50); 
-                }
-                else {
-                     fuel.setValue(fuelValue);
-                }
+        if (RPMValue >= 50) {
+            fuel.setValue(50);
+        } else {
+            fuel.setValue(fuelValue);
+        }
 
         //value to be sent to the Heat guage 
         int heatValue = sliderValue / 20;
@@ -333,21 +326,21 @@ public class FXMLDocumentController implements Initializable {
             if (key == KeyCode.W) {
                 commValue = (int) (0 + (sliderValue / 12.75));
                 upArrow.setStyle("-fx-fill: #31D9C5;");
-        
+
             }
 
             if (key == KeyCode.S) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (22 + (sliderValue / 12.75));
                 downArrow.setStyle("-fx-fill:  #31D9C5;");
-            
+
             }
 
             if (key == KeyCode.A) {
                 hSlider.setValue(hSlider.getValue());
                 commValue = (int) (44 + (sliderValue / 12.75));
                 leftArrow.setStyle("-fx-fill:  #31D9C5;");
-         
+
             }
 
             if (key == KeyCode.D) {
@@ -368,20 +361,17 @@ public class FXMLDocumentController implements Initializable {
                 spedometer.setValue((sliderValue * 50) / 255);
                 RPMValue = (float) ((sliderValue * 5.5) / 60);
                 rpm.setValue(RPMValue);
-                i=i+RPMValue;
-                fuelValue=(float)((i/1.6)/12);
-                if (RPMValue>=50)
-                {
-                   fuel.setValue(50); 
-                }
-                else {
-                     fuel.setValue(fuelValue);
+                i = i + RPMValue;
+                fuelValue = (float) ((i / 1.6) / 12);
+                if (RPMValue >= 50) {
+                    fuel.setValue(50);
+                } else {
+                    fuel.setValue(fuelValue);
                 }
                 fuel.setValue(fuelValue);
                 int heatValue = sliderValue / 20;
                 heat.setValue(heatValue);
-                
-                
+
             }
 
             if (key == KeyCode.L) {
@@ -397,7 +387,7 @@ public class FXMLDocumentController implements Initializable {
                 rpm.setValue(RPMValue);
                 int heatValue = sliderValue / 20;
                 heat.setValue(heatValue);
-                
+
             }
 
             if (key == KeyCode.K) {
@@ -419,7 +409,7 @@ public class FXMLDocumentController implements Initializable {
                             rpm.setValue(0);
                             hSlider.setValue(0);
                             fuel.setValue(0);
-                            i=0;
+                            i = 0;
                             heat.setValue(0);
                         }
                         break;
@@ -440,7 +430,7 @@ public class FXMLDocumentController implements Initializable {
                             rpm.setValue(0);
                             hSlider.setValue(0);
                             fuel.setValue(0);
-                            i=0;
+                            i = 0;
                             heat.setValue(0);
                         }
                         break;
@@ -460,11 +450,15 @@ public class FXMLDocumentController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Please, connect the arduino first");
                 alert.show();
+                upArrow.setStyle("-fx-fill:  #000000;");
+                downArrow.setStyle("-fx-fill:  #000000;");
+                rightArrow.setStyle("-fx-fill:  #000000;");
+                leftArrow.setStyle("-fx-fill:  #000000;");
                 spedometer.setValue(0);
                 rpm.setValue(0);
                 hSlider.setValue(0);
                 fuel.setValue(0);
-                i=0;
+                i = 0;
                 heat.setValue(0);
             }
         }
@@ -487,7 +481,6 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
-   
     @FXML
     void AboutHandler(ActionEvent event) throws IOException {
         Parent nfxml = FXMLLoader.load(getClass().getResource("HelpScene.fxml"));
