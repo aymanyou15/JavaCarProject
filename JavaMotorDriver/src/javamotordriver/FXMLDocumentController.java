@@ -104,6 +104,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        portList.setPromptText("COM");
         btn.setShape(new Circle(100));
         btn.setText("Start");
         btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
