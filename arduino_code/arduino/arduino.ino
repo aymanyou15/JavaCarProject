@@ -34,6 +34,7 @@ void loop()
 
   f = Serial.read();
 
+  /* move forward */
   if (f <= 20 && f >= 0)
   {
     f = f * 12.75;
@@ -41,6 +42,7 @@ void loop()
     analogWrite(ENR, f);
     Forward_Motion();
   }
+  /* move Downward */
   else if (f <= 42 && f >= 22)
   {
     f = (f - 22) * 12.75;
@@ -48,6 +50,7 @@ void loop()
     analogWrite(ENR, f);
     Backward_Motion();
   }
+  /* move left */
   else if (f <= 64 && f >= 44)
   {
     f = (f - 44) * 12.75;
@@ -55,6 +58,7 @@ void loop()
     analogWrite(ENR, f);
     Left_Motion();
   }
+  /* move right */
   else if (f <= 86 && f >= 66)
   {
     f = (f - 66) * 12.75;
@@ -62,15 +66,17 @@ void loop()
     analogWrite(ENR, f);
     Right_Motion();
   }
+  /* buzzer on */
   else if (f == 100)
   {
     digitalWrite(buzz, HIGH);
   }
+  /* buzzer off */
   else if (f == 120)
   {
     digitalWrite(buzz, LOW);
   }
-
+  /* stop the car */
   else if (f >= 130)
   {
     Stop_Motion();
