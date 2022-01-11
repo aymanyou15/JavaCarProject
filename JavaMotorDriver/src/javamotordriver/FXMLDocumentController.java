@@ -131,6 +131,7 @@ public class FXMLDocumentController implements Initializable {
         portCheck.setDaemon(true);
         portCheck.start();
         i = 0;
+     
     }
 
     public void detectPorts() throws InterruptedException {
@@ -296,9 +297,8 @@ public class FXMLDocumentController implements Initializable {
         //Assume the car fuel tank has 12 gallon of fuel 
         i = i + RPMValue;
         float fuelValue = (float) ((i / 1.6) / 12);
-        fuel.setValue(fuelValue);
-        if (RPMValue >= 50) {
-            fuel.setValue(50);
+        if (fuelValue >= 50) {
+            fuel.setValue(49.5);
         } else {
             fuel.setValue(fuelValue);
         }
@@ -364,12 +364,11 @@ public class FXMLDocumentController implements Initializable {
                 rpm.setValue(RPMValue);
                 i = i + RPMValue;
                 fuelValue = (float) ((i / 1.6) / 12);
-                if (RPMValue >= 50) {
-                    fuel.setValue(50);
+                if (fuelValue>=50){
+                    fuel.setValue(49.5);
                 } else {
                     fuel.setValue(fuelValue);
                 }
-                fuel.setValue(fuelValue);
                 int heatValue = sliderValue / 20;
                 heat.setValue(heatValue);
 
