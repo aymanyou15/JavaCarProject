@@ -207,7 +207,7 @@ public class FXMLDocumentController implements Initializable {
 
                     // socket connection with server
                     try {
-                        socket = new Socket("127.0.0.1", 5005);
+                        socket = new Socket("10.145.6.208", 5005);
                         dos = new PrintStream(socket.getOutputStream());
                     } catch (IOException ex) {
                         // No Server to Connect to
@@ -460,6 +460,10 @@ public class FXMLDocumentController implements Initializable {
                 fuel.setValue(0);
                 i = 0;
                 heat.setValue(0);
+                timeline.stop();
+                btn.setText("Start");
+                btn.setStyle("-fx-font-size: 25px;" + "-fx-background-color: #3385ff;" + "-fx-font-weight: bold;"
+                    + "-fx-text-align: center;");
             }
         }
     }
@@ -470,6 +474,7 @@ public class FXMLDocumentController implements Initializable {
                 || key == KeyCode.O || key == KeyCode.L || key == KeyCode.K) {
             try {
                 out.write(205);
+                dos.println(0);
                 upArrow.setStyle("-fx-background-color: #000000;");
                 downArrow.setStyle("-fx-background-color: #000000;");
                 rightArrow.setStyle("-fx-background-color:#000000;");

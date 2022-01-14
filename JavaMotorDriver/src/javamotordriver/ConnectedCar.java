@@ -32,10 +32,12 @@ public class ConnectedCar extends Thread{
     Group live;
     Arc leftarc,rightarc;
     Timeline t;
+    Thread thread;
     int carx,cary;
     double cardiag;
     public static int count = 0;
     public static Text counter = new Text("Connected Cars: 0");
+    
     
     public ConnectedCar(Socket socket,Group grb,Color clr){
         angle = 90;
@@ -98,7 +100,7 @@ public class ConnectedCar extends Thread{
         try {
             instream = new DataInputStream(socket.getInputStream());
             start();
-        } catch (IOException ex) {
+        } catch (IOException | NullPointerException ex) {
             System.out.println("No Car connection");
         }
     }
@@ -124,11 +126,27 @@ public class ConnectedCar extends Thread{
                         
                         last.setEndX(startx+r*Math.cos(Math.PI*angle/180));
                         last.setEndY(starty-r*Math.sin(Math.PI*angle/180));
-                        if(incoming.equals("W"))
-                            r++;
-                        else
-                            r--;
-                    }else{
+                        if(incoming.equals("W")){
+                            if(thread != null){
+                                thread.stop();
+                                thread = null;
+                            }
+                            thread = new Thread(()->{
+                                r++;
+                            });
+                            thread.start();
+                        }
+                        else if(incoming.equals("S")){
+                            if(thread != null){
+                                thread.stop();
+                                thread = null;
+                            }
+                            thread = new Thread(()->{
+                                r--;
+                            });
+                            thread.start();
+                        }
+                    }else if(incoming.equals("A") || incoming.equals("D")){
                         car.setRotate(90-angle);
                         live.setRotate(90-angle);
                         startx = last.getEndX();
@@ -140,14 +158,30 @@ public class ConnectedCar extends Thread{
                             g.getChildren().add(last);
                         }
                         if(incoming.equals("A")){
-                            angle++;
+                            if(thread != null){
+                                thread.stop();
+                                thread = null;
+                            }
+                            thread = new Thread(()->{
+                                angle++;
+                            });
+                            thread.start();
                         }
                         else if(incoming.equals("D")){
-                            angle--;
+                            if(thread != null){
+                                thread.stop();
+                                thread = null;
+                            }
+                            thread = new Thread(()->{
+                                angle--;
+                            });
+                            thread.start();
                         }
+                    }else{
+                        thread = null;
                     }
                 });
-            } catch (IOException ex) {
+            } catch (IOException | NullPointerException ex) {
                 // Car Connection is closed
                 Platform.runLater(()->{
                     count--;
@@ -172,4 +206,3 @@ public class ConnectedCar extends Thread{
         });
     }
 }
-

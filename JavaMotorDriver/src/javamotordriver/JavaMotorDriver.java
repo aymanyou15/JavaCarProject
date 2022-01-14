@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -24,6 +25,7 @@ public class JavaMotorDriver extends Application {
         
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("iti-logo.png")));
         primaryStage.setTitle("AREA 51");        
         primaryStage.show();
     }
